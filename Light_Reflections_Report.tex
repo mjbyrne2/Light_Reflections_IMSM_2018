@@ -1,23 +1,174 @@
-%% Preamble
-% Document type and packages imported:
-\documentclass[12pt]{article}
-\usepackage{amsmath,geometry}
+\documentclass[12pt]{amsart}
+\textwidth7in \textheight9in \topmargin-10mm 
+\evensidemargin-5mm
+\oddsidemargin-5mm
+\renewcommand{\baselinestretch}{1.1}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
 
-% Set margin width:
-\geometry{margin = 1 in}
+\newcommand{\nn}{\nonumber}
 
-% Title page
-\title{Title}
-\date{July 25, 2018}
-\author{Authors}
+\newtheorem{theorem}{Theorem}%[section]
+\newtheorem{definition}{Definition}%[section]
+\newtheorem{lemma}{Lemma}%[section]
+\newtheorem{corollary}{Corollary}%[section]
+\newtheorem{remark}{Remark}%[section]
+\newtheorem{proposition}{Proposition}
+\newtheorem{claim}{Claim}
 
+\newcommand{\bea}{\begin{eqnarray*}}
+\newcommand{\eea}{\end{eqnarray*}}
+\newcommand{\ben}{\begin{eqnarray}}
+\newcommand{\een}{\end{eqnarray}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+
+% Math symbols
+
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\x}{\ensuremath{\mathbb{x}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\K}{\ensuremath{\mathbb{K}}}
+
+\newcommand{\sgn}{\operatorname{sign}}
+\renewcommand{\Im}{\operatorname{Im}}
+\renewcommand{\Re}{\operatorname{Re}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\Id}{\operatorname{Id}}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cX}{\mathcal{X}}
+
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\fn}{\mathfrak{n}}
+
+
+\newcommand{\To}{\Longrightarrow}
+\newcommand{\half}{\frac{1}{2}}
+
+\newcommand{\mn}{|\!|\!|}
+
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\bk}{\mathbf{k}}
+\newcommand{\bm}{\mathbf{m}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\n}{|\!|\!|}
+
+
+
+\newcommand{\bxi}{\boldsymbol{\xi}}
+\newcommand{\btau}{\boldsymbol{\tau}}
+\newcommand{\bet}{\boldsymbol{x_1x_2}}
+
+\newcommand{\cl}[1]{\overline{#1}}
+\newcommand{\no}[1]{\left\Vert#1\right\Vert}
+\newcommand{\til}[1]{\widetilde{#1}}
+\renewcommand{\hat}[1]{\widehat{#1}}
+
+% Greek letters abbreviations
+\newcommand{\al}{\alpha}
+\newcommand{\be}{\beta}
+\newcommand{\ga}{\gamma}
+\newcommand{\de}{\delta}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\si}{\sigma}
+\newcommand{\Ga}{\Gamma}
+\newcommand{\ka}{\kappa}
+\newcommand{\La}{\Lambda}
+\newcommand{\la}{\lambda}
+\newcommand{\te}{\theta}
+\newcommand{\Up}{\Upsilon}
+\newcommand{\Om}{\Omega}
+\newcommand{\om}{\omega}
+
+% Differential operators abbreviations
+\renewcommand{\d}{\partial}
+
+
+
+\author{ Michael Byrne}
+\email{mjbyrne2@asu.edu}
+\author{Fatoumata Sanogo}
+\email{sonogof1@uab.edu}
+\author{Pai Song}
+\email{psong@odu.edu}
+\author{Kevin Tsai}
+\email{ytsai003@ucr.edu}
+\author{Hang Yang}
+\email{hang.yang@rice.edu}
+\author{Li Zhu}
+\email{zhul5@unlv.nevada.edu}
+
+\title{Something Cool (TBD)}
 %% Document
 \begin{document}
 
 \maketitle
 
-\section{Introduction}
+\section{Project Overview}
 
+\section{Theoretical Background and Tools}
+\subsection{Reflectance Distribution Functions and Optical Cross Section}
+\subsection{Rvachev Functions and Its Applications}~\\
+The study Rvachev functions (R-functions) arise in the attempt to describe complex geometric objects with a single inequality or equation. In 17 century, Decartes suggested the idea of relating geometric objects (e.g. lines, circles and bodies) to analytical objects (e.g. sets, functions and equations). Since then, methods to study geometric properties based on its functional descriptions have been developed systematically. This is also known as the direct problem of analytical geometry. As oppose to the direct problem, people also considered the inverse problem: given certain geometric objects equipped with some desired properties, find an analytical representation to such objects. For the simple geometric objects, the inverse problem is not difficult at all. Yet for more complicated ones, especially when multiple forms and shapes are composed, the analytical description of it becomes less clean. The birth of R-functions is exactly devised to help with this process.    
 
+On the formal level, R-functions are the functions whose signs do not depend on the "size" of their arguments.  The following are some easy  examples of R-functions: \\
+(a) $f(x,y)=1$\\
+(b) $f(x,y,z)=x^2+y^2+z^2+1$\\
+(c) $f(x,y)=xy$\\
+And here are some R-functions that are less obvious:\\
+(d) $f(x,y)=\min(x,y)$. \\
+(e) $f(x,y)=x+y-\sqrt{x^2+y^2}$\\
+Define 
+$$S_2(x)=\begin{cases} 1,\quad x>0;\\ 0, \quad x<0\end{cases}$$
+\begin{definition}
+A function $f(x_1,...,x_n):\mathbb{R}^n\to\mathbb{R}$ is an R-function if and only if there exists a Boolean function $F(x_1,...,x_n):\{0,1\}^n\to \{0,1\}$ such that
+$$S_2(f(x_1,...,x_n))=F(S_2(x_1),...,S_2(x_n))$$
+Such function $F$ is called the Boolean companion function of $f$.
+\end{definition}
+With this definition, we can easily see, for example,   that (a)(c)(d) are indeed R-functions with Boolean companions $1$, $\Leftrightarrow$ and $\wedge$ respectively. Other examples can also be checked and can have more complicated companions. 
+
+Upon combining elementary "primitives"(sphere, cylinder etc) into composite objects with Boolean operations, we can actually construct certain R-functions that allows us to operate on the formulae/functions of those primitives and get a single analytical expression for the composite objects. And the set of R-functions used to define these operations has a natural correspondence to the Boolean functions. For the complete system of Boolean functions $\{0, \neg, \wedge, \vee\}$, consider the set of R-functions $\{-1,-x, x_1\wedge_\alpha x_2, x_1\vee_\alpha x_2\}$ where $\wedge_\alpha, \vee_\alpha$ is defined by
+$$R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} (x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2})$$
+In general, $a$ is a symmetric function with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent( in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. Let's look at an example of how we can use R-functions to get simple analytical equation for complex geometric objects. There are other system of R-functions that are used to complete the task. For example
+$$R_{\alpha}^m(x_1,x_2): \frac{1}{1+\alpha} (x_1 \wedge_\alpha ,\vee_\alpha x_2)(x_1^2+x_2^2)^{m/2}$$
+
+Consider defining the checkerboard in a single equation with the following primitives 
+$$D_1=\{\sin(\pi x_1)\geq 0\}$$
+$$D_2=\{\sin(\pi x_2)\geq 0\}$$
+$$D_3=32-x^2-y^2-|x^2-y^2|\geq 0$$. 
+Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripes and $D_3$ defines region enclosed by a rectangular boundary. The checker board will then be represented by the following Boolean equation
+$$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_2)\wedge D_3$$
+Recall that $\Leftrightarrow$ is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
+$$\sin(\pi x_1)\sin(\pi x_2) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
+This can be further simplified into an equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$. Once of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on such property, as well as other properties. See for more information. 
+\subsection{Chebfun and OPENSCAD}
+\section{Results and Discussions}
+\section{acknowledgement}
 
 \end{document}

@@ -1,5 +1,5 @@
-\documentclass[12pt]{amsart}
-\textwidth7in \textheight9in \topmargin-10mm 
+\documentclass[11pt]{amsart}
+%\textwidth7in \textheight9in \topmargin-10mm 
 \evensidemargin-5mm
 \oddsidemargin-5mm
 \renewcommand{\baselinestretch}{1.1}
@@ -112,25 +112,31 @@
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
 
-\author{ Michael Byrne}
-\email{mjbyrne2@asu.edu}
-\author{Fatoumata Sanogo}
-\email{sonogof1@uab.edu}
-\author{Pai Song}
-\email{psong@odu.edu}
-\author{Kevin Tsai}
-\email{ytsai003@ucr.edu}
-\author{Hang Yang}
-\email{hang.yang@rice.edu}
-\author{Li Zhu}
-\email{zhul5@unlv.nevada.edu}
-
+\author{Michael Byrne,$^1$}
+\thanks{$^1$mjbyrne2@asu.edu}
+\author{Fatoumata Sanogo,$^2$}
+\thanks{$^2$sanogof1@uab.edu}
+\author{Pai Song,$^3$\\}
+\thanks{$^3$psong@odu.edu}
+\author{Kevin Tsai,$^4$}
+\thanks{$^4$ytsai003@ucr.edu}
+\author{Hang Yang$^5$}
+\thanks{$^5$hang.yang@rice.edu}
+\author{Li Zhu$^6$}
+\thanks{$^6$zhul5@unlv.nevada.edu}
 \title{Something Cool (TBD)}
 %% Document
 \begin{document}
 
 \maketitle
 
+{
+\noindent
+\textit{
+Problem Presenter:  John Peach (MIT Lincoln Lab)\\
+Faculty Mentor: Alen Alexanderian (NCSU)
+}
+}
 \section{Project Overview}
 
 \section{Theoretical Background and Tools}
@@ -152,7 +158,19 @@ A function $f(x_1,...,x_n):\mathbb{R}^n\to\mathbb{R}$ is an R-function if and on
 $$S_2(f(x_1,...,x_n))=F(S_2(x_1),...,S_2(x_n))$$
 Such function $F$ is called the Boolean companion function of $f$.
 \end{definition}
-With this definition, we can easily see, for example,   that (a)(c)(d) are indeed R-functions with Boolean companions $1$, $\Leftrightarrow$ and $\wedge$ respectively. Other examples can also be checked and can have more complicated companions. 
+
+\begin{figure}
+\includegraphics[width=.32\textwidth]{./figs/shape1.pdf}
+\includegraphics[width=.32\textwidth]{./figs/shape2.pdf}
+\\
+\includegraphics[width=.32\textwidth]{./figs/union.pdf}
+\includegraphics[width=.32\textwidth]{./figs/intersect.pdf}
+\includegraphics[width=.32\textwidth]{./figs/diff.pdf}
+\end{figure}
+With this definition, we can easily see, for example,   that (a)(c)(d) are
+indeed R-functions with Boolean companions $1$, $\Leftrightarrow$ and $\wedge$
+respectively. Other examples can also be checked and can have more complicated
+companions. 
 
 Upon combining elementary "primitives"(sphere, cylinder etc) into composite objects with Boolean operations, we can actually construct certain R-functions that allows us to operate on the formulae/functions of those primitives and get a single analytical expression for the composite objects. And the set of R-functions used to define these operations has a natural correspondence to the Boolean functions. For the complete system of Boolean functions $\{0, \neg, \wedge, \vee\}$, consider the set of R-functions $\{-1,-x, x_1\wedge_\alpha x_2, x_1\vee_\alpha x_2\}$ where $\wedge_\alpha, \vee_\alpha$ is defined by
 $$R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} (x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2})$$
@@ -214,9 +232,9 @@ The interpolation formula ~\eqref{eqn:cheb error} gives
 |e^x-P_4(x)|\leq \frac{e}{2^45!}\approx 0.00142
 \end{equation*}
 
-\begin{figure}     	\centerline{\includegraphics[width=3.2in]{e1a.eps}
+\begin{figure}     	\centerline{\includegraphics[width=3.2in]{./figs/e1a.eps}
       	\hspace{-6pt}
-     	\includegraphics[width=3.2in]{e1b.eps}}
+     	\includegraphics[width=3.2in]{./figs/e1b.eps}}
      	\hspace{-6pt}
 		\caption{Errors of interpolations for the fucntion $e^x$ with points $N=4$ and $N=8$}
         \label{fig:e1}
@@ -225,9 +243,9 @@ The interpolation formula ~\eqref{eqn:cheb error} gives
 
 \begin{exmp}
 In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. Figure \eqref{fig:e2} shows Runge phenomenon from polynomial interpolation.\\
-\begin{figure}     	\centerline{\includegraphics[width=3.2in]{e2a.eps}
+\begin{figure}     	\centerline{\includegraphics[width=3.2in]{./figs/e2a.eps}
       	\hspace{-6pt}
-     	\includegraphics[width=3.2in]{e2b.eps}}
+     	\includegraphics[width=3.2in]{./figs/e2b.eps}}
      	\hspace{-6pt}
 		\caption{Interpolation of function $f(x)=\frac{1}{1+12x^2}$}
         \label{fig:e2}

@@ -30,6 +30,8 @@
 \newcommand{\beq}{\begin{equation}}
 \newcommand{\eeq}{\end{equation}}
 
+\newcommand{\BRDF}{\mathrm{BRDF}}
+\newcommand{\ip}[2]{\langle {#1}, {#2} \rangle}
 % Math symbols
 
 \newcommand{\C}{\ensuremath{\mathbb{C}}}
@@ -112,13 +114,13 @@
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
 
-\author{Michael Byrne,$^1$}
+\author{Michael Byrne$^1$}
 \thanks{$^1$mjbyrne2@asu.edu}
-\author{Fatoumata Sanogo,$^2$}
+\author{Fatoumata Sanogo$^2$}
 \thanks{$^2$sanogof1@uab.edu}
-\author{Pai Song,$^3$\\}
+\author{Pai Song$^3$\\}
 \thanks{$^3$psong@odu.edu}
-\author{Kevin Tsai,$^4$}
+\author{Kevin Tsai$^4$}
 \thanks{$^4$ytsai003@ucr.edu}
 \author{Hang Yang$^5$}
 \thanks{$^5$hang.yang@rice.edu}
@@ -143,15 +145,47 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \subsection{Reflectance Distribution Functions and Optical Cross Section}
 When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A \textit{Reflectance Distribution Function} (abbr. RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable "light density" after reflection. 
 
-In general, the degree to which light is reflected depends on the viewer and light position relative to the surface normal and tangent. Consequently, RDF is a function of incoming light direction (represented by the incident vector \textbf{I})and viewing direction (represented by observing vector \textbf{V}) relative to a local orientation at the light interaction point. When the light incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$, such function is called \textit{Mono-static Reflectance Distribution Function} (abbr. MRDF). More generally, when the two angles are different it is called \textit{Bi-directional Reflectance Distribution Function} (abbr. BRDF). 
+In general, the degree to which light is reflected depends on the viewer and
+light position relative to the surface normal and tangent. Consequently, RDF is
+a function of incoming light direction (represented by the incident vector
+\textbf{I})and viewing direction (represented by observing vector \textbf{V})
+relative to a local orientation at the light interaction point. When the light
+incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$,
+such function is called \textit{Mono-static Reflectance Distribution Function}
+(abbr. MRDF). More generally, when the two angles are different it is called
+Bi-directional Reflectance Distribution Function (BRDF). 
 
-Theoretically, BRDF is material-specific. So getting an accurate functional relation requires careful measurements through lab experiments. However, there are models that provide substitutes for easy usage. The most famous examples are Cook-Torrance model \cite{CookTorr}, the Ward's model \cite{Ward} and the Blinn-Phong model \cite{BlinnPhong}. In our report, we will focus on using the Blinn-Phong model, which In specific, says the following 
-$$BRDF(\mathbf{I},\mathbf{V};\mathbf{N})\approx \bigg(\frac{<\mathbf{I}+\mathbf{N},\mathbf{V}>}{\|\mathbf{I}+\mathbf{N}\|}\bigg)^\alpha$$
-where $\mathbf{N}$ is the surface (outward) normal and $\alpha$ depends on the material used to cover the surface. 
+Theoretically, BRDF is material-specific. Therefore, getting an accurate functional
+relation requires careful measurements through lab experiments. However, there
+are models that provide substitutes for easy usage. The most famous examples
+are Cook--Torrance model~\cite{CookTorr}, the Ward's model~\cite{Ward} and the
+Blinn-Phong model~\cite{BlinnPhong}. In our report, we will focus on using the
+Blinn--Phong model, which says the following
+
+\[
+   \BRDF(\mathbf{I},\mathbf{V};\mathbf{N})
+   \approx
+   \bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}
+                  {\|\mathbf{I}+\mathbf{N}\|}\bigg)^\alpha
+\]
+where $\mathbf{N}$ is the surface (outward) normal and $\alpha \geq 0$ depends
+on the material used to cover the surface. 
 
 
 \subsection{Rvachev Functions and Its Applications}
-The study \textit{Rvachev functions} (abbr. R-functions) arise in the attempt to describe complex geometric objects with a single inequality or equation. In 17 century, Decartes suggested the idea of relating geometric objects (e.g. lines, circles and bodies) to analytical objects (e.g. sets, functions and equations). Since then, methods to study geometric properties based on its functional descriptions have been developed systematically. This is also known as the direct problem of analytical geometry. As oppose to the direct problem, people also considered the inverse problem: given certain geometric objects equipped with some desired properties, find an analytical representation to such objects. For the simple geometric objects, the inverse problem is not difficult at all. Yet for more complicated ones, especially when multiple forms and shapes are composed, the analytical description of it becomes less clean. The birth of R-functions is exactly devised to help with this process.    
+The study \textit{Rvachev functions} (abbr. R-functions) arise in the attempt
+to describe complex geometric objects with a single inequality or equation. In
+17 century, Decartes suggested the idea of relating geometric objects (e.g.
+lines, circles and bodies) to analytical objects (e.g. sets, functions and
+equations). Since then, methods to study geometric properties based on its
+functional descriptions have been developed systematically. This is also known
+as the direct problem of analytical geometry. As oppose to the direct problem,
+people also considered the inverse problem: given certain geometric objects
+equipped with some desired properties, find an analytical representation to
+such objects. For the simple geometric objects, the inverse problem is not
+difficult at all. Yet for more complicated ones, especially when multiple forms
+and shapes are composed, the analytical description of it becomes less clean.
+The birth of R-functions is exactly devised to help with this process.    
 
 On the formal level, R-functions are the functions whose signs do not depend on the "size" of their arguments.  The following are some easy  examples of R-functions: \\
 (a) $f(x,y)=1$\\
@@ -271,23 +305,23 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
   SIAM J. SCI. COMPUT Vol. 25, No. 5: 1743-1770 
   
 \bibitem{CSG Operations}
-	Younis Hijazi, Aaron Knoll, Mathias Schott, Andrew Kensler, Charles Hansen and Hans Hagen
-	\emph{CSG Operations of Arbitrary Primitives with Interval Arithmetic and Real-Time Ray Casting}.
-  Scientific Visualization: Advanced Concepts, 78-89 (1998) 
+Younis Hijazi, Aaron Knoll, Mathias Schott, Andrew Kensler, Charles Hansen and Hans Hagen
+\emph{CSG Operations of Arbitrary Primitives with Interval Arithmetic and Real-Time Ray Casting}.
+Scientific Visualization: Advanced Concepts, 78-89 (1998) 
 	
 \bibitem{Boolean Operations}
-	Yohan D. Fougerolle, Andrei Gribok, Sebti Foufou, Frederic Truchetet and Mongi A. Abidi
-	\emph{Boolean Operations with Implicit and Parametric Representation of Primitives Using R-Functions}.
-  IEEE Transactions on Visualization and Computer Graphics, Vol. 11, No. 5 (2005).
+Yohan D. Fougerolle, Andrei Gribok, Sebti Foufou, Frederic Truchetet and Mongi A. Abidi
+\emph{Boolean Operations with Implicit and Parametric Representation of Primitives Using R-Functions}.
+IEEE Transactions on Visualization and Computer Graphics, Vol. 11, No. 5 (2005).
   
-  \bibitem{BRDF}
-	Chris Wynn
-	\emph{An Introduction to BRDF-Based Lighting}.
-  NVIDIA Corporation, 2000
-		
+\bibitem{BRDF}
+Chris Wynn
+\emph{An Introduction to BRDF-Based Lighting}.
+NVIDIA Corporation, 2000
+
 \bibitem{CookTorr}
-	Robert Cook and Kenneth Torrance
-	\emph{A reflectance model for computer graphics. Computer Graphics}, Proc. of SIGGRAPH 81: 244-253 (1981).  
+Robert Cook and Kenneth Torrance
+\emph{A reflectance model for computer graphics. Computer Graphics}, Proc. of SIGGRAPH 81: 244-253 (1981).  
 	
 \bibitem{Ward}
 Gregory J. Ward 
@@ -295,15 +329,13 @@ Gregory J. Ward
 
 \bibitem{BlinnPhong}
 James F. Blinn  
-\emph{Models of light reflection for computer synthesized pictures}, Proc. 4th Annual Conference on Computer Graphics and Interactive Techniques: 192-198 (1977). 
+\emph{Models of light reflection for computer synthesized pictures}, Proc. 4th
+Annual Conference on Computer Graphics and Interactive Techniques: 192-198
+(1977). 
 
-
-
-  
 \end{thebibliography}
 
 \bibliographystyle{plain}
-
-\bibliography{paper}
+%\bibliography{paper}
 
 \end{document}

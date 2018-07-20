@@ -140,7 +140,7 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \section{Project Overview}
 
 \section{Theoretical Background and Tools}
-\subsection{Reflectance Distribution Functions and Optical Cross Section}~\\
+\subsection{Reflectance Distribution Functions and Optical Cross Section}
 When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A \textit{Reflectance Distribution Function} (abbr. RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable "light density" after reflection. 
 
 In general, the degree to which light is reflected depends on the viewer and light position relative to the surface normal and tangent. Consequently, RDF is a function of incoming light direction (represented by the incident vector \textbf{I})and viewing direction (represented by observing vector \textbf{V}) relative to a local orientation at the light interaction point. When the light incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$, such function is called \textit{Mono-static Reflectance Distribution Function} (abbr. MRDF). More generally, when the two angles are different it is called \textit{Bi-directional Reflectance Distribution Function} (abbr. BRDF). 
@@ -150,7 +150,7 @@ $$BRDF(\mathbf{I},\mathbf{V};\mathbf{N})\approx \bigg(\frac{<\mathbf{I}+\mathbf{
 where $\mathbf{N}$ is the surface (outward) normal and $\alpha$ depends on the material used to cover the surface. 
 
 
-\subsection{Rvachev Functions and Its Applications}~\\
+\subsection{Rvachev Functions and Its Applications}
 The study \textit{Rvachev functions} (abbr. R-functions) arise in the attempt to describe complex geometric objects with a single inequality or equation. In 17 century, Decartes suggested the idea of relating geometric objects (e.g. lines, circles and bodies) to analytical objects (e.g. sets, functions and equations). Since then, methods to study geometric properties based on its functional descriptions have been developed systematically. This is also known as the direct problem of analytical geometry. As oppose to the direct problem, people also considered the inverse problem: given certain geometric objects equipped with some desired properties, find an analytical representation to such objects. For the simple geometric objects, the inverse problem is not difficult at all. Yet for more complicated ones, especially when multiple forms and shapes are composed, the analytical description of it becomes less clean. The birth of R-functions is exactly devised to help with this process.    
 
 On the formal level, R-functions are the functions whose signs do not depend on the "size" of their arguments.  The following are some easy  examples of R-functions: \\
@@ -197,7 +197,7 @@ $$\sin(\pi x_1)\sin(\pi x_2) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
 This can be further simplified into an equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$. Once of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on such property, as well as other properties. See for more information. 
 \subsection{Chebfun and OPENSCAD}~\\
 It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.\\ 
-\subsubsection{Polynomial interpolation error formula}~\\
+\subsubsection{Polynomial interpolation error formula}
 Consider the case with single variable. We start with a function $y=f(x)$ and take data points from it to build an interpolating polynomial $P(x)$. The interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following theorem gives a formula for the interpolation error that is usually impossible to evaluate exactly, but often can be at least bounded by an error.
 \begin{theorem}
 Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ pionts $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 

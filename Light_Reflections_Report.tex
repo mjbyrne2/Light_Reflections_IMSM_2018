@@ -109,7 +109,8 @@
 % Differential operators abbreviations
 \renewcommand{\d}{\partial}
 
-
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
 
 \author{ Michael Byrne}
 \email{mjbyrne2@asu.edu}
@@ -167,8 +168,171 @@ $$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_
 Recall that $\Leftrightarrow$ is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
 $$\sin(\pi x_1)\sin(\pi x_2) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
 This can be further simplified into an equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$. Once of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on such property, as well as other properties. See for more information. 
-\subsection{Chebfun and OPENSCAD}
+\subsection{Chebfun and OPENSCAD}~\\
+It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.\\ 
+\subsubsection{Polynomial interpolation error formula}~\\
+Consider the case with single variable. We start with a function $y=f(x)$ and take data points from it to build an interpolating polynomial $P(x)$. The interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following theorem gives a formula for the interpolation error that is usually impossible to evaluate exactly, but often can be at least bounded by an error.
+\begin{theorem}
+Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ pionts $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 
+\begin{equation}
+\label{eqn:poly error}
+f(x)-P(x)=\frac{(x-x_1)(x-x_2)\cdot\cdot\cdot(x-x_n)}{n!}f^{(n)}(c)
+\end{equation}
+where $c$ lies between the smallest and largest of the number $x,x_1,...,x_n.$
+\end{theorem}
+The motivation for Chebyshev interpolation is to improve control of the maximum value of the interpolation error given by ~\eqref{eqn:poly error}. For a given positive integer $n$, the Chebyshev nodes in the interval $(-1,1)$ are
+\begin{equation}
+\label{eqn:cheb points}
+x_i=\cos\Big(\frac{2i-1}{2n}\pi\Big),\mbox{ }i=1,...,n.
+\end{equation}
+The interpolation error due to Chebyshev positioning formula ~\eqref{eqn:cheb points}, is summarized in the following theorem:
+\begin{theorem}
+The choice of real numbers $-1\le x_1,...,x_n\le 1$ that makes the value of 
+\begin{equation}
+\max_{-1 \leq x \leq 1}|(x-x_1)\cdot\cdot\cdot(x-x_n)|
+\end{equation}
+as small as possible is given by ~\eqref{eqn:cheb points}, and the minimum value is $\dfrac{1}{2^{n-1}}$. In fact, the minimum is achieved by 
+\begin{equation}
+\label{eqn:cheb error}
+(x-x_1)\cdot\cdot\cdot(x-x_n)=\frac{1}{2^{n-1}}T_n(x)
+\end{equation}
+where $T_n(x)$ denotes the degrees $n$ Chebyshev polynomial.
+\end{theorem}
+
+\begin{exmp}
+In this example, we compare the errors for Polynomial interpolation and Chebyshev interpolation with different interpolation points for the function $e^x$ on $[-1,1]$. Figure \ref{fig:e1} shows the comparisons for $N=5$ and $N=8$, and there isn't significant difference between the two interpolations for $N=5$. In the contrast, we can see better approximation for the Chebyshev interpolation near the boundary when  $N=8$.\\
+The interpolation formula ~\eqref{eqn:poly error} gives 
+\begin{equation}
+f(x)-P_4(x)=\frac{(x+1)(x+\frac{1}{2})x(x-\frac{1}{2})(x-1)}{5!}f^{(5)}(c)
+\end{equation}
+where $-1<c<1$. For $-1\leq x\leq 1$, the error is bounded by
+\begin{equation*}
+f(x)-P_4(x)=\frac{(x+1)(x+\frac{1}{2})x(x-\frac{1}{2})(x-1)}{5!}f^{(5)}(c)\leq \frac{0.11348}{5!}e\approx 0.002570
+\end{equation*}
+The interpolation formula ~\eqref{eqn:cheb error} gives 
+\begin{equation*}
+|e^x-P_4(x)|\leq \frac{e}{2^45!}\approx 0.00142
+\end{equation*}
+
+\begin{figure}     	\centerline{\includegraphics[width=3.2in]{e1a.eps}
+      	\hspace{-6pt}
+     	\includegraphics[width=3.2in]{e1b.eps}}
+     	\hspace{-6pt}
+		\caption{Errors of interpolations for the fucntion $e^x$ with points $N=4$ and $N=8$}
+        \label{fig:e1}
+\end{figure}
+\end{exmp}
+
+\begin{exmp}
+In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. Figure \eqref{fig:e2} shows Runge phenomenon from polynomial interpolation.\\
+\begin{figure}     	\centerline{\includegraphics[width=3.2in]{e2a.eps}
+      	\hspace{-6pt}
+     	\includegraphics[width=3.2in]{e2b.eps}}
+     	\hspace{-6pt}
+		\caption{Interpolation of function $f(x)=\frac{1}{1+12x^2}$}
+        \label{fig:e2}
+\end{figure}
+\end{exmp}
+
 \section{Results and Discussions}
 \section{acknowledgement}
+
+\begin{thebibliography}{9}
+\bibitem{Zachary}
+  Zachary Battles and Lloyd N. Trefethen
+  \emph{An Extension of Matlab to Continuous Function and Operations}.
+  SIAM J. SCI. COMPUT Vol. 25, No. 5, pp. 1743-1770 
+  
+\bibitem{CSG Operations}
+	Younis Hijazi, Aaron Knoll, Mathias Schott, Andrew Kensler, Charles Hansen and Hans Hagen
+	\emph{CSG Operations of Arbitrary Primitives with Interval Arithmetic and Real-Time Ray Casting}.
+  Scientific Visualization: Advanced Concepts, 78-89 (1998) 
+	
+\bibitem{Boolean Operations}
+	Yohan D. Fougerolle, Andrei Gribok, Sebti Foufou, Frederic Truchetet and Mongi A. Abidi
+	\emph{Boolean Operations with Implicit and Parametric Representation of Primitives Using R-Functions}.
+  IEEE Transactions on Visualization and Computer Graphics, Vol. 11, No. 5 (2005)
+  
+  \bibitem{BRDF}
+	Chris Wynn
+	\emph{An Introduction to BRDF-Based Lighting}.
+  NVIDIA Corporation, 2000
+		
+	
+%\bibitem{Xudong Liu}
+%  Xu-Dong Liu, Ronald P. Fedkiw, and Myungjoo Kang
+%  \emph{A Boundary Condition Capturing Method for Poisson's Equation on Irregular Domains}.
+%  Journal of Computational Physics \textbf{160}, 151-178(2000)
+%  
+%\bibitem{Wei-Fan Hu}
+%
+%  Wei-Fan Hu, Ming-Chih La, Yuan-Nan Young
+%  \emph{A Hybrid Immersed Boundary and Immersed Interface Method for Electrohydrodynamic Simulations}.
+%  Journal of Computational Physics \textbf{282}, 47-61(2015)
+%  
+%\bibitem{lamport94}
+%
+%  Frederic G. Gibou, Ronald P. Fedkiw, Li-Tien Cheng and Myungjoo Kang
+%  \emph{A Second Order Accurate Symmetric Discretization of the Poisson Equation on Irregular Domains}.
+%  Journal of Computational Physics \textbf{176}, 1-23(2002)
+%  
+%\bibitem{lamport94}
+%
+%  Hans Johansen and Phillip Colella
+%  \emph{A Cartesian Grid Embedded Boundary Method for Poisson's Equation on Irregular Domains}.
+%  Journal of Computational Physics \textbf{141}, 60-85(1998)  
+%  
+%\bibitem{lamport94}
+%
+%  Erik Bjorklund
+%  \emph{The level-set method applied to droplet dynamics int the presence of an electric field}.
+%  Computers \& Fluids \textbf{38}, 358-369(2009) 
+%  
+%\bibitem{lamport94}
+%
+%  Rajat Mittal, Gianluca Laccarino
+%  \emph{Immersed Boundary Methods}.
+%  Annu. Rev. Fluid Mech. 2005. 37:239-61 
+%  
+%  \bibitem{lamport94}
+%
+%  Frederic Gibou, Ronald P. Fedkiw, Li-Tien Cheng, and Myungjoo Kang
+%  \emph{A Second-Order-Accurate Symmetric Discretization of the Poisson Equation on Irregular Domains}.
+%  Journal of Computational Physics \textbf{176}, 205-227(2002) 
+%  
+%  \bibitem{lamport94}
+%
+%  Yu-Heng Tseng, Joel H. Ferziger
+%  \emph{A ghost-cell immersed boundary method for flow in complex geometry}.
+%  Journal of Computational Physics 192(2003) 593-623 
+%  
+%  \bibitem{Zhilin-ref-1}
+%  
+%  R. J. LeVeque and Z. Li
+%  \emph{The immersed interface method for elliptic equations with discontinuous coefficients and singular sources}.
+%  SIAM J. Numer. Anual., 31(1994), pp. 1019-1044
+%  
+%  \bibitem{Zhilin-ref-2}
+%  
+%  Z. Li
+%  \emph{The Immersed Interface Method - A Numerical Approach for Partial Difference Equations with Interfaces}.
+%   Ph.D. thesis, University of Washington, Seattle, WA, 1994
+%   
+%  \bibitem{S. Deng}   
+%   
+%   S. Deng, K. Ito and Z. Li
+%   \emph{Three-dimensional elliptic solvers for interface problems and applications}
+%   Journal of Computational Physics 181(2003) 215-243
+%   
+%   \bibitem{S. Xu}
+%   S. Xu
+%     \emph{An iterative two-fluid pressure solver based on the immersed interface method}.
+%  Commun. Comput. Phys. 12 (2012) 528-543
+  
+\end{thebibliography}
+
+\bibliographystyle{plain}
+
+\bibliography{paper}
 
 \end{document}

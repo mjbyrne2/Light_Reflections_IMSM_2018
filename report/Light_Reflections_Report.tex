@@ -252,26 +252,24 @@ It's common to choose the base points $x_i$ for interpolation to be evenly space
 Consider the case with single variable. We start with a function $y=f(x)$ and take data points from it to build an interpolating polynomial $P(x)$. The interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following theorem gives a formula for the interpolation error that is usually impossible to evaluate exactly, but often can be at least bounded by an error.
 \begin{theorem}
 Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ pionts $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 
-\begin{equation}
-\label{eqn:poly error}
+\begin{equation} \label{eqn_poly_error}
 f(x)-P(x)=\frac{(x-x_1)(x-x_2)\cdot\cdot\cdot(x-x_n)}{n!}f^{(n)}(c)
 \end{equation}
 where $c$ lies between the smallest and largest of the number $x,x_1,...,x_n.$
 \end{theorem}
-The motivation for Chebyshev interpolation is to improve control of the maximum value of the interpolation error given by ~\eqref{eqn:poly error}. For a given positive integer $n$, the Chebyshev nodes in the interval $(-1,1)$ are
+The motivation for Chebyshev interpolation is to improve control of the maximum value of the interpolation error given by ~\eqref{eqn_poly_error}. For a given positive integer $n$, the Chebyshev nodes in the interval $(-1,1)$ are
 \begin{equation}
-\label{eqn:cheb points}
+\label{eqn_cheb_point}
 x_i=\cos\Big(\frac{2i-1}{2n}\pi\Big),\mbox{ }i=1,...,n.
 \end{equation}
-The interpolation error due to Chebyshev positioning formula ~\eqref{eqn:cheb points}, is summarized in the following theorem:
+The interpolation error due to Chebyshev positioning formula ~\eqref{eqn_cheb_point}, is summarized in the following theorem:
 \begin{theorem}
 The choice of real numbers $-1\le x_1,...,x_n\le 1$ that makes the value of 
 \begin{equation}
 \max_{-1 \leq x \leq 1}|(x-x_1)\cdot\cdot\cdot(x-x_n)|
 \end{equation}
-as small as possible is given by ~\eqref{eqn:cheb points}, and the minimum value is $\dfrac{1}{2^{n-1}}$. In fact, the minimum is achieved by 
-\begin{equation}
-\label{eqn:cheb error}
+as small as possible is given by ~\eqref{eqn_cheb_point}, and the minimum value is $\dfrac{1}{2^{n-1}}$. In fact, the minimum is achieved by 
+\begin{equation} \label{eqn_cheb_error}
 (x-x_1)\cdot\cdot\cdot(x-x_n)=\frac{1}{2^{n-1}}T_n(x)
 \end{equation}
 where $T_n(x)$ denotes the degrees $n$ Chebyshev polynomial.
@@ -279,7 +277,7 @@ where $T_n(x)$ denotes the degrees $n$ Chebyshev polynomial.
 
 \begin{exmp}
 In this example, we compare the errors for Polynomial interpolation and Chebyshev interpolation with different interpolation points for the function $e^x$ on $[-1,1]$. Figure \ref{fig:e1} shows the comparisons for $N=5$ and $N=8$, and there isn't significant difference between the two interpolations for $N=5$. In the contrast, we can see better approximation for the Chebyshev interpolation near the boundary when  $N=8$.\\
-The interpolation formula ~\eqref{eqn:poly error} gives 
+The interpolation formula ~\eqref{eqn_poly_error} gives 
 \begin{equation}
 f(x)-P_4(x)=\frac{(x+1)(x+\frac{1}{2})x(x-\frac{1}{2})(x-1)}{5!}f^{(5)}(c)
 \end{equation}
@@ -287,7 +285,7 @@ where $-1<c<1$. For $-1\leq x\leq 1$, the error is bounded by
 \begin{equation*}
 f(x)-P_4(x)=\frac{(x+1)(x+\frac{1}{2})x(x-\frac{1}{2})(x-1)}{5!}f^{(5)}(c)\leq \frac{0.11348}{5!}e\approx 0.002570
 \end{equation*}
-The interpolation formula ~\eqref{eqn:cheb error} gives 
+The interpolation formula ~\eqref{eqn_cheb_error} gives 
 \begin{equation*}
 |e^x-P_4(x)|\leq \frac{e}{2^45!}\approx 0.00142
 \end{equation*}
@@ -314,10 +312,45 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 
 \section{Results and Discussions}
 \subsection{Analytical Solutions for Sphere}
+Recall that by using Bling-Phong model for shpere, we can compute OCS through
+$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) cos\gamma cos\beta \mathrm{d}A$$
+where $\gamma$ is the angle between N and V,  $\beta$ is the angle between N and I. The geometric relations are shown in the picture below.
+\begin{figure}[h!]
+  \includegraphics[width=4.5in]{./figs/sphere.pdf}
+  \label{fig:sphere}
+\end{figure}
+
+The spherical coordinates (r,$\theta$,$\varphi$) are related to the Cartesian coordinates $(x,y,z)$ via
+$$x =rcos\theta \sin\varphi, \quad y=r\sin\theta \sin\varphi, \quad z=r\cos\varphi $$
+with Jacobian 
+$$\big|\frac{\partial(x,y,z)}{\partial(r,\theta,\varphi)}\big|= r^2 \sin\varphi $$
+Thus
+
+  $$\sigma =\int_{0}^{\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{I+N}{V}}{\|I+N\|}\Bigg)^\alpha\frac{\ip{N}{V}}{\|N\| \|V\|}\frac{\ip{N}{I}}{\|N\| \|I\|}r^2\sin\varphi\mathrm{d}\theta\mathrm{d}\varphi$$
 \subsection{Numerical Solutions for Sphere}
 \section{Future work}
 \subsection{Other Shapes and Technical Challenges}
-\subsection{The Multipath Problem}
+\subsection{The Multipath Problem}~\\
+Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces and only consider the case with two bounces. We denote the incident light by its direction $I_1$. The light $I_1$ then gets reflected and travels along $I_2$ and reflected by the surface again before arriving at the sensor, whose viewing angle is represented by $V$. With the picture below, it is clear that
+
+$$N_1=(\cos\theta,\sin\theta)$$
+$$I_2= (-\cos(\frac{3\pi}{2}-2\theta),-\sin(\frac{3\pi}{2}-2\theta))$$
+$$N_2= (-\cos\varphi,\sin\varphi)$$
+
+\begin{figure}[H]
+  \includegraphics[width=4.5in]{./figs/multipath.pdf}
+  \label{fig:reflection}
+\end{figure}
+
+
+The contribution from a single bounce to the OCS is computed by
+$$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{<(I_1+N_1),V>}{\|I_1+N_1\|}\Bigg)^\alpha\frac{<N_1,V>}{\|N_1\| \|V\|}\frac{<N_1,I_1>}{\|N_1\| \|I_1\|} \mathrm{d}\theta$$
+
+Then the contribution from the second bounce to the OCS is computed by
+
+$$\sigma_2 =\int_{0}^{\pi}\int_{0}^{\pi}\Bigg(\frac{\ip{I_2+N_2}{V}}{\|I_2+N_2\|}\Bigg)^\alpha\frac{\ip{N_2}{V}}{\|N_2\| \|V\|}\frac{\ip{N_2}{I_2}}{\|N_2\| \|I_2\|}\mathrm{d}\theta\mathrm{d}\varphi$$
+Summing the two, we now have an analytical formula for the whole OCS
+ $$ \sigma= \sigma_1+\sigma_2$$
 
 \section{Conclusion}
 \section{acknowledgement}

@@ -31,6 +31,7 @@
 \newcommand{\eeq}{\end{equation}}
 
 \newcommand{\BRDF}{\mathrm{BRDF}}
+\newcommand{\MRDF}{\mathrm{MRDF}}
 \newcommand{\ip}[2]{\langle {#1}, {#2} \rangle}
 % Math symbols
 
@@ -141,9 +142,9 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 }
 \section{Project Overview}
 
-\section{Theoretical Background and Tools}
-\subsection{Reflectance Distribution Functions and Optical Cross Section}
-When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A \textit{Reflectance Distribution Function} (abbr. RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable "light density" after reflection. 
+\section{Theoretical Background and Tools}~\\
+\subsection{Reflectance Distribution Functions and Optical Cross Section}~\\
+When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A Reflectance Distribution Function (RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable "light density" after reflection. 
 
 In general, the degree to which light is reflected depends on the viewer and
 light position relative to the surface normal and tangent. Consequently, RDF is
@@ -151,8 +152,8 @@ a function of incoming light direction (represented by the incident vector
 \textbf{I})and viewing direction (represented by observing vector \textbf{V})
 relative to a local orientation at the light interaction point. When the light
 incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$,
-such function is called \textit{Mono-static Reflectance Distribution Function}
-(abbr. MRDF). More generally, when the two angles are different it is called
+such function is called Mono-static Reflectance Distribution Function
+(MRDF). More generally, when the two angles are different it is called
 Bi-directional Reflectance Distribution Function (BRDF). 
 
 Theoretically, BRDF is material-specific. Therefore, getting an accurate functional
@@ -165,15 +166,17 @@ Blinn--Phong model, which says the following
 \[
    \BRDF(\mathbf{I},\mathbf{V};\mathbf{N})
    \approx
-   \bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}
-                  {\|\mathbf{I}+\mathbf{N}\|}\bigg)^\alpha
+   (\ip{\mathbf{H}}{\mathbf{V}})^\alpha
 \]
-where $\mathbf{N}$ is the surface (outward) normal and $\alpha \geq 0$ depends
-on the material used to cover the surface. 
-
-
-\subsection{Rvachev Functions and Its Applications}
-The study \textit{Rvachev functions} (abbr. R-functions) arise in the attempt
+where  $\alpha \geq 0$ depends
+on the material used to cover the surface, $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
+is the so-called half-way vector.
+A special case of the Blinn-Phong Model gives rise to a handy formula for MRDF. Taking $\mathbf{I}=\mathbf{V}$ and letting the angle between $\mathbf{I}$ and $\mathbf{N}$ be $\theta$, we get
+\[
+\MRDF(I;N)=(\cos \theta)^\alpha
+\]
+\subsection{Rvachev Functions and Its Motivation}~\\
+The study Rvachev functions (R-functions) arise in the attempt
 to describe complex geometric objects with a single inequality or equation. In
 17 century, Decartes suggested the idea of relating geometric objects (e.g.
 lines, circles and bodies) to analytical objects (e.g. sets, functions and
@@ -182,12 +185,22 @@ functional descriptions have been developed systematically. This is also known
 as the direct problem of analytical geometry. As oppose to the direct problem,
 people also considered the inverse problem: given certain geometric objects
 equipped with some desired properties, find an analytical representation to
-such objects. For the simple geometric objects, the inverse problem is not
-difficult at all. Yet for more complicated ones, especially when multiple forms
-and shapes are composed, the analytical description of it becomes less clean.
-The birth of R-functions is exactly devised to help with this process.    
+such objects. The following graphs illustrate one of the inverse problem: given a disk and a ball, find the analytical formulae respectively for their union, intersection and difference. 
+\begin{figure}[H]
+\includegraphics[width=.32\textwidth]{./figs/shape1.pdf}
+\includegraphics[width=.32\textwidth]{./figs/shape2.pdf}
+\\
+\includegraphics[width=.32\textwidth]{./figs/union.pdf}
+\includegraphics[width=.32\textwidth]{./figs/intersect.pdf}
+\includegraphics[width=.32\textwidth]{./figs/diff.pdf}
+\end{figure}
 
-On the formal level, R-functions are the functions whose signs do not depend on the "size" of their arguments.  The following are some easy  examples of R-functions: \\
+
+For the simple geometric objects, the inverse problem is not
+difficult at all. Yet for more complicated ones, especially when multiple forms
+and shapes are composed, the analytical description of it becomes less clean and usually involves logical operations among regions defined by inequalities. The birth of R-functions is exactly to help resolve this issue.    
+
+On the formal level, an R-function is a function whose sign do not depend on the magnitude of its arguments.  The following are some easy  examples of R-functions: \\
 (a) $f(x,y)=1$\\
 (b) $f(x,y,z)=x^2+y^2+z^2+1$\\
 (c) $f(x,y)=xy$\\
@@ -202,14 +215,6 @@ $$S_2(f(x_1,...,x_n))=F(S_2(x_1),...,S_2(x_n))$$
 Such function $F$ is called the Boolean companion function of $f$.
 \end{definition}
 
-\begin{figure}
-\includegraphics[width=.32\textwidth]{./figs/shape1.pdf}
-\includegraphics[width=.32\textwidth]{./figs/shape2.pdf}
-\\
-\includegraphics[width=.32\textwidth]{./figs/union.pdf}
-\includegraphics[width=.32\textwidth]{./figs/intersect.pdf}
-\includegraphics[width=.32\textwidth]{./figs/diff.pdf}
-\end{figure}
 With this definition, we can easily see, for example,   that (a)(c)(d) are
 indeed R-functions with Boolean companions $1$, $\Leftrightarrow$ and $\wedge$
 respectively. Other examples can also be checked and can have more complicated
@@ -217,21 +222,23 @@ companions.
 
 Upon combining elementary "primitives"(sphere, cylinder etc) into composite objects with Boolean operations, we can actually construct certain R-functions that allows us to operate on the formulae/functions of those primitives and get a single analytical expression for the composite objects. And the set of R-functions used to define these operations has a natural correspondence to the Boolean functions. For the complete system of Boolean functions $\{0, \neg, \wedge, \vee\}$, consider the set of R-functions $\{-1,-x, x_1\wedge_\alpha x_2, x_1\vee_\alpha x_2\}$ where $\wedge_\alpha, \vee_\alpha$ is defined by
 $$R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} (x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2})$$
-In general, $a$ is a symmetric function with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent( in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. Let's look at an example of how we can use R-functions to get simple analytical equation for complex geometric objects. There are other system of R-functions that are used to complete the task. For example
+In the above definition, $a$ is a symmetric function in general with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent (in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. Let's look at an example of how we can use R-functions to get simple analytical equation for complex geometric objects. There are other system of R-functions that could also be used to complete the task. For example
 $$R_{\alpha}^m(x_1,x_2): \frac{1}{1+\alpha} (x_1 \wedge_\alpha ,\vee_\alpha x_2)(x_1^2+x_2^2)^{m/2}$$
 
-Consider defining the checkerboard in a single equation with the following primitives 
+The following example demonstrates the merits of using R-functions. Consider defining the checkerboard in a single equation with the following primitives 
 $$D_1=\{\sin(\pi x_1)\geq 0\}$$
 $$D_2=\{\sin(\pi x_2)\geq 0\}$$
-$$D_3=32-x^2-y^2-|x^2-y^2|\geq 0$$. 
+$$D_3=32-x^2-y^2-|x^2-y^2|\geq 0$$ 
 Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripes and $D_3$ defines region enclosed by a rectangular boundary. The checker board will then be represented by the following Boolean equation
 $$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_2)\wedge D_3$$
 Recall that $\Leftrightarrow$ is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
-$$\sin(\pi x_1)\sin(\pi x_2) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
-This can be further simplified into an equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$. Once of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on such property, as well as other properties. See for more information. 
+$$(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
+This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$. Once of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on the importance of differentiability of the R-functions and will use $R_\alpha$. See for more information. 
+
+
 \subsection{Chebfun and OPENSCAD}~\\
 It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.\\ 
-\subsubsection{Polynomial interpolation error formula}
+\subsubsection{Polynomial interpolation error formula}~\\
 Consider the case with single variable. We start with a function $y=f(x)$ and take data points from it to build an interpolating polynomial $P(x)$. The interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following theorem gives a formula for the interpolation error that is usually impossible to evaluate exactly, but often can be at least bounded by an error.
 \begin{theorem}
 Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ pionts $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 
@@ -296,42 +303,61 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 \end{exmp}
 
 \section{Results and Discussions}
+\subsection{Analytical Solutions for Sphere}
+\subsection{Numerical Solutions for Sphere}
+\section{Future work}
+\subsection{Other Shapes and Technical Challenges}
+\subsection{The Multipath Problem}
+
+\section{Conclusion}
 \section{acknowledgement}
 
 \begin{thebibliography}{9}
-\bibitem{Zachary}
-  Zachary Battles and Lloyd N. Trefethen
-  \emph{An Extension of Matlab to Continuous Function and Operations}.
-  SIAM J. SCI. COMPUT Vol. 25, No. 5: 1743-1770 
-  
-\bibitem{CSG Operations}
-Younis Hijazi, Aaron Knoll, Mathias Schott, Andrew Kensler, Charles Hansen and Hans Hagen
-\emph{CSG Operations of Arbitrary Primitives with Interval Arithmetic and Real-Time Ray Casting}.
-Scientific Visualization: Advanced Concepts, 78-89 (1998) 
-	
-\bibitem{Boolean Operations}
-Yohan D. Fougerolle, Andrei Gribok, Sebti Foufou, Frederic Truchetet and Mongi A. Abidi
-\emph{Boolean Operations with Implicit and Parametric Representation of Primitives Using R-Functions}.
-IEEE Transactions on Visualization and Computer Graphics, Vol. 11, No. 5 (2005).
-  
 \bibitem{BRDF}
-Chris Wynn
+Chris Wynn,
 \emph{An Introduction to BRDF-Based Lighting}.
-NVIDIA Corporation, 2000
+NVIDIA Corporation, 2000.
 
-\bibitem{CookTorr}
-Robert Cook and Kenneth Torrance
-\emph{A reflectance model for computer graphics. Computer Graphics}, Proc. of SIGGRAPH 81: 244-253 (1981).  
-	
 \bibitem{Ward}
-Gregory J. Ward 
+Gregory J. Ward, 
 \emph{Measuring and Modeling Anisotropic Reflection. (SIGGRAPH 92),}: 265-272 (1992).
 
 \bibitem{BlinnPhong}
-James F. Blinn  
+James F. Blinn,  
 \emph{Models of light reflection for computer synthesized pictures}, Proc. 4th
 Annual Conference on Computer Graphics and Interactive Techniques: 192-198
 (1977). 
+
+\bibitem{CookTorr}
+Robert Cook and Kenneth Torrance,
+\emph{A reflectance model for computer graphics. Computer Graphics}, Proc. of SIGGRAPH 81: 244-253 (1981).  
+
+\bibitem{Shapiro}
+Vadim Shapiro,
+\emph{Theory of R-functions and Applications: A Primer}
+
+ \bibitem{Boolean Operations}
+Yohan D. Fougerolle, Andrei Gribok, Sebti Foufou, Frederic Truchetet and Mongi A. Abidi,
+\emph{Boolean Operations with Implicit and Parametric Representation of Primitives Using R-Functions}.
+IEEE Transactions on Visualization and Computer Graphics, Vol. 11, No. 5 (2005).
+
+\bibitem{CSG Operations}
+Younis Hijazi, Aaron Knoll, Mathias Schott, Andrew Kensler, Charles Hansen and Hans Hagen,
+\emph{CSG Operations of Arbitrary Primitives with Interval Arithmetic and Real-Time Ray Casting}.
+Scientific Visualization: Advanced Concepts, 78-89 (1998) 
+	
+ 
+\bibitem{Zachary}
+  Zachary Battles and Lloyd N. Trefethen,
+  \emph{An Extension of Matlab to Continuous Function and Operations}.
+  SIAM J. SCI. COMPUT Vol. 25, No. 5: 1743-1770 
+ 
+
+
+
+	
+
+
 
 \end{thebibliography}
 

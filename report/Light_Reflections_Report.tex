@@ -169,8 +169,8 @@ Blinn--Phong model, which says the following
    (\ip{\mathbf{H}}{\mathbf{V}})^\alpha
 \]
 where  $\alpha \geq 0$ depends
-on the material used to cover the surface, $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
-is the so-called half-way vector.
+on light diffusivity of the material used to cover the surface (large diffusivity corresponds to small $\alpha$, see graph below), $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
+is the so-called half-way vector. 
 A special case of the Blinn-Phong Model gives rise to a handy formula for MRDF. Taking $\mathbf{I}=\mathbf{V}$ and letting the angle between $\mathbf{I}$ and $\mathbf{N}$ be $\theta$, we get
 \[
 \MRDF(I;N)=(\cos \theta)^\alpha
@@ -186,6 +186,7 @@ as the direct problem of analytical geometry. As oppose to the direct problem,
 people also considered the inverse problem: given certain geometric objects
 equipped with some desired properties, find an analytical representation to
 such objects. The following graphs illustrate one of the inverse problem: given a disk and a ball, find the analytical formulae respectively for their union, intersection and difference. 
+
 \begin{figure}[H]
 \includegraphics[width=.32\textwidth]{./figs/shape1.pdf}
 \includegraphics[width=.32\textwidth]{./figs/shape2.pdf}
@@ -224,16 +225,19 @@ Upon combining elementary "primitives"(sphere, cylinder etc) into composite obje
 $$R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} (x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2})$$
 In the above definition, $a$ is a symmetric function in general with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent (in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. Let's look at an example of how we can use R-functions to get simple analytical equation for complex geometric objects. There are other system of R-functions that could also be used to complete the task. For example
 $$R_{\alpha}^m(x_1,x_2): \frac{1}{1+\alpha} (x_1 \wedge_\alpha ,\vee_\alpha x_2)(x_1^2+x_2^2)^{m/2}$$
+One of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on the importance of differentiability of the R-functions and will use $R_\alpha$. See~\cite{Shapiro} for more information.
+The following example shows the merits of using R-functions. Consider defining the checkerboard in a single equation with the following primitives 
+$$D_1=\{\sin(\pi x_1)\geq 0\}, \quad D_2=\{\sin(\pi x_2)\geq 0\},\quad D_3=\{32-x^2-y^2-|x^2-y^2|\geq 0\}$$ 
+Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripes and $D_3$ defines region enclosed by a rectangular boundary. 
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{./figs/checkerboard.pdf}
+\end{figure}
 
-The following example demonstrates the merits of using R-functions. Consider defining the checkerboard in a single equation with the following primitives 
-$$D_1=\{\sin(\pi x_1)\geq 0\}$$
-$$D_2=\{\sin(\pi x_2)\geq 0\}$$
-$$D_3=32-x^2-y^2-|x^2-y^2|\geq 0$$ 
-Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripes and $D_3$ defines region enclosed by a rectangular boundary. The checker board will then be represented by the following Boolean equation
+The checker board will then be represented by the following Boolean equation
 $$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_2)\wedge D_3$$
 Recall that $\Leftrightarrow$ is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
 $$(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
-This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$. Once of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on the importance of differentiability of the R-functions and will use $R_\alpha$. See for more information. 
+This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$.  
 
 
 \subsection{Chebfun and OPENSCAD}~\\
@@ -334,7 +338,7 @@ Robert Cook and Kenneth Torrance,
 
 \bibitem{Shapiro}
 Vadim Shapiro,
-\emph{Theory of R-functions and Applications: A Primer}
+\emph{Theory of R-functions and Applications: A Primer}, Cornell University, 1988.
 
  \bibitem{Boolean Operations}
 Yohan D. Fougerolle, Andrei Gribok, Sebti Foufou, Frederic Truchetet and Mongi A. Abidi,

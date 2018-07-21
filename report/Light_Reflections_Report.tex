@@ -141,10 +141,36 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 }
 }
 \section{Project Overview}
+By carefully observing the light reflected from a distant object, it may be possible to infer subtle properties such as
+orientation, conditions of surface materials and overall status and health of the object. The physics of light reflecting from
+the surface of an object is fairly well known and depends on material properties, angles of incidence and reflection and the
+wavelength of the incident beam. To model reflectance from a surface, the object may be represented as a triangular mesh
+and reflectance from each patch then determined from the local surface normal, incident and reflected angles as well as the
+bistatic reflectance distribution function (BRDF) which provides a measure of the reflectivity for a material (at a selected
+wavelength) for each incident and reflected angle.
+The total Optical Cross Section (OCS) for an object is simply the sum of the reflectances for each triangular patch. For
+simple geometric objects such as spheres, cubes, cylinders or cones the OCS may be calculated analytically, but for more
+complex objects the typical procedure is to generate a mesh model and then perform the estimate. However, to accurately
+represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between
+accuracy of the surface represented and speed of calculation. For highly specular (mirror-like) surfaces the flat triangular
+patches reflect over a very narrow set of angles resulting in a "disco ball" effect. The Humanity Star
+(http://www.thehumanitystar.com/) is an excellent example of a satellite deliberately designed with just such an effect and
+is expected to produce a pulsing bright spot in the night sky as sunlight reflects off of the large facets [l].
+The goal of this project is to develop a method that extends the accuracy of simple analytic models to much more complex
+objects. Many man-made objects are composed of relatively simple basis shapes and may be described through constructive
+solid geometry methods [5]. The surfaces may be then represented in functional forms using Chebyshev polynomials [2]
+and built up using Rvachev functions [4]. With a functional description of the surface, it is possible to also have a functional
+definition of the normal vector which is required to calculate the reflectance from the BRDF, and with a smoothly varying
+normal function the "disco ball" effect is eliminated. Another advantage of using functional representations of the surfaces
+is that the data storage requirements may be significantly reduced. Calculating the OCS becomes more complicated in
+regions where the surface is concave because a portion of the surface may be hidden behind another area, and light may
+make multiple reflections in the concave region before exiting towards the sensor. Developing robust solutions to the
+problem of surface concavities will be the main focus of this project.
+
+
 \section{Theoretical Background and Tools}~\\
 \subsection{Reflectance Distribution Functions and Optical Cross Section}~\\
 When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A Reflectance Distribution Function (RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable "light density" after reflection. 
-
 
 In general, the degree to which light is reflected depends on the viewer and
 light position relative to the surface normal and tangent. Generally speaking, RDF is
@@ -176,13 +202,13 @@ A special case of the Blinn-Phong Model gives rise to a handy formula for MRDF. 
 \]
 
 Optical Cross Section (OCS) describes the maximum amount of optical flux that is reflected by an object. It can be computed accordingly by the geometry of surface of the object and reflectivity of a particular wavelength of an object. Here, we will again ignore wavelength and use the representation 
-$$\mathrm{OCS}=\int_{S} \rho dA$$
+$$\sigma=\int_{S} \rho dA$$
 where $\rho$ is the optical density and is given by an $RDF$, $S$ denotes the surface. In our project, we use the representation
-$$\mathrm{OCS}= \int_S\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos (\theta_1)\cos(\theta_2)dA$$
-with $\theta_1$ denoting the relative angle between incident light angle and surface normal, $\theta_2$ denoting the relative angle between viewing angle and the surface normal. The cosine functions are use to account for the projected light along the surface normal. 
+$$\sigma= \int_S\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma\cos\beta dA$$
+with $\gamma$ denoting the relative angle between incident light angle and surface normal, $\beta$ denoting the relative angle between viewing angle and the surface normal. The cosine functions are use to account for the projected light along the surface normal. 
 
 \subsection{Rvachev Functions and Its Motivation}~\\
-The study Rvachev functions (R-functions) arise in the attempt
+The study Rvachev functions (R-functions) arises in the attempt
 to describe complex geometric objects with a single inequality or equation. In
 17 century, Decartes suggested the idea of relating geometric objects (e.g.
 lines, circles and bodies) to analytical objects (e.g. sets, functions and
@@ -331,7 +357,7 @@ Thus
 \section{Future work}
 \subsection{Other Shapes and Technical Challenges}
 \subsection{The Multipath Problem}~\\
-Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces and only consider the case with two bounces. We denote the incident light by its direction $I_1$. The light $I_1$ then gets reflected and travels along $I_2$ and reflected by the surface again before arriving at the sensor, whose viewing angle is represented by $V$. With the picture below, it is clear that
+Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces (include only two bounces). The surface we consider here is the half cylindrical shell facing downwards. We denote the incident light by its vector of direction $I_1$. The light hits point $D$ and gets reflected and travels along $I_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $V$. With the picture below, it is clear that
 
 $$N_1=(\cos\theta,\sin\theta)$$
 $$I_2= (-\cos(\frac{3\pi}{2}-2\theta),-\sin(\frac{3\pi}{2}-2\theta))$$
@@ -349,9 +375,9 @@ $$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{<(I_1+N_1),V>}{\|I_1+N_1\|}\Bigg)^\alpha\f
 Then the contribution from the second bounce to the OCS is computed by
 
 $$\sigma_2 =\int_{0}^{\pi}\int_{0}^{\pi}\Bigg(\frac{\ip{I_2+N_2}{V}}{\|I_2+N_2\|}\Bigg)^\alpha\frac{\ip{N_2}{V}}{\|N_2\| \|V\|}\frac{\ip{N_2}{I_2}}{\|N_2\| \|I_2\|}\mathrm{d}\theta\mathrm{d}\varphi$$
-Summing the two, we now have an analytical formula for the whole OCS
+Summing the two gives an analytical formula for the whole OCS
  $$ \sigma= \sigma_1+\sigma_2$$
-
+The cases for more bounces can be done in a similar fashion. At this point however, we are still unable to numerically implement the analytical results. But this will be part of our future work.
 \section{Conclusion}
 \section{acknowledgement}
 

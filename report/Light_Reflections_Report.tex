@@ -141,20 +141,16 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 }
 }
 \section{Project Overview}
-
 \section{Theoretical Background and Tools}~\\
 \subsection{Reflectance Distribution Functions and Optical Cross Section}~\\
 When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A Reflectance Distribution Function (RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable "light density" after reflection. 
 
+
 In general, the degree to which light is reflected depends on the viewer and
-light position relative to the surface normal and tangent. Consequently, RDF is
-a function of incoming light direction (represented by the incident vector
+light position relative to the surface normal and tangent. Generally speaking, RDF is
+depends on the wave length of the light that is projected and is a function of incoming light direction (represented by the incident vector
 \textbf{I})and viewing direction (represented by observing vector \textbf{V})
-relative to a local orientation at the light interaction point. When the light
-incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$,
-such function is called Mono-static Reflectance Distribution Function
-(MRDF). More generally, when the two angles are different it is called
-Bi-directional Reflectance Distribution Function (BRDF). 
+relative to a local orientation at the light interaction point. However, since this is not the concern of our project, we ignore for now the effect of the wave length. When the light incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$, such function is called Mono-static Reflectance Distribution Function (MRDF). More generally, when the two angles are different it is called Bi-directional Reflectance Distribution Function (BRDF). 
 
 Theoretically, BRDF is material-specific. Therefore, getting an accurate functional
 relation requires careful measurements through lab experiments. However, there
@@ -166,15 +162,25 @@ Blinn--Phong model, which says the following
 \[
    \BRDF(\mathbf{I},\mathbf{V};\mathbf{N})
    \approx
-   (\ip{\mathbf{H}}{\mathbf{V}})^\alpha
+   |\ip{\mathbf{H}}{\mathbf{V}}|^\alpha
 \]
-where  $\alpha \geq 0$ depends
-on light diffusivity of the material used to cover the surface (large diffusivity corresponds to small $\alpha$, see graph below), $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
-is the so-called half-way vector. 
+where $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
+is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the light reflectivity the material used to cover the surface (large reflectivity corresponds to large $\alpha$). Intuitively speaking, the more mirror-like an object is,  the shaper its specular peak will be (corresponding to an RDF that decays faster). \begin{figure}[H]
+ \includegraphics[width=1.1\textwidth]{./figs/surfaces.pdf}
+\end{figure}
+
+
 A special case of the Blinn-Phong Model gives rise to a handy formula for MRDF. Taking $\mathbf{I}=\mathbf{V}$ and letting the angle between $\mathbf{I}$ and $\mathbf{N}$ be $\theta$, we get
 \[
 \MRDF(I;N)=(\cos \theta)^\alpha
 \]
+
+Optical Cross Section (OCS) describes the maximum amount of optical flux that is reflected by an object. It can be computed accordingly by the geometry of surface of the object and reflectivity of a particular wavelength of an object. Here, we will again ignore wavelength and use the representation 
+$$\mathrm{OCS}=\int_{S} \rho dA$$
+where $\rho$ is the optical density and is given by an $RDF$, $S$ denotes the surface. In our project, we use the representation
+$$\mathrm{OCS}= \int_S\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos (\theta_1)\cos(\theta_2)dA$$
+with $\theta_1$ denoting the relative angle between incident light angle and surface normal, $\theta_2$ denoting the relative angle between viewing angle and the surface normal. The cosine functions are use to account for the projected light along the surface normal. 
+
 \subsection{Rvachev Functions and Its Motivation}~\\
 The study Rvachev functions (R-functions) arise in the attempt
 to describe complex geometric objects with a single inequality or equation. In
@@ -225,8 +231,8 @@ Upon combining elementary "primitives"(sphere, cylinder etc) into composite obje
 $$R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} (x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2})$$
 In the above definition, $a$ is a symmetric function in general with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent (in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. Let's look at an example of how we can use R-functions to get simple analytical equation for complex geometric objects. There are other system of R-functions that could also be used to complete the task. For example
 $$R_{\alpha}^m(x_1,x_2): \frac{1}{1+\alpha} (x_1 \wedge_\alpha ,\vee_\alpha x_2)(x_1^2+x_2^2)^{m/2}$$
-One of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on the importance of differentiability of the R-functions and will use $R_\alpha$. See~\cite{Shapiro} for more information.
-The following example shows the merits of using R-functions. Consider defining the checkerboard in a single equation with the following primitives 
+One of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that while $R_\alpha$ is not differentiable along the diagonal $x_1=x_2$, $R_{\alpha}^m$ is analytic on the whole plane except at $0$ where it is only $m$-times differentiable. For the purpose of this report, we shall not dwell on differentiability of the R-functions and will use $R_\alpha$. See~\cite{Shapiro} for more information.
+The following example shows the merits of using R-functions. Consider defining the checkerboard in a single equation with the following constituents (primitives) 
 $$D_1=\{\sin(\pi x_1)\geq 0\}, \quad D_2=\{\sin(\pi x_2)\geq 0\},\quad D_3=\{32-x^2-y^2-|x^2-y^2|\geq 0\}$$ 
 Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripes and $D_3$ defines region enclosed by a rectangular boundary. 
 \begin{figure}[H]

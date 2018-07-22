@@ -272,9 +272,27 @@ $$(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
 This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$.  
 
 
-\subsection{Chebfun and OPENSCAD}~\\
-It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.\\ 
-\subsubsection{Polynomial interpolation error formula}~\\
+\subsection{Chebfun and OpenSCAD}~\\
+\subsubsection{OpenSCAD}~\\
+OpenSCAD is a free software application for creating solid 3D CAD (computer-aided design) objects. It is a script-only based modeller that uses its own description language. The program does constructive solid geometry (CSG) using specified geometric primitives (such as spheres, boxes, cylinders, etc.) and defines how they are modified and combined (for instance by intersection, difference, envelope combination and Minkowski sums) to render a more complex 3D model. Then we use other tool (Gmsh, etc.) to create finite element meshes. Figure \eqref{fig:sdh_openscad} demonstrate the example of screwdriver handle constructed by OpenSCAD. Figure \eqref{fig:sdh_mesh} shows the triangular mesh generated on the surface of the object.
+\begin{figure}     	\centerline{\includegraphics[width=4.8in]{./figs/sdh_openscad}}
+     	\hspace{-6pt}
+		\caption{Constructive Solid Geometry created by OpenSCAD}
+        \label{fig:sdh_openscad}
+\end{figure}
+\begin{figure}     	\centerline{\includegraphics[width=2.4in]{./figs/sdh_mesh}}
+     	\hspace{-6pt}
+		\caption{Finite element meshed generated on Constructive Solid Geometry}
+        \label{fig:sdh_mesh}
+\end{figure}
+
+Numerically, we can handle even more complex objects through the typical procedure. However, to accurately represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between accuracy of the surface represented and speed of calculation. Table \ref{table: sphere OCS} shows the numerical calculation of OCS for a unit sphere. The relative error is $4.48476\times 10^{-4}$ by using 20480 triangle facets.  
+
+We wish to develop a method that improves the accuracy for much more complex objects. We consider representing the surface in functional form using Chebyshev polynomials and built up through Rvachev functions. The reason to choose Chebyshev polynomial is because for smooth enough object surface, by using sufficiently many Chebyshev poins, the surface representation is possibly accurate to close to machine precision.
+
+\subsubsection{Chebyshev interpolation analysis}~\\
+It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.
+
 Consider the case with single variable. We start with a function $y=f(x)$ and take data points from it to build an interpolating polynomial $P(x)$. The interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following theorem gives a formula for the interpolation error that is usually impossible to evaluate exactly, but often can be at least bounded by an error.
 \begin{theorem}
 Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ pionts $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 
@@ -361,6 +379,51 @@ we arrive at
   $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\leq 0}\mathbf{\chi}_{\ip{\mathbf{V}}{\mathbf{I}}\leq 0}\mathrm{d}\vartheta\mathrm{d}\varphi$$
   
 \subsection{Numerical Solutions for Sphere}
+
+\subsubsection{Numerical calculation of Scattering function}~\\
+For each facet in the model, find angle $\theta$ between incident ray and facet normal, in Figure \eqref{fig:facet}. Target relativity, $\rho$, is given by $MRDF$($\theta$), and scattering function, $\sigma$, is estimated by
+\begin{equation}
+\sigma =\frac{\rho A}{\Omega}
+\end{equation} 
+where $A$ is Target area, $\Omega$ is solid angle of scattering.
+
+Simply for a sphere, we generate a mesh by using icosahedron. An icosahedron is a polyhedron composed of tweenty identical equilateral, each triangle has the same area and each vertex is at the same distance from all its neighbors. To get a higher number of triangles we need to subdivide each triangles by creating a new vertex at the middle point of each edge which is then normalized, to make it lie in the sphere surface. This breaks the initial properties of the icosahedron, the triangles are not equilateral anymore and neither the area nor the distance between adjacent vertices is the same across the mesh. But it is still a better approximation by almost any measure excluding its number of triangles. 
+\begin{figure}     	\centerline{\includegraphics[width=1.6in]{./figs/facet.png}}
+		\caption{Incident angle $\theta$ on each triangle facet}
+        \label{fig:facet}
+\end{figure}
+
+\begin{figure}     	\centerline{\includegraphics[width=7.2in]{./figs/icosahedron.eps}}
+		\caption{Visualization of icosahedral mesh with number of faces N = 20, 80, 320, 1280, 5120 and 20480}
+        \label{fig:facet}
+\end{figure}
+The calculation of Optical Cross Setion is summarized as following:
+\begin{itemize}
+\item Genete mesh for a given model
+\item For each facet, calculate reflectance from incident angle, material properties, etc.
+\item Sum over all visible facets to obtain Optical Cross Section (OCS).
+\end{itemize} 
+The following table \ref{table: sphere OCS} shows the numerical results for different mesh size of a sphere with constant $\rho=1$. The analytic OCS for a sphere is 8.3776.
+\begin{table}[htp]
+	\small
+	\caption{Numerical calculation of OCS for a sphere
+	}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	N & Numerical Results & Relative error & order \\
+	\hline
+	320 & $7.9718$ & $2.82327E-02$ &  \\
+    \hline	
+	1280 & $8.2738$ & $7.14740E-03$ & 0.99094 \\
+    \hline	
+	5120 & $8.3515$ & $1.79249E-03$ & 0.99773 \\
+	\hline
+	20480 & $8.3710$ & $4.48476E-04$ & 0.99943 \\
+	\hline
+	\end{tabular}
+	\label{table: sphere OCS}
+\end{table}
 \section{Future work}
 \subsection{Other Shapes and Technical Challenges}
 \subsection{The Multipath Problem}~\\

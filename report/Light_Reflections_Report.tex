@@ -364,11 +364,11 @@ we arrive at
 \section{Future work}
 \subsection{Other Shapes and Technical Challenges}
 \subsection{The Multipath Problem}~\\
-Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces (include only two bounces). The surface we consider here is the half cylindrical shell facing downwards. We denote the incident light by its vector of direction $I_1$. The light hits point $D$ and gets reflected and travels along $I_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $V$. With the picture below, it is clear that
+Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces (include only two bounces). The surface we consider here is the half cylindrical shell facing downwards. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$. The light hits point $D$ and gets reflected and travels along $\mathbf{I}_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $\mathbf{V}=(\cos\psi_V,\sin\psi_V)$ with $\psi_V$ also given. With the picture below, it is clear that
 
-$$N_1=(\cos\theta,\sin\theta)$$
-$$I_2= (-\cos(\frac{3\pi}{2}-2\theta),-\sin(\frac{3\pi}{2}-2\theta))$$
-$$N_2= (-\cos\varphi,\sin\varphi)$$
+$$\mathbf{N}_1=(\cos\vartheta_1,\sin\vartheta_1)$$
+$$\mathbf{I}_2= (\sin(\psi_I+\vartheta_1-\vartheta_2),-\cos(\psi_I+\vartheta_1-\vartheta_2))$$
+$$\mathbf{N}_2= (\cos\vartheta_2,\sin\vartheta_2)$$
 
 \begin{figure}[H]
   \includegraphics[width=4.5in]{./figs/multipath.pdf}
@@ -377,11 +377,11 @@ $$N_2= (-\cos\varphi,\sin\varphi)$$
 
 
 The contribution from a single bounce to the OCS is computed by
-$$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{<(I_1+N_1),V>}{\|I_1+N_1\|}\Bigg)^\alpha\frac{<N_1,V>}{\|N_1\| \|V\|}\frac{<N_1,I_1>}{\|N_1\| \|I_1\|} \mathrm{d}\theta$$
+$$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_1+\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{I}_1+\mathbf{N}_1\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{N}_1\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_1}{\mathbf{I}_1}}{\|\mathbf{N}_1\| \|\mathbf{I}_1\|} \mathrm{d}\vartheta_1$$
 
 Then the contribution from the second bounce to the OCS is computed by
 
-$$\sigma_2 =\int_{0}^{\pi}\int_{0}^{\pi}\Bigg(\frac{\ip{I_2+N_2}{V}}{\|I_2+N_2\|}\Bigg)^\alpha\frac{\ip{N_2}{V}}{\|N_2\| \|V\|}\frac{\ip{N_2}{I_2}}{\|N_2\| \|I_2\|}\mathrm{d}\theta\mathrm{d}\varphi$$
+$$\sigma_2 =\int_{0}^{\pi}\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_2+\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{I}_2+\mathbf{N}_2\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{N}_2\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_2}{\mathbf{I}_2}}{\|\mathbf{N}_2\| \|\mathbf{I}_2\|}\mathrm{d}\vartheta_1\mathrm{d}\vartheta_2$$
 Summing the two gives an analytical formula for the whole OCS
  $$ \sigma= \sigma_1+\sigma_2$$
 The cases for more bounces can be done in a similar fashion. At this point however, we are still unable to numerically implement the analytical results. But this will be part of our future work.

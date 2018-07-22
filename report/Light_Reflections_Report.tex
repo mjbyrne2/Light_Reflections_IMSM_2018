@@ -119,7 +119,7 @@
 \thanks{$^1$mjbyrne2@asu.edu}
 \author{Fatoumata Sanogo$^2$}
 \thanks{$^2$sanogof1@uab.edu}
-\author{Pai Song$^3$\\}
+\author{Pai Song$^3$}
 \thanks{$^3$psong@odu.edu}
 \author{Kevin Tsai$^4$}
 \thanks{$^4$ytsai003@ucr.edu}
@@ -207,7 +207,7 @@ where $\rho$ is the optical density and is given by an $RDF$, $S$ denotes the su
 $$\sigma= \int_S\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma\cos\beta dA$$
 with $\gamma$ denoting the relative angle between incident light angle and surface normal, $\beta$ denoting the relative angle between viewing angle and the surface normal. The cosine functions are use to account for the projected light along the surface normal. 
 
-\subsection{Rvachev Functions and Its Motivation}~\\
+\subsection{Rvachev Functions}~\\
 The study Rvachev functions (R-functions) arises in the attempt
 to describe complex geometric objects with a single inequality or equation. In
 17 century, Decartes suggested the idea of relating geometric objects (e.g.
@@ -339,20 +339,27 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 \section{Results and Discussions}
 \subsection{Analytical Solutions for Sphere}
 Recall that by using Bling-Phong model for shpere, we can compute OCS through
-$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) cos\gamma cos\beta \mathrm{d}A$$
-where $\gamma$ is the angle between N and V,  $\beta$ is the angle between N and I. The geometric relations are shown in the picture below.
+$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) cos\gamma cos\beta \mathbf{\chi}_{\ip{N}{I}\leq 0}\mathbf{\chi}_{\ip{V}{N}\leq 0}\mathrm{d}A$$
+where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\vartheta\sin\varphi,\cos\varphi)$ and  $\mathbf{V}=(\mathbf{V}_1,\mathbf{V}_2,\mathbf{V}_3)$,  $\beta$ is the angle between $\mathbf{N}$ and $\mathbf{I}=(\mathbf{I}_1,\mathbf{I}_2,\mathbf{I}_3)$. The geometric relations are shown in the picture below.
+
+
 \begin{figure}[h!]
   \includegraphics[width=4.5in]{./figs/sphere.pdf}
   \label{fig:sphere}
 \end{figure}
-
-The spherical coordinates (r,$\theta$,$\varphi$) are related to the Cartesian coordinates $(x,y,z)$ via
-$$x =rcos\theta \sin\varphi, \quad y=r\sin\theta \sin\varphi, \quad z=r\cos\varphi $$
+The appearances of two indicator functions 
+$$\mathbf{\chi}_{\ip{N}{I}\leq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi\mathbf{I}_1+\sin\vartheta\sin\varphi\mathbf{I}_2+\cos\varphi\mathbf{I}_3\leq 0\}$$ 
+$$\mathbf{\chi}_{\ip{V}{N}\leq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi\mathbf{V}_1+\sin\vartheta\sin\varphi\mathbf{V}_2+\cos\varphi\mathbf{V}_3\leq 0\}$$ 
+in the formula are just to include only the common part of the illuminated area and the detectable area.
+The spherical coordinates $(r,\theta,\varphi)$ are related to the Cartesian coordinates $(x,y,z)$ via
+$$x =r\cos\vartheta \sin\varphi, \quad y=r\sin\vartheta \sin\varphi, \quad z=r\cos\varphi $$
 with Jacobian 
-$$\big|\frac{\partial(x,y,z)}{\partial(r,\theta,\varphi)}\big|= r^2 \sin\varphi $$
-Thus
-
-  $$\sigma =\int_{0}^{\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{I+N}{V}}{\|I+N\|}\Bigg)^\alpha\frac{\ip{N}{V}}{\|N\| \|V\|}\frac{\ip{N}{I}}{\|N\| \|I\|}r^2\sin\varphi\mathrm{d}\theta\mathrm{d}\varphi$$
+$$\bigg|\frac{\partial(x,y,z)}{\partial(r,\vartheta,\varphi)}\bigg|= r^2 \sin\varphi $$
+Thus by noticing 
+$$\cos\gamma =\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|},\quad \cos\beta=\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}$$
+we arrive at
+  $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\leq 0}\mathbf{\chi}_{\ip{\mathbf{V}}{\mathbf{I}}\leq 0}\mathrm{d}\vartheta\mathrm{d}\varphi$$
+  
 \subsection{Numerical Solutions for Sphere}
 \section{Future work}
 \subsection{Other Shapes and Technical Challenges}

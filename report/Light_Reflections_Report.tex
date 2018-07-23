@@ -427,6 +427,17 @@ The following table \ref{table: sphere OCS} shows the numerical results for diff
 \end{table}
 \section{Future work}
 \subsection{Other Shapes and Technical Challenges}
+
+In the pursuit of accurate solutions of optical cross section for more complex objects, one major challenge arises when the object being considered has sharp edges. Even in one dimension, polynomial approximation can be challenging for functions that are not differentiable everywhere, such as $f(x) = |x|$ on the interval $[-1,1]$. Even with R-functions providing a means of obtaining implicit representations for combinations of objects, these implicit representations often contain terms that make polynomial approximation difficult. For example, the implicit function obtained using R-functions that describes the union of two spheres of radius one with centers at the origin and $(1.5,0,0)$ is
+\[{\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\left({\left(x-\frac{3}{2}\right)}^2+y^2+z^2-1\right)}^2}+x^2+2\,y^2+2\,z^2-2 = 0\]
+One solution could be to manually increase the tolerance (and thus decrease the desired accuracy) of the polynomial approximation, though doing so for complex objects might yield approximations that are far less accurate that using facets to discretize the surface. Another approach might be to use smoothed versions of objects, such as the equation $x^n + y^n + z^n = 1$ for large even values of $n$ to approximate a cube centered at the origin (see Figure \ref{cubes}).  While there will certainly be a trade-off in the accuracy, investigation will be needed to fully evaluate the viability of this approach and to compare it with the approach of simply increasing the approximation tolerance.
+\begin{figure}[ht]
+\includegraphics[width=\linewidth]{./figs/cubes.eps}
+\caption{An example of approximating an object with sharp edges. Here a cube is approximated by the function $x^n + y^n + z^n = 1$ for $n = 2$, 4, and 8 (from left to right).}
+\label{cubes}
+\end{figure}
+
+
 \subsection{The Multipath Problem}~\\
 Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces (that means we include only two bounces into the final OCS calculation). The surface we consider here is the half cylindrical shell facing downwards. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$. The light hits point $D$ and gets reflected to travel along $\mathbf{I}_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $\mathbf{V}=(\cos\psi_V,\sin\psi_V)$ with $\psi_V$ also given. With the picture below, it is clear that
 

@@ -425,7 +425,7 @@ The following TABLE \ref{table: sphere OCS} shows the numerical results for diff
 	\hline
 	320 & $1.99294$ & $4.84419-02$ &  \\
     \hline	
-	1280 & $2.068455$ & $1.23853E-02$ & 0.98381 \\
+	1280 & $2.06845$ & $1.23853E-02$ & 0.98381 \\
     \hline	
 	5120 & $2.08787$ & $3.11387E-03$ & 0.99593 \\
 	\hline
@@ -495,7 +495,7 @@ Both orbiting simulations resulted in agreement with the physical phenomenon. Th
 \section{Future work}
 \subsection{Other Shapes and Technical Challenges}
 
-\textbf{\\Creating complex shapes and visualization.}
+\textbf{Creating complex shapes and visualization.}
 Using Rvachev functions, it is possible to create 
 complex objects by combining basic shapes such as elliptic paraboloids, 
 planes, and spheres. In Figure~\ref{fig:rocket}, we show a model rocket created
@@ -512,7 +512,7 @@ functions.}
 \label{fig:rocket} 
 \end{figure} 
 
-\textbf{\\Numerical approximation issues.}
+\textbf{Numerical approximation issues.}
 In the pursuit of accurate solutions of optical cross section for more complex
 objects, one major challenge arises when the object being considered has sharp
 edges. Even in one dimension, polynomial approximation can be challenging for
@@ -543,42 +543,33 @@ with the approach of simply increasing the approximation tolerance.
 
 
 \subsection{The Multipath Problem}~\\
-Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. In reality however, light will only be reflected finitely many times before it completely dissipates. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is 1. The configuration is shown here. 
+Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is r. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$. The light hits point $D$ and gets reflected to travel along $\mathbf{I}_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $\mathbf{V}=(\cos\psi_V,\sin\psi_V)$ with $\psi_V$ also given. With the picture below, it is clear that
+
+$$\mathbf{N}_1=(\cos\vartheta_1,\sin\vartheta_1),\quad \mathbf{I}_2= (-\cos(\psi_I+\vartheta_2-\vartheta_1),-\sin(\psi_I+\vartheta_2-\vartheta_1)),\quad \mathbf{N}_2= (\cos\vartheta_2,\sin\vartheta_2)$$
 
 \begin{figure}[H]
   \includegraphics[width=4.5in]{./figs/multipath_edit.png}
   \label{fig:reflection}
 \end{figure}
 
-Given $\psi_I$, we suppose incoming light beam is denoted by $\mathbf{I}=(\cos\psi_{I},\sin\psi_{I})$ and is reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector whose viewing angle is $\mathbf{V}$. Denote the (inward) normal vector at $D_n$ by $\mathbf{N}_n=(-\cos\vartheta_n,-\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(-\cos\psi_n,-\sin\psi_n)$ with $\psi_n$ defined inductively as  
-$$\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\ 2\delta_n=\vartheta_{n+1}-\vartheta_n,\\ \psi_n=\psi_{n-1}-(\pi-2\delta_n)\end{cases}$$ 
 
-\begin{proposition}
-The OCS with reflections on the cylindrical surface of radius 1 is computed by
- $$ \sigma= \sum_{n=1}^{\infty}\sigma_n$$
-and 
-$$\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \bigg(\prod_{i=1}^{n}\frac{1}{\|\mathbf{N}_{i+1}-\mathbf{N}_{i}\|^2} \bigg)\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n$$
-under the assumption that the infinite sum converges.
-\end{proposition}
-
-\begin{proof}
-By Blinn-Phong model, the contribution from a single bounce to the OCS is computed by
+The contribution from a single bounce to the OCS is computed by
 $$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_1+\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{I}_1+\mathbf{N}_1\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{N}_1\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_1}{\mathbf{I}_1}}{\|\mathbf{N}_1\| \|\mathbf{I}_1\|} \mathrm{d}\vartheta_1$$
-Let's now consider the contribution due to two bounces. From the picture above, it is clear to see that
-$\angle{ID_1O}=\angle{OD_1D_2}=\angle{D_1D_2O}:=\delta_1$. Thus $\vartheta_2-\vartheta_1=\angle{D_2OD_1}=\pi-2\angle{OD_1D_2}=\pi-2\delta_1$. On the other hand we have $\psi_1=\psi_2+2\delta_1$. Thus
-
-
-$$\mathbf{N}_1=(-\cos\vartheta_1,-\sin\vartheta_1),\quad \mathbf{I}_2= (\cos(\psi_I+\vartheta_2-\vartheta_1),\sin(\psi_I+\vartheta_2-\vartheta_1)),\quad \mathbf{N}_2= (-\cos\vartheta_2,-\sin\vartheta_2)$$
 
 Then the contribution from the second bounce to the OCS is computed by
 
 $$\sigma_2 =\int_{0}^{\pi}\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_2+\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{I}_2+\mathbf{N}_2\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{N}_2\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_2}{\mathbf{I}_2}}{\|\mathbf{N}_2\| \|\mathbf{I}_2\|} \frac{1}{\|\mathbf{N}_1-\mathbf{N}_2\|^2}\mathrm{d}\vartheta_1\mathrm{d}\vartheta_2$$
-The extra factor  $1/\|\mathbf{N}_1-{\mathbf{N}}_2\|^2$ in the integrand is to account for energy lost when light travels long distances. To get contribution for three bounces, simply view $I_2$ as the incident light compute similarly. 
-\end{proof}
+where the extra factor  $1/\|\mathbf{N}_1-{\mathbf{N}}_2\|^2$ is to due to the fact that the longer distance the light travels from $D$ to $E$, the weaker the light can be gathered at $E$.  Therefore the OCS including two bounces is given by $$\sigma=\sigma_1+\sigma_2$$
 
+We can compute the total contribution for more bounces in similar fashion. Assume the incoming light $\mathbf{I}=(\cos\psi_{I},\sin\psi_{I})$ is reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector whose viewing angle is $\mathbf{V}$. Denote the normal vector at $D_n$ by $\mathbf{N}_n=(\cos\vartheta_n,\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(\cos\psi_n,\sin\psi_n)$. Define inductively 
+$$\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\ 2\delta_n=\vartheta_{n+1}-\vartheta_n,\\ \psi_n=\psi_{n-1}-(\pi-2\delta_n)\end{cases}$$ 
+$$\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \bigg(\prod_{i=1}^{n}\frac{1}{\|\mathbf{N}_{i+1}-\mathbf{N}_{i}\|^2} \bigg)\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n$$
+
+Total contributions for up to $n$ bounces is then given by
+ $$ \sigma= \sigma_1+\sigma_2+...+\sigma_n$$
 \section{Conclusion}
 \section{acknowledgement}
-The authors thank North Carolina State University for hosting the workshop and are grateful to Prof. Mansoor Haider and Thomas Gehrmann for organizing. The authors also owe greatly to John Peach for introduction into the project and guidance  throughout and to Prof. Alen Alexanderian for his patience and kind instructions. 
+
 \begin{thebibliography}{9}
 \bibitem{BRDF}
 Chris Wynn,

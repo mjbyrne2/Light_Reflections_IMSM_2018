@@ -432,7 +432,7 @@ In the pursuit of accurate solutions of optical cross section for more complex o
 \[{\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\left({\left(x-\frac{3}{2}\right)}^2+y^2+z^2-1\right)}^2}+x^2+2\,y^2+2\,z^2-2 = 0\]
 One solution could be to manually increase the tolerance (and thus decrease the desired accuracy) of the polynomial approximation, though doing so for complex objects might yield approximations that are far less accurate that using facets to discretize the surface. Another approach might be to use smoothed versions of objects, such as the equation $x^n + y^n + z^n = 1$ for large even values of $n$ to approximate a cube centered at the origin (see Figure \ref{cubes}).  While there will certainly be a trade-off in the accuracy, investigation will be needed to fully evaluate the viability of this approach and to compare it with the approach of simply increasing the approximation tolerance.
 \begin{figure}[ht]
-\includegraphics[width=\linewidth]{./figs/cubes.eps}
+\includegraphics[width=\linewidth]{./figs/cubes.pdf}
 \caption{An example of approximating an object with sharp edges. Here a cube is approximated by the function $x^n + y^n + z^n = 1$ for $n = 2$, 4, and 8 (from left to right).}
 \label{cubes}
 \end{figure}

@@ -290,7 +290,7 @@ This can be further simplified into one equation with noticing that the region d
 
 \subsection{OpenSCAD and Chebfun}
 \subsubsection{OpenSCAD}~\\
-OpenSCAD is a free software application for creating solid 3D CAD (computer-aided design) objects. It is a script-only based modeller that uses its own description language. The program does constructive solid geometry (CSG) using specified geometric primitives (such as spheres, boxes, cylinders, etc.) and defines how they are modified and combined (for instance by intersection, difference, envelope combination and Minkowski sums) to render a more complex 3D model. Then we use other tool (Gmsh, etc.) to create finite element meshes. FIGURE \eqref{fig:sdh_openscad} demonstrate the example of screwdriver handle constructed by OpenSCAD and the triangular mesh generated on the surface of the object.
+OpenSCAD is a free software application for creating solid 3D CAD (computer-aided design) objects. It is a script-only based modeller that uses its own description language. The program does constructive solid geometry (CSG) using specified geometric primitives (such as spheres, boxes, cylinders, etc.) and defines how they are modified and combined (for instance by intersection, difference, envelope combination and Minkowski sums) to render a more complex 3D model. Then we use other tool (Gmsh, etc.) to create finite element meshes. FIGURE \ref{fig:sdh_openscad} demonstrate the example of screwdriver handle constructed by OpenSCAD and the triangular mesh generated on the surface of the object.
 \begin{figure}[H]   	
 \centerline{\includegraphics[scale=0.3]{./figs/sdh_openscad}
      	\hspace{-6pt}
@@ -334,7 +334,7 @@ where $T_n(x)$ denotes the degrees $n$ Chebyshev polynomial.
 \end{theorem}
 
 \begin{exmp}
-In this example, we compare the errors for Polynomial interpolation and Chebyshev interpolation with different interpolation points for the function $e^x$ on $[-1,1]$. Figure \ref{fig:e1} shows the comparisons for $N=5$ and $N=8$, and there isn't significant difference between the two interpolations for $N=5$. In the contrast, we can see better approximation for the Chebyshev interpolation near the boundary when  $N=8$.\\
+In this example, we compare the errors for Polynomial interpolation and Chebyshev interpolation with different interpolation points for the function $e^x$ on $[-1,1]$. FIGURE \ref{fig:e1} shows the comparisons for $N=5$ and $N=8$, and there isn't significant difference between the two interpolations for $N=5$. In the contrast, we can see better approximation for the Chebyshev interpolation near the boundary when  $N=8$.\\
 The interpolation formula ~\eqref{eqn_poly_error} gives 
 \begin{equation}
 f(x)-P_4(x)=\frac{(x+1)(x+\frac{1}{2})x(x-\frac{1}{2})(x-1)}{5!}f^{(5)}(c)
@@ -358,7 +358,7 @@ The interpolation formula ~\eqref{eqn_cheb_error} gives
 \end{exmp}
 
 \begin{exmp}
-In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. Figure \eqref{fig:e2} shows Runge phenomenon from polynomial interpolation.
+In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. FIGURE \ref{fig:e2} shows Runge phenomenon from polynomial interpolation.
 \begin{figure}[H] 	
         \centerline{\includegraphics[width=3.2in]{./figs/e2a.eps}
       	\hspace{-6pt}
@@ -394,7 +394,7 @@ we arrive at
   $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0}\mathrm{d}\vartheta\mathrm{d}\varphi$$
   
 \subsection{Numerical Calculation of Scattering Function for Sphere - Finite Element Approach}~\\
-For each facet in the model, find angle $\theta$ between incident ray and facet normal, in Figure \eqref{fig:facet}. Target relativity, $\rho$, is given by $MRDF$($\theta$), and scattering function, $\sigma$, is estimated by
+For each facet in the model, find angle $\theta$ between incident ray and facet normal, in FIGURE \ref{fig:facet}. Target relativity, $\rho$, is given by $MRDF$($\theta$), and scattering function, $\sigma$, is estimated by
 \begin{equation}
 \sigma =\frac{\rho A}{\Omega}
 \end{equation} 

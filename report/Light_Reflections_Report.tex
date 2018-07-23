@@ -298,7 +298,7 @@ OpenSCAD is a free software application for creating solid 3D CAD (computer-aide
         \label{fig:sdh_mesh}
 \end{figure}
 
-Numerically, we can handle even more complex objects through the typical procedure. However, to accurately represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between accuracy of the surface represented and speed of calculation. Table \ref{table: sphere OCS} shows the numerical calculation of OCS for a unit sphere. The relative error is $4.48476\times 10^{-4}$ by using 20480 triangle facets.  
+Numerically, we can handle even more complex objects through the typical procedure. However, to accurately represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between accuracy of the surface represented and speed of calculation. Table \ref{table: sphere OCS} shows the numerical calculation of OCS for a unit sphere. The relative error is about $10^{-4}$ by using 20480 triangle facets.  
 
 We wish to develop a method that improves the accuracy for much more complex objects. We consider representing the surface in functional form using Chebyshev polynomials and built up through Rvachev functions. The reason to choose Chebyshev polynomial is because for smooth enough object surface, by using sufficiently many Chebyshev poins, the surface representation is possibly accurate to close to machine precision.
 
@@ -391,7 +391,7 @@ $$\cos\gamma =\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|},
 we arrive at
   $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0}\mathrm{d}\vartheta\mathrm{d}\varphi$$
   
-\subsection{Numerical calculation of Scattering function for sphere - finite element approach}~\\
+\subsection{Numerical Calculation of Scattering Function for Sphere - Finite Element Approach}~\\
 For each facet in the model, find angle $\theta$ between incident ray and facet normal, in Figure \eqref{fig:facet}. Target relativity, $\rho$, is given by $MRDF$($\theta$), and scattering function, $\sigma$, is estimated by
 \begin{equation}
 \sigma =\frac{\rho A}{\Omega}
@@ -399,14 +399,13 @@ For each facet in the model, find angle $\theta$ between incident ray and facet 
 where $A$ is Target area, $\Omega$ is solid angle of scattering.
 
 Simply for a sphere, we generate a mesh by using icosahedron. An icosahedron is a polyhedron composed of twenty identical equilateral, each triangle has the same area and each vertex is at the same distance from all its neighbors. To get a higher number of triangles we need to subdivide each triangles by creating a new vertex at the middle point of each edge which is then normalized, to make it lie in the sphere surface. This breaks the initial properties of the icosahedron, the triangles are not equilateral anymore and neither the area nor the distance between adjacent vertices is the same across the mesh. But it is still a better approximation by almost any measure excluding its number of triangles. 
-\begin{figure}[H]  	\centerline{\includegraphics[width=1.2in]{./figs/facet.png}}
+\begin{figure}[H]  	\centerline{\includegraphics[height=1.4in,width=1.2in]{./figs/facet.png}}
 		\caption{Incident angle $\theta$ on each triangle facet}
         \label{fig:facet}
 \end{figure}
-
-\begin{figure}[H] 	\centerline{\includegraphics[width=7.2in]{./figs/icosahedron.eps}}
+\begin{figure}[H] 	\centerline{\includegraphics[width=4.8in]{./figs/icosahedron.eps}}
 		\caption{Visualization of icosahedral mesh with number of faces N = 20, 80, 320, 1280, 5120 and 20480}
-        \label{fig:facet}
+        \label{fig:icosahedron}
 \end{figure}
 The calculation of Optical Cross Setion is summarized as following:
 \begin{itemize}
@@ -414,8 +413,8 @@ The calculation of Optical Cross Setion is summarized as following:
 \item For each facet, calculate reflectance from incident angle, material properties, etc.
 \item Sum over all visible facets to obtain Optical Cross Section (OCS).
 \end{itemize} 
-The following table \ref{table: sphere OCS} shows the numerical results for different mesh size of a sphere with constant $\rho=1$. The analytic OCS for a sphere is 8.3776.
-\begin{table}[htp]
+The following TABLE \ref{table: sphere OCS} shows the numerical results for different mesh size of a sphere with constant $\rho=1$ and $\alpha=0$. The analytic OCS for a sphere is $2\pi/3\approx 2.094395102389723$.
+\begin{table}[H]
 	\small
 	\caption{Numerical calculation of OCS for a sphere
 	}
@@ -424,13 +423,13 @@ The following table \ref{table: sphere OCS} shows the numerical results for diff
 	\hline
 	N & Numerical Results & Relative error & order \\
 	\hline
-	320 & $7.9718$ & $2.82327E-02$ &  \\
+	320 & $1.99294$ & $4.84419-02$ &  \\
     \hline	
-	1280 & $8.2738$ & $7.14740E-03$ & 0.99094 \\
+	1280 & $2.068455$ & $1.23853E-02$ & 0.98381 \\
     \hline	
-	5120 & $8.3515$ & $1.79249E-03$ & 0.99773 \\
+	5120 & $2.08787$ & $3.11387E-03$ & 0.99593 \\
 	\hline
-	20480 & $8.3710$ & $4.48476E-04$ & 0.99943 \\
+	20480 & $2.09276$ & $7.79570E-04$ & 0.99898 \\
 	\hline
 	\end{tabular}
 	\label{table: sphere OCS}

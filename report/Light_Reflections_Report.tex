@@ -31,6 +31,7 @@
 \newcommand{\eeq}{\end{equation}}
 
 \newcommand{\BRDF}{\mathrm{BRDF}}
+\newcommand{\MRDF}{\mathrm{MRDF}}
 \newcommand{\ip}[2]{\langle {#1}, {#2} \rangle}
 % Math symbols
 
@@ -118,7 +119,7 @@
 \thanks{$^1$mjbyrne2@asu.edu}
 \author{Fatoumata Sanogo$^2$}
 \thanks{$^2$sanogof1@uab.edu}
-\author{Pai Song$^3$\\}
+\author{Pai Song$^3$}
 \thanks{$^3$psong@odu.edu}
 \author{Kevin Tsai$^4$}
 \thanks{$^4$ytsai003@ucr.edu}
@@ -140,20 +141,42 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 }
 }
 \section{Project Overview}
+By carefully observing the light reflected from a distant object, it may be possible to infer subtle properties such as
+orientation, conditions of surface materials and overall status and health of the object. The physics of light reflecting from
+the surface of an object is fairly well known and depends on material properties, angles of incidence and reflection and the
+wavelength of the incident beam. To model reflectance from a surface, the object may be represented as a triangular mesh
+and reflectance from each patch then determined from the local surface normal, incident and reflected angles as well as the
+bistatic reflectance distribution function (BRDF) which provides a measure of the reflectivity for a material (at a selected
+wavelength) for each incident and reflected angle.
+The total Optical Cross Section (OCS) for an object is simply the sum of the reflectances for each triangular patch. For
+simple geometric objects such as spheres, cubes, cylinders or cones the OCS may be calculated analytically, but for more
+complex objects the typical procedure is to generate a mesh model and then perform the estimate. However, to accurately
+represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between
+accuracy of the surface represented and speed of calculation. For highly specular (mirror-like) surfaces the flat triangular
+patches reflect over a very narrow set of angles resulting in a "disco ball" effect. The Humanity Star
+(http://www.thehumanitystar.com/) is an excellent example of a satellite deliberately designed with just such an effect and
+is expected to produce a pulsing bright spot in the night sky as sunlight reflects off of the large facets [l].
+The goal of this project is to develop a method that extends the accuracy of simple analytic models to much more complex
+objects. Many man-made objects are composed of relatively simple basis shapes and may be described through constructive
+solid geometry methods [5]. The surfaces may be then represented in functional forms using Chebyshev polynomials [2]
+and built up using Rvachev functions [4]. With a functional description of the surface, it is possible to also have a functional
+definition of the normal vector which is required to calculate the reflectance from the BRDF, and with a smoothly varying
+normal function the "disco ball" effect is eliminated. Another advantage of using functional representations of the surfaces
+is that the data storage requirements may be significantly reduced. Calculating the OCS becomes more complicated in
+regions where the surface is concave because a portion of the surface may be hidden behind another area, and light may
+make multiple reflections in the concave region before exiting towards the sensor. Developing robust solutions to the
+problem of surface concavities will be the main focus of this project.
 
-\section{Theoretical Background and Tools}
-\subsection{Reflectance Distribution Functions and Optical Cross Section}
-When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A \textit{Reflectance Distribution Function} (abbr. RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable "light density" after reflection. 
+
+\section{Theoretical Background and Tools}~\\
+\subsection{Reflectance Distribution Functions and Optical Cross Section}~\\
+When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A Reflectance Distribution Function (RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable "light density" after reflection. 
 
 In general, the degree to which light is reflected depends on the viewer and
-light position relative to the surface normal and tangent. Consequently, RDF is
-a function of incoming light direction (represented by the incident vector
+light position relative to the surface normal and tangent. Generally speaking, RDF is
+depends on the wave length of the light that is projected and is a function of incoming light direction (represented by the incident vector
 \textbf{I})and viewing direction (represented by observing vector \textbf{V})
-relative to a local orientation at the light interaction point. When the light
-incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$,
-such function is called \textit{Mono-static Reflectance Distribution Function}
-(abbr. MRDF). More generally, when the two angles are different it is called
-Bi-directional Reflectance Distribution Function (BRDF). 
+relative to a local orientation at the light interaction point. However, since this is not the concern of our project, we ignore for now the effect of the wave length. When the light incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$, such function is called Mono-static Reflectance Distribution Function (MRDF). More generally, when the two angles are different it is called Bi-directional Reflectance Distribution Function (BRDF). 
 
 Theoretically, BRDF is material-specific. Therefore, getting an accurate functional
 relation requires careful measurements through lab experiments. However, there
@@ -165,15 +188,27 @@ Blinn--Phong model, which says the following
 \[
    \BRDF(\mathbf{I},\mathbf{V};\mathbf{N})
    \approx
-   \bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}
-                  {\|\mathbf{I}+\mathbf{N}\|}\bigg)^\alpha
+   |\ip{\mathbf{H}}{\mathbf{V}}|^\alpha
 \]
-where $\mathbf{N}$ is the surface (outward) normal and $\alpha \geq 0$ depends
-on the material used to cover the surface. 
+where $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
+is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the light reflectivity the material used to cover the surface (large reflectivity corresponds to large $\alpha$). Intuitively speaking, the more mirror-like an object is,  the shaper its specular peak will be (corresponding to an RDF that decays faster). \begin{figure}[H]
+ \includegraphics[width=1.1\textwidth]{./figs/surfaces.pdf}
+\end{figure}
 
 
-\subsection{Rvachev Functions and Its Applications}
-The study \textit{Rvachev functions} (abbr. R-functions) arise in the attempt
+A special case of the Blinn-Phong Model gives rise to a handy formula for MRDF. Taking $\mathbf{I}=\mathbf{V}$ and letting the angle between $\mathbf{I}$ and $\mathbf{N}$ be $\theta$, we get
+\[
+\MRDF(I;N)=(\cos \theta)^\alpha
+\]
+
+Optical Cross Section (OCS) describes the maximum amount of optical flux that is reflected by an object. It can be computed accordingly by the geometry of surface of the object and reflectivity of a particular wavelength of an object. Here, we will again ignore wavelength and use the representation 
+$$\sigma=\int_{S} \rho dA$$
+where $\rho$ is the optical density and is given by an $RDF$, $S$ denotes the surface. In our project, we use the representation
+$$\sigma= \int_S\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma\cos\beta dA$$
+with $\gamma$ denoting the relative angle between incident light angle and surface normal, $\beta$ denoting the relative angle between viewing angle and the surface normal. The cosine functions are use to account for the projected light along the surface normal. 
+
+\subsection{Rvachev Functions}~\\
+The study Rvachev functions (R-functions) arises in the attempt
 to describe complex geometric objects with a single inequality or equation. In
 17 century, Decartes suggested the idea of relating geometric objects (e.g.
 lines, circles and bodies) to analytical objects (e.g. sets, functions and
@@ -182,12 +217,23 @@ functional descriptions have been developed systematically. This is also known
 as the direct problem of analytical geometry. As oppose to the direct problem,
 people also considered the inverse problem: given certain geometric objects
 equipped with some desired properties, find an analytical representation to
-such objects. For the simple geometric objects, the inverse problem is not
-difficult at all. Yet for more complicated ones, especially when multiple forms
-and shapes are composed, the analytical description of it becomes less clean.
-The birth of R-functions is exactly devised to help with this process.    
+such objects. The following graphs illustrate one of the inverse problem: given a disk and a ball, find the analytical formulae respectively for their union, intersection and difference. 
 
-On the formal level, R-functions are the functions whose signs do not depend on the "size" of their arguments.  The following are some easy  examples of R-functions: \\
+\begin{figure}[H]
+\includegraphics[width=.32\textwidth]{./figs/shape1.pdf}
+\includegraphics[width=.32\textwidth]{./figs/shape2.pdf}
+\\
+\includegraphics[width=.32\textwidth]{./figs/union.pdf}
+\includegraphics[width=.32\textwidth]{./figs/intersect.pdf}
+\includegraphics[width=.32\textwidth]{./figs/diff.pdf}
+\end{figure}
+
+
+For the simple geometric objects, the inverse problem is not
+difficult at all. Yet for more complicated ones, especially when multiple forms
+and shapes are composed, the analytical description of it becomes less clean and usually involves logical operations among regions defined by inequalities. The birth of R-functions is exactly to help resolve this issue.    
+
+On the formal level, an R-function is a function whose sign do not depend on the magnitude of its arguments.  The following are some easy  examples of R-functions: \\
 (a) $f(x,y)=1$\\
 (b) $f(x,y,z)=x^2+y^2+z^2+1$\\
 (c) $f(x,y)=xy$\\
@@ -202,14 +248,6 @@ $$S_2(f(x_1,...,x_n))=F(S_2(x_1),...,S_2(x_n))$$
 Such function $F$ is called the Boolean companion function of $f$.
 \end{definition}
 
-\begin{figure}
-\includegraphics[width=.32\textwidth]{./figs/shape1.pdf}
-\includegraphics[width=.32\textwidth]{./figs/shape2.pdf}
-\\
-\includegraphics[width=.32\textwidth]{./figs/union.pdf}
-\includegraphics[width=.32\textwidth]{./figs/intersect.pdf}
-\includegraphics[width=.32\textwidth]{./figs/diff.pdf}
-\end{figure}
 With this definition, we can easily see, for example,   that (a)(c)(d) are
 indeed R-functions with Boolean companions $1$, $\Leftrightarrow$ and $\wedge$
 respectively. Other examples can also be checked and can have more complicated
@@ -217,44 +255,65 @@ companions.
 
 Upon combining elementary "primitives"(sphere, cylinder etc) into composite objects with Boolean operations, we can actually construct certain R-functions that allows us to operate on the formulae/functions of those primitives and get a single analytical expression for the composite objects. And the set of R-functions used to define these operations has a natural correspondence to the Boolean functions. For the complete system of Boolean functions $\{0, \neg, \wedge, \vee\}$, consider the set of R-functions $\{-1,-x, x_1\wedge_\alpha x_2, x_1\vee_\alpha x_2\}$ where $\wedge_\alpha, \vee_\alpha$ is defined by
 $$R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} (x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2})$$
-In general, $a$ is a symmetric function with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent( in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. Let's look at an example of how we can use R-functions to get simple analytical equation for complex geometric objects. There are other system of R-functions that are used to complete the task. For example
+In the above definition, $a$ is a symmetric function in general with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent (in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. Let's look at an example of how we can use R-functions to get simple analytical equation for complex geometric objects. There are other system of R-functions that could also be used to complete the task. For example
 $$R_{\alpha}^m(x_1,x_2): \frac{1}{1+\alpha} (x_1 \wedge_\alpha ,\vee_\alpha x_2)(x_1^2+x_2^2)^{m/2}$$
+One of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that while $R_\alpha$ is not differentiable along the diagonal $x_1=x_2$, $R_{\alpha}^m$ is analytic on the whole plane except at $0$ where it is only $m$-times differentiable. For the purpose of this report, we shall not dwell on differentiability of the R-functions and will use $R_\alpha$. See~\cite{Shapiro} for more information.
+The following example shows the merits of using R-functions. Consider defining the checkerboard in a single equation with the following constituents (primitives) 
+$$D_1=\{\sin(\pi x_1)\geq 0\}, \quad D_2=\{\sin(\pi x_2)\geq 0\},\quad D_3=\{32-x^2-y^2-|x^2-y^2|\geq 0\}$$ 
+Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripes and $D_3$ defines region enclosed by a rectangular boundary. 
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{./figs/checkerboard.pdf}
+\end{figure}
 
-Consider defining the checkerboard in a single equation with the following primitives 
-$$D_1=\{\sin(\pi x_1)\geq 0\}$$
-$$D_2=\{\sin(\pi x_2)\geq 0\}$$
-$$D_3=32-x^2-y^2-|x^2-y^2|\geq 0$$. 
-Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripes and $D_3$ defines region enclosed by a rectangular boundary. The checker board will then be represented by the following Boolean equation
+The checker board will then be represented by the following Boolean equation
 $$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_2)\wedge D_3$$
 Recall that $\Leftrightarrow$ is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
-$$\sin(\pi x_1)\sin(\pi x_2) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
-This can be further simplified into an equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$. Once of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that $R_\alpha$ being not differentiable along the diagonal $x_1=x_2$ while $R_{\alpha}^m$ is analytic on the whole plane except at $0$ and is $m$-times differentiable there. For the purpose of this report, we shall not dwell on such property, as well as other properties. See for more information. 
-\subsection{Chebfun and OPENSCAD}~\\
-It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.\\ 
-\subsubsection{Polynomial interpolation error formula}
+$$(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
+This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$.  
+
+
+\subsection{Chebfun and OpenSCAD}~\\
+\subsubsection{OpenSCAD}~\\
+OpenSCAD is a free software application for creating solid 3D CAD (computer-aided design) objects. It is a script-only based modeller that uses its own description language. The program does constructive solid geometry (CSG) using specified geometric primitives (such as spheres, boxes, cylinders, etc.) and defines how they are modified and combined (for instance by intersection, difference, envelope combination and Minkowski sums) to render a more complex 3D model. Then we use other tool (Gmsh, etc.) to create finite element meshes. Figure \eqref{fig:sdh_openscad} demonstrate the example of screwdriver handle constructed by OpenSCAD. Figure \eqref{fig:sdh_mesh} shows the triangular mesh generated on the surface of the object.
+\begin{figure}     	\centerline{\includegraphics[width=4.8in]{./figs/sdh_openscad}}
+     	\hspace{-6pt}
+		\caption{Constructive Solid Geometry created by OpenSCAD}
+        \label{fig:sdh_openscad}
+\end{figure}
+\begin{figure}     	\centerline{\includegraphics[width=2.4in]{./figs/sdh_mesh}}
+     	\hspace{-6pt}
+		\caption{Finite element meshed generated on Constructive Solid Geometry}
+        \label{fig:sdh_mesh}
+\end{figure}
+
+Numerically, we can handle even more complex objects through the typical procedure. However, to accurately represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between accuracy of the surface represented and speed of calculation. Table \ref{table: sphere OCS} shows the numerical calculation of OCS for a unit sphere. The relative error is $4.48476\times 10^{-4}$ by using 20480 triangle facets.  
+
+We wish to develop a method that improves the accuracy for much more complex objects. We consider representing the surface in functional form using Chebyshev polynomials and built up through Rvachev functions. The reason to choose Chebyshev polynomial is because for smooth enough object surface, by using sufficiently many Chebyshev poins, the surface representation is possibly accurate to close to machine precision.
+
+\subsubsection{Chebyshev interpolation analysis}~\\
+It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.
+
 Consider the case with single variable. We start with a function $y=f(x)$ and take data points from it to build an interpolating polynomial $P(x)$. The interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following theorem gives a formula for the interpolation error that is usually impossible to evaluate exactly, but often can be at least bounded by an error.
 \begin{theorem}
 Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ pionts $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 
-\begin{equation}
-\label{eqn:poly error}
+\begin{equation} \label{eqn_poly_error}
 f(x)-P(x)=\frac{(x-x_1)(x-x_2)\cdot\cdot\cdot(x-x_n)}{n!}f^{(n)}(c)
 \end{equation}
 where $c$ lies between the smallest and largest of the number $x,x_1,...,x_n.$
 \end{theorem}
-The motivation for Chebyshev interpolation is to improve control of the maximum value of the interpolation error given by ~\eqref{eqn:poly error}. For a given positive integer $n$, the Chebyshev nodes in the interval $(-1,1)$ are
+The motivation for Chebyshev interpolation is to improve control of the maximum value of the interpolation error given by ~\eqref{eqn_poly_error}. For a given positive integer $n$, the Chebyshev nodes in the interval $(-1,1)$ are
 \begin{equation}
-\label{eqn:cheb points}
+\label{eqn_cheb_point}
 x_i=\cos\Big(\frac{2i-1}{2n}\pi\Big),\mbox{ }i=1,...,n.
 \end{equation}
-The interpolation error due to Chebyshev positioning formula ~\eqref{eqn:cheb points}, is summarized in the following theorem:
+The interpolation error due to Chebyshev positioning formula ~\eqref{eqn_cheb_point}, is summarized in the following theorem:
 \begin{theorem}
 The choice of real numbers $-1\le x_1,...,x_n\le 1$ that makes the value of 
 \begin{equation}
 \max_{-1 \leq x \leq 1}|(x-x_1)\cdot\cdot\cdot(x-x_n)|
 \end{equation}
-as small as possible is given by ~\eqref{eqn:cheb points}, and the minimum value is $\dfrac{1}{2^{n-1}}$. In fact, the minimum is achieved by 
-\begin{equation}
-\label{eqn:cheb error}
+as small as possible is given by ~\eqref{eqn_cheb_point}, and the minimum value is $\dfrac{1}{2^{n-1}}$. In fact, the minimum is achieved by 
+\begin{equation} \label{eqn_cheb_error}
 (x-x_1)\cdot\cdot\cdot(x-x_n)=\frac{1}{2^{n-1}}T_n(x)
 \end{equation}
 where $T_n(x)$ denotes the degrees $n$ Chebyshev polynomial.
@@ -262,7 +321,7 @@ where $T_n(x)$ denotes the degrees $n$ Chebyshev polynomial.
 
 \begin{exmp}
 In this example, we compare the errors for Polynomial interpolation and Chebyshev interpolation with different interpolation points for the function $e^x$ on $[-1,1]$. Figure \ref{fig:e1} shows the comparisons for $N=5$ and $N=8$, and there isn't significant difference between the two interpolations for $N=5$. In the contrast, we can see better approximation for the Chebyshev interpolation near the boundary when  $N=8$.\\
-The interpolation formula ~\eqref{eqn:poly error} gives 
+The interpolation formula ~\eqref{eqn_poly_error} gives 
 \begin{equation}
 f(x)-P_4(x)=\frac{(x+1)(x+\frac{1}{2})x(x-\frac{1}{2})(x-1)}{5!}f^{(5)}(c)
 \end{equation}
@@ -270,7 +329,7 @@ where $-1<c<1$. For $-1\leq x\leq 1$, the error is bounded by
 \begin{equation*}
 f(x)-P_4(x)=\frac{(x+1)(x+\frac{1}{2})x(x-\frac{1}{2})(x-1)}{5!}f^{(5)}(c)\leq \frac{0.11348}{5!}e\approx 0.002570
 \end{equation*}
-The interpolation formula ~\eqref{eqn:cheb error} gives 
+The interpolation formula ~\eqref{eqn_cheb_error} gives 
 \begin{equation*}
 |e^x-P_4(x)|\leq \frac{e}{2^45!}\approx 0.00142
 \end{equation*}
@@ -285,8 +344,9 @@ The interpolation formula ~\eqref{eqn:cheb error} gives
 \end{exmp}
 
 \begin{exmp}
-In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. Figure \eqref{fig:e2} shows Runge phenomenon from polynomial interpolation.\\
-\begin{figure}     	\centerline{\includegraphics[width=3.2in]{./figs/e2a.eps}
+In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. Figure \eqref{fig:e2} shows Runge phenomenon from polynomial interpolation.
+\begin{figure}  [H]   	
+        \centerline{\includegraphics[width=3.2in]{./figs/e2a.eps}
       	\hspace{-6pt}
      	\includegraphics[width=3.2in]{./figs/e2b.eps}}
      	\hspace{-6pt}
@@ -296,42 +356,148 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 \end{exmp}
 
 \section{Results and Discussions}
+\subsection{Analytical Solutions for Sphere}
+Recall that by using Bling-Phong model for shpere, we can compute OCS through
+$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) cos\gamma cos\beta \mathbf{\chi}_{\ip{N}{I}\geq 0}\mathbf{\chi}_{\ip{V}{N}\geq 0}\mathrm{d}A$$
+where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\vartheta\sin\varphi,\cos\varphi)$ and  $\mathbf{V}=(\mathbf{V}_1,\mathbf{V}_2,\mathbf{V}_3)$,  $\beta$ is the angle between $\mathbf{N}$ and $\mathbf{I}=(\mathbf{I}_1,\mathbf{I}_2,\mathbf{I}_3)$. The geometric relations are shown in the picture below.
+
+
+\begin{figure}[h!]
+  \includegraphics[width=4.5in]{./figs/sphere.pdf}
+  \label{fig:sphere}
+\end{figure}
+The appearances of two indicator functions 
+$$\mathbf{\chi}_{\ip{N}{I}\geq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi\mathbf{I}_1+\sin\vartheta\sin\varphi\mathbf{I}_2+\cos\varphi\mathbf{I}_3\geq 0\}$$ 
+$$\mathbf{\chi}_{\ip{V}{N}\geq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi\mathbf{V}_1+\sin\vartheta\sin\varphi\mathbf{V}_2+\cos\varphi\mathbf{V}_3\geq 0\}$$ 
+in the formula are just to include only the common part of the illuminated area and the detectable area.
+The spherical coordinates $(r,\theta,\varphi)$ are related to the Cartesian coordinates $(x,y,z)$ via
+$$x =r\cos\vartheta \sin\varphi, \quad y=r\sin\vartheta \sin\varphi, \quad z=r\cos\varphi $$
+with Jacobian 
+$$\bigg|\frac{\partial(x,y,z)}{\partial(r,\vartheta,\varphi)}\bigg|= r^2 \sin\varphi $$
+Thus by noticing 
+$$\cos\gamma =\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|},\quad \cos\beta=\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}$$
+we arrive at
+  $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0}\mathrm{d}\vartheta\mathrm{d}\varphi$$
+  
+\subsection{Numerical Solutions for Sphere}
+
+\subsubsection{Numerical calculation of Scattering function}~\\
+For each facet in the model, find angle $\theta$ between incident ray and facet normal, in Figure \eqref{fig:facet}. Target relativity, $\rho$, is given by $MRDF$($\theta$), and scattering function, $\sigma$, is estimated by
+\begin{equation}
+\sigma =\frac{\rho A}{\Omega}
+\end{equation} 
+where $A$ is Target area, $\Omega$ is solid angle of scattering.
+
+Simply for a sphere, we generate a mesh by using icosahedron. An icosahedron is a polyhedron composed of tweenty identical equilateral, each triangle has the same area and each vertex is at the same distance from all its neighbors. To get a higher number of triangles we need to subdivide each triangles by creating a new vertex at the middle point of each edge which is then normalized, to make it lie in the sphere surface. This breaks the initial properties of the icosahedron, the triangles are not equilateral anymore and neither the area nor the distance between adjacent vertices is the same across the mesh. But it is still a better approximation by almost any measure excluding its number of triangles. 
+\begin{figure}     	\centerline{\includegraphics[width=1.6in]{./figs/facet.png}}
+		\caption{Incident angle $\theta$ on each triangle facet}
+        \label{fig:facet}
+\end{figure}
+
+\begin{figure}     	\centerline{\includegraphics[width=7.2in]{./figs/icosahedron.eps}}
+		\caption{Visualization of icosahedral mesh with number of faces N = 20, 80, 320, 1280, 5120 and 20480}
+        \label{fig:facet}
+\end{figure}
+The calculation of Optical Cross Setion is summarized as following:
+\begin{itemize}
+\item Genete mesh for a given model
+\item For each facet, calculate reflectance from incident angle, material properties, etc.
+\item Sum over all visible facets to obtain Optical Cross Section (OCS).
+\end{itemize} 
+The following table \ref{table: sphere OCS} shows the numerical results for different mesh size of a sphere with constant $\rho=1$. The analytic OCS for a sphere is 8.3776.
+\begin{table}[htp]
+	\small
+	\caption{Numerical calculation of OCS for a sphere
+	}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	N & Numerical Results & Relative error & order \\
+	\hline
+	320 & $7.9718$ & $2.82327E-02$ &  \\
+    \hline	
+	1280 & $8.2738$ & $7.14740E-03$ & 0.99094 \\
+    \hline	
+	5120 & $8.3515$ & $1.79249E-03$ & 0.99773 \\
+	\hline
+	20480 & $8.3710$ & $4.48476E-04$ & 0.99943 \\
+	\hline
+	\end{tabular}
+	\label{table: sphere OCS}
+\end{table}
+\section{Future work}
+\subsection{Other Shapes and Technical Challenges}
+\subsection{The Multipath Problem}~\\
+Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces (that means we include only two bounces into the final OCS calculation). The surface we consider here is the half cylindrical shell facing downwards. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$. The light hits point $D$ and gets reflected to travel along $\mathbf{I}_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $\mathbf{V}=(\cos\psi_V,\sin\psi_V)$ with $\psi_V$ also given. With the picture below, it is clear that
+
+$$\mathbf{N}_1=(\cos\vartheta_1,\sin\vartheta_1)$$
+$$\mathbf{I}_2= (\sin(\psi_I+\vartheta_1-\vartheta_2),-\cos(\psi_I+\vartheta_1-\vartheta_2))$$
+$$\mathbf{N}_2= (\cos\vartheta_2,\sin\vartheta_2)$$
+
+\begin{figure}[H]
+  \includegraphics[width=4.5in]{./figs/multipath.pdf}
+  \label{fig:reflection}
+\end{figure}
+
+
+The contribution from a single bounce to the OCS is computed by
+$$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_1+\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{I}_1+\mathbf{N}_1\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{N}_1\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_1}{\mathbf{I}_1}}{\|\mathbf{N}_1\| \|\mathbf{I}_1\|} \mathrm{d}\vartheta_1$$
+
+Then the contribution from the second bounce to the OCS is computed by
+
+$$\sigma_2 =\int_{0}^{\pi}\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_2+\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{I}_2+\mathbf{N}_2\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{N}_2\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_2}{\mathbf{I}_2}}{\|\mathbf{N}_2\| \|\mathbf{I}_2\|}\mathrm{d}\vartheta_1\mathrm{d}\vartheta_2$$
+Summing the two gives an analytical formula for the whole OCS
+ $$ \sigma= \sigma_1+\sigma_2$$
+The cases for more bounces can be done in a similar fashion. At this point however, we are still unable to numerically implement the analytical results. But this will be part of our future work.
+\section{Conclusion}
 \section{acknowledgement}
 
 \begin{thebibliography}{9}
-\bibitem{Zachary}
-  Zachary Battles and Lloyd N. Trefethen
-  \emph{An Extension of Matlab to Continuous Function and Operations}.
-  SIAM J. SCI. COMPUT Vol. 25, No. 5: 1743-1770 
-  
-\bibitem{CSG Operations}
-Younis Hijazi, Aaron Knoll, Mathias Schott, Andrew Kensler, Charles Hansen and Hans Hagen
-\emph{CSG Operations of Arbitrary Primitives with Interval Arithmetic and Real-Time Ray Casting}.
-Scientific Visualization: Advanced Concepts, 78-89 (1998) 
-	
-\bibitem{Boolean Operations}
-Yohan D. Fougerolle, Andrei Gribok, Sebti Foufou, Frederic Truchetet and Mongi A. Abidi
-\emph{Boolean Operations with Implicit and Parametric Representation of Primitives Using R-Functions}.
-IEEE Transactions on Visualization and Computer Graphics, Vol. 11, No. 5 (2005).
-  
 \bibitem{BRDF}
-Chris Wynn
+Chris Wynn,
 \emph{An Introduction to BRDF-Based Lighting}.
-NVIDIA Corporation, 2000
+NVIDIA Corporation, 2000.
 
-\bibitem{CookTorr}
-Robert Cook and Kenneth Torrance
-\emph{A reflectance model for computer graphics. Computer Graphics}, Proc. of SIGGRAPH 81: 244-253 (1981).  
-	
 \bibitem{Ward}
-Gregory J. Ward 
+Gregory J. Ward, 
 \emph{Measuring and Modeling Anisotropic Reflection. (SIGGRAPH 92),}: 265-272 (1992).
 
 \bibitem{BlinnPhong}
-James F. Blinn  
+James F. Blinn,  
 \emph{Models of light reflection for computer synthesized pictures}, Proc. 4th
 Annual Conference on Computer Graphics and Interactive Techniques: 192-198
 (1977). 
+
+\bibitem{CookTorr}
+Robert Cook and Kenneth Torrance,
+\emph{A reflectance model for computer graphics. Computer Graphics}, Proc. of SIGGRAPH 81: 244-253 (1981).  
+
+\bibitem{Shapiro}
+Vadim Shapiro,
+\emph{Theory of R-functions and Applications: A Primer}, Cornell University, 1988.
+
+ \bibitem{Boolean Operations}
+Yohan D. Fougerolle, Andrei Gribok, Sebti Foufou, Frederic Truchetet and Mongi A. Abidi,
+\emph{Boolean Operations with Implicit and Parametric Representation of Primitives Using R-Functions}.
+IEEE Transactions on Visualization and Computer Graphics, Vol. 11, No. 5 (2005).
+
+\bibitem{CSG Operations}
+Younis Hijazi, Aaron Knoll, Mathias Schott, Andrew Kensler, Charles Hansen and Hans Hagen,
+\emph{CSG Operations of Arbitrary Primitives with Interval Arithmetic and Real-Time Ray Casting}.
+Scientific Visualization: Advanced Concepts, 78-89 (1998) 
+	
+ 
+\bibitem{Zachary}
+  Zachary Battles and Lloyd N. Trefethen,
+  \emph{An Extension of Matlab to Continuous Function and Operations}.
+  SIAM J. SCI. COMPUT Vol. 25, No. 5: 1743-1770 
+ 
+
+
+
+	
+
+
 
 \end{thebibliography}
 

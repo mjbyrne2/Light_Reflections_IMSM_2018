@@ -201,18 +201,6 @@ A special case of the Blinn-Phong Model gives rise to a handy formula for MRDF. 
 \MRDF(I;N)=(\cos \theta)^\alpha
 \]
 
-\begin{figure}[H]
- \includegraphics[width=1\textwidth]{./figs/MRDFs.eps}
- \caption{The MRDFs from the simplified Blinn-Phong model for varying values of $\alpha$. The aspect angle is the angle between $\mathbf{N}$ and $\mathbf{I}=\mathbf{V}$. Note as the value of $\alpha$ becomes large, the modeled specularity of the surface increases; in other words, there is less diffusion of light as it is being reflected off of the surface.}
- \label{MRDFs}
-\end{figure}
-
-\begin{figure}[H]
- \includegraphics[width=0.8\textwidth]{./figs/BRDF_Vectors.eps}
- \caption{Distributions of light from the Blinn-Phong model for varying values of $\alpha$, where $\mathbf{N} = (0,1)$ and $\mathbf{I} = (\cos(3\pi/4),\sin(3\pi/4))$. Again, as the value of $\alpha$ becomes large, the modeled specularity of the surface increases which results in more of the incoming light being reflected in the direction $(\cos(\pi/4),\sin(\pi/4))$.}
- \label{BRDFVectors}
-\end{figure}
-
 Optical Cross Section (OCS) describes the maximum amount of optical flux that is reflected by an object. It can be computed accordingly by the geometry of surface of the object and reflectivity of a particular wavelength of an object. Here, we will again ignore wavelength and use the representation 
 $$\sigma=\int_{S} \rho dA$$
 where $\rho$ is the optical density and is given by an $RDF$, $S$ denotes the surface. In our project, we use the representation

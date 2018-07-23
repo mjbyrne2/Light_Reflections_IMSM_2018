@@ -344,8 +344,9 @@ The interpolation formula ~\eqref{eqn_cheb_error} gives
 \end{exmp}
 
 \begin{exmp}
-In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. Figure \eqref{fig:e2} shows Runge phenomenon from polynomial interpolation.\\
-\begin{figure}     	\centerline{\includegraphics[width=3.2in]{./figs/e2a.eps}
+In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. Figure \eqref{fig:e2} shows Runge phenomenon from polynomial interpolation.
+\begin{figure}  [H]   	
+        \centerline{\includegraphics[width=3.2in]{./figs/e2a.eps}
       	\hspace{-6pt}
      	\includegraphics[width=3.2in]{./figs/e2b.eps}}
      	\hspace{-6pt}
@@ -357,7 +358,7 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 \section{Results and Discussions}
 \subsection{Analytical Solutions for Sphere}
 Recall that by using Bling-Phong model for shpere, we can compute OCS through
-$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) cos\gamma cos\beta \mathbf{\chi}_{\ip{N}{I}\leq 0}\mathbf{\chi}_{\ip{V}{N}\leq 0}\mathrm{d}A$$
+$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) cos\gamma cos\beta \mathbf{\chi}_{\ip{N}{I}\geq 0}\mathbf{\chi}_{\ip{V}{N}\geq 0}\mathrm{d}A$$
 where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\vartheta\sin\varphi,\cos\varphi)$ and  $\mathbf{V}=(\mathbf{V}_1,\mathbf{V}_2,\mathbf{V}_3)$,  $\beta$ is the angle between $\mathbf{N}$ and $\mathbf{I}=(\mathbf{I}_1,\mathbf{I}_2,\mathbf{I}_3)$. The geometric relations are shown in the picture below.
 
 
@@ -366,8 +367,8 @@ where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\v
   \label{fig:sphere}
 \end{figure}
 The appearances of two indicator functions 
-$$\mathbf{\chi}_{\ip{N}{I}\leq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi\mathbf{I}_1+\sin\vartheta\sin\varphi\mathbf{I}_2+\cos\varphi\mathbf{I}_3\leq 0\}$$ 
-$$\mathbf{\chi}_{\ip{V}{N}\leq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi\mathbf{V}_1+\sin\vartheta\sin\varphi\mathbf{V}_2+\cos\varphi\mathbf{V}_3\leq 0\}$$ 
+$$\mathbf{\chi}_{\ip{N}{I}\geq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi\mathbf{I}_1+\sin\vartheta\sin\varphi\mathbf{I}_2+\cos\varphi\mathbf{I}_3\geq 0\}$$ 
+$$\mathbf{\chi}_{\ip{V}{N}\geq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi\mathbf{V}_1+\sin\vartheta\sin\varphi\mathbf{V}_2+\cos\varphi\mathbf{V}_3\geq 0\}$$ 
 in the formula are just to include only the common part of the illuminated area and the detectable area.
 The spherical coordinates $(r,\theta,\varphi)$ are related to the Cartesian coordinates $(x,y,z)$ via
 $$x =r\cos\vartheta \sin\varphi, \quad y=r\sin\vartheta \sin\varphi, \quad z=r\cos\varphi $$
@@ -376,7 +377,7 @@ $$\bigg|\frac{\partial(x,y,z)}{\partial(r,\vartheta,\varphi)}\bigg|= r^2 \sin\va
 Thus by noticing 
 $$\cos\gamma =\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|},\quad \cos\beta=\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}$$
 we arrive at
-  $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\leq 0}\mathbf{\chi}_{\ip{\mathbf{V}}{\mathbf{I}}\leq 0}\mathrm{d}\vartheta\mathrm{d}\varphi$$
+  $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0}\mathrm{d}\vartheta\mathrm{d}\varphi$$
   
 \subsection{Numerical Solutions for Sphere}
 
@@ -427,7 +428,7 @@ The following table \ref{table: sphere OCS} shows the numerical results for diff
 \section{Future work}
 \subsection{Other Shapes and Technical Challenges}
 \subsection{The Multipath Problem}~\\
-Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces (include only two bounces). The surface we consider here is the half cylindrical shell facing downwards. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$. The light hits point $D$ and gets reflected and travels along $\mathbf{I}_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $\mathbf{V}=(\cos\psi_V,\sin\psi_V)$ with $\psi_V$ also given. With the picture below, it is clear that
+Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. For simplicity, we assume that all energy is lost after 3 bounces (that means we include only two bounces into the final OCS calculation). The surface we consider here is the half cylindrical shell facing downwards. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$. The light hits point $D$ and gets reflected to travel along $\mathbf{I}_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $\mathbf{V}=(\cos\psi_V,\sin\psi_V)$ with $\psi_V$ also given. With the picture below, it is clear that
 
 $$\mathbf{N}_1=(\cos\vartheta_1,\sin\vartheta_1)$$
 $$\mathbf{I}_2= (\sin(\psi_I+\vartheta_1-\vartheta_2),-\cos(\psi_I+\vartheta_1-\vartheta_2))$$

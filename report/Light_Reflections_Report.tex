@@ -379,7 +379,57 @@ $$\cos\gamma =\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|},
 we arrive at
   $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0}\mathrm{d}\vartheta\mathrm{d}\varphi$$
   
-\subsection{Numerical Solutions for Sphere}
+\subsection{Numerical Solutions for Sphere & Application to Ellipsoid}
+
+%{\bf To capture the target area for numerical integration using Chebfun, the boolean relationship is chosen to avoid explicit boundary angles. This is achieved by multiplying the integrand derived from the Blinn-Phong model by $max\{0, \langle L,N\rangle\}$ and $max\{0,\langle V,N\rangle\}$ which rules out area not in the intersection of the lighted area and viewer's range. Here $\langle\cdot, \cdot\rangle$ is the inner product, $L$ is the light source direction, $V$ is the viewer direction, and $N$ is the outward unit normal of the surface.}
+
+{\bf CASE 1: Method verification.} Verification of the accuracy of Chebfun is performed by simulating the case where the light source and the viewer are at the identical direction to capture the optical cross section value. The reflexivity and the light diffusivity of the surface are fixed as $\rho = 1$ and $\alpha =0$ respectively. The optical cross section (OCS) approximated using Chebfun, with interpolating error tolerance of $10^{-8}$, yields $\sigma_{cheb} = 2.094395102389723$. The known analytic solution is $\sigma_{analytic} = \frac{2*\pi}{3}\approx 2.094395102393195$. The absolute error of the Chebfun approach is in the range of $10^{-12}$ due its semi-analytic nature. This is superior to the triangular discretization approach which performs at $\approx 10^{-4}$ accuracy. To ensure the Chebfun approach does not produce non-physical result, additional tests were run for different $\alpha$ value and different viewer's position.
+
+The $\alpha$ value is chosen to be the interval $[0,18]$ with fixed increment. The results shows that as $\alpha$ increases the OCS value decreases (Fig ~\ref{fig: OCS_parallel_plane}). Since higher $\alpha$ value represents the smaller specular highlight, the viewer would receive less total reflected light across the whole surface. This is in agreement with the physical observation.
+
+Next we tested the influence of the viewer position. Two scenarios were tested: parallel orbiting viewer and perpendicular orbiting viewer, with respect to the light source. In the parallel orbiting scenario (Fig. ~\ref{fig: OCS_parallel_plane}), the OCS value decreases as the viewer moves away from the light source, followed by restoration to the initial value. The rate of decay is clearly influenced by the $\alpha$ value. In the perpendicular orbiting scenario, the viewer moves on the xy-plane while the light source is fixed at $(\theta, \phi) = (0,0)$ position. The simulation results shows that the OCS value remains constant.
+
+Both orbiting simulation results show agreement with the physical phenomenon. This indicates that Chebfun approach can produce accurate and physical results.
+
+{\bf CASE 2: Ellipsoid I} Following the verification we applied the Chebfun approach to a non-uniform shape. The shape chosen is an triaxial ellipsoid due to its simple geometry and non-uniform symmetry. We started with the ellipsoid $\frac{x^2}{4}+\frac{y^2}{9}+\frac{z^2}{1} = 1$. $\rho$ and $\alpha$ are as in the verification section. However, due to the artificial singularities generated from the parametrization of the surface, we intentially excluded a small neighborhood near the "north pole" and the "south pole" to avoid instability. Light source is fixed at $(\theta,\phi) = (\pi/2, \pi/2)$ and the viewer orbits on the xy-plane. The Chebfun approach yields OCS value of $\approx 2.1104$ when the viewer is positioned in the same direction as the light source. The similarity of this OCS value may be due to the comparable geometry of the surface facing $(\theta, \phi)=(\pi/2, pi/2)$ to a hemisphere.Similar to the sphere case, the OCS value drops down as the viewer moves further away from the light source. The decay rates of OCS value between the sphere and ellipsoid case are expected to be different, where the ellipsoid case is with the higher rate, and can be observed using Figure ~\ref{} and Figure ~\ref{}. We also performed the same test simulating viewer orbiting on a plane perpendicular to the light source, the resulting periodic oscillation obtained is determined to be physical.
+
+{\bf CASE 3: Ellipsoid II} We next chose the ellipsoid described by $\frac{x^2}{9}+\frac{y^2}{4}+\frac{z^2}{1} = 1$ to compare the result with ellipsoid I case. The remaining setup is identical to the previous case. Using the Chebfun approach we found that the OCS value when the light source and the viewer are at the identical position is $\approx 1.1927$. Since the viewer would be facing a larger area, the OCS value is expected to be higher. The result turns out to be the exact opposite such that the OCS value produced is lower than the  Due to this difference in curvatures, it follows that for ellipsoid II, when the viewer moves away from the light source, the curvature change is less drastic compared to the ellipsoid I case.
+
+\begin{figure}
+\includegraphics[scale=0.25]{./figs/OCS_parallel_plane}
+\label{fig: OCS_parallel_plane}
+\caption{Simulation of orbiting viewer on the plane as the light source with different $\alpha$ values.}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.25]{./figs/OCS_perpendicular_plane}
+\label{fig: OCS_perpendicular_plane}
+\caption{Simulation of orbiting viewer on the plane perpendicular to the light source with different $\alpha$ values.}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.35]{./figs/OCS_ellipsoid}
+\label{fig: OCS_ellipsoid}
+\caption{A visual representation of the ellipsoid I simulation. The red line represents the direction of the incoming light source. It can be observed that how fast the curvature change when the viewer orbits around the ellipsoid. The graphic is generated using the Chebfun package.}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.25]{./figs/OCS_parallel_plane_ellipsoid}
+\label{fig: OCS_parallel_plane_ellipsoid}
+\caption{Simulation of orbiting viewer on the same plane as the light source. $\alpha = 0$. The shape of interest here is an ellipsoid.}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.25]{./figs/OCS_perpendicular_plane_ellipsoid}
+\label{fig: OCS_perpendicular_plane_ellipsoid}
+\caption{Simulation of orbiting viewer on the plane perpendicular to the light source. $\alpha = 0$. The shape of interest here is an ellipsoid.}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.25]{./figs/OCS_decay_by_alpha_ellipsoid}
+\label{fig: OCS_decay_by_alpha_ellipsoid}
+\caption{OCS value of the ellipsoid simulations with increasing $\alpha$ values. It can be observed that ellipsoid I experiences a faster decay due to the high curvature decay.}
+\end{figure}
 
 \subsubsection{Numerical calculation of Scattering function}~\\
 For each facet in the model, find angle $\theta$ between incident ray and facet normal, in Figure \eqref{fig:facet}. Target relativity, $\rho$, is given by $MRDF$($\theta$), and scattering function, $\sigma$, is estimated by

@@ -1,8 +1,8 @@
 \documentclass[11pt,reqno]{amsart}
 %\textwidth7in \textheight9in \topmargin-10mm 
-\evensidemargin-5mm
-\oddsidemargin-5mm
-\renewcommand{\baselinestretch}{1.1}
+%\evensidemargin-5mm
+%\oddsidemargin-5mm
+%\renewcommand{\baselinestretch}{1.1}
 \usepackage{url}
 \usepackage{color}
 \usepackage{breqn}
@@ -15,7 +15,7 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{bbm}
-
+\usepackage{parskip}
 
 
 \newcommand{\nn}{\nonumber}
@@ -308,7 +308,8 @@ OpenSCAD is a free software application for creating solid 3D CAD (computer-aide
      	\hspace{-6pt}
 		\includegraphics[scale=0.2]{./figs/sdh_mesh}}
      	\hspace{-6pt}
-		\caption{Constructive Solid Geometry \& Generation of Finite element mesh ~\cite{mesh}}
+		\caption{Constructive Solid Geometry \& Generation of Finite element 
+                mesh~\cite{mesh}}
         \label{fig:sdh_openscad}
 \end{figure}
 
@@ -620,15 +621,19 @@ Finally, we extend the continuous model to incorporate the multi-path phenomenon
 
 \section{Acknowledgment}
 This research was conducted as part of the IMSM workshop organized by SAMSI supported by NSF. The authors thank Prof. Mansoor Haider and Thomas Gehrmann for organizing and recruiting. The authors also thank John Peach for introducing and guiding the project, as well as Prof. Alen Alexanderian for instructions and suggestions throughout. 
+
+\iffalse
+
 \begin{thebibliography}{9}
+
 \bibitem{BRDF}
 Chris Wynn,
 \emph{An Introduction to BRDF-Based Lighting}.
 NVIDIA Corporation, 2000.
 
 \bibitem{Ward}
-Gregory J. Ward, 
-\emph{Measuring and Modeling Anisotropic Reflection. (SIGGRAPH 92),}: 265-272 (1992).
+Ward, G. J. (1992, July). Measuring and modeling anisotropic reflection. 
+In ACM SIGGRAPH Computer Graphics (Vol. 26, No. 2, pp. 265-272). ACM.
 
 \bibitem{BlinnPhong}
 James F. Blinn,  
@@ -666,15 +671,11 @@ Scientific Visualization: Advanced Concepts, 78-89 (1998)
 \bibitem{Morales}
 Gustavo Morales. Matlab Central.\\
 \url{https://www.mathworks.com/matlabcentral/fileexchange/23623-ezimplot3-implicit-3d-functions-plotter?focused=5168229&tab=function}
-
-
-	
-
-
-
 \end{thebibliography}
+\fi
 
-\bibliographystyle{plain}
-%\bibliography{paper}
+\bibliographystyle{abbrv}
+\bibliography{report}
+
 
 \end{document}

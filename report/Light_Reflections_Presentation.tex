@@ -134,20 +134,21 @@ used \verb+chebfun+ for computing integrals
 
 \begin{frame}[t]
 \frametitle{The Blinn--Phong model}
-\centerline{\includegraphics[scale=0.22]{./figs/ModelVectors}}
-$$\text{BRDF}(\mathbf{I},\mathbf{V}) = \big(<\mathbf{H},\mathbf{N}>\big)^\alpha \text{ for } \alpha \geq 0$$
-\centerline{where the \textit{halfway vector} $\mathbf{H}$ is defined as $(\mathbf{I} + \mathbf{V})/\|\mathbf{I} + \mathbf{V}\|$}
+\centerline{\includegraphics[scale=0.2]{./figs/ModelVectors}}
+$$\text{BRDF}(\mathbf{I},\mathbf{V}) = \left(\frac{\langle\mathbf{H},\mathbf{N}\rangle}{\|\mathbf{H}\|}\right)^\alpha \text{ for } \alpha \geq 0$$
+\centerline{where $\mathbf{H} = \mathbf{I} + \mathbf{V}$ is the \textit{halfway vector}}
 \begin{itemize}
 \item Modification of Phong model
-\item BRDF: \textit{Bistatic reflectance distribution function}
+\item BRDF: \textit{Bi-static reflectance distribution function}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{Blinn--Phong as MRDF}
 \begin{itemize}
-\item MRDF: \textit{Monostatic reflectance distribution function}
-\item Case where $\mathbf{I} = \mathbf{V}$
+\item MRDF: \textit{Mono-static reflectance distribution function}
+\item Case where light and viewing vector are parallel
+\item Blinn--Phong reduces to scaled $(\cos\theta)^\alpha$ \\\vspace*{0.25 in}
 \end{itemize}
 \centerline{\includegraphics[scale=0.3]{./figs/MRDFs}}
 \end{frame}

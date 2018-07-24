@@ -10,7 +10,7 @@
 \newcommand{\ip}[2]{\langle {#1}, {#2} \rangle}
 
 % Title page
-\title{Light reflections}
+\title{Semi-analytics and quantification of light reflection}
 
 \date{July 25, 2018}
 \author{
@@ -73,7 +73,7 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \centerline{\includegraphics[scale = 0.35]{./figs/sdh_openscad}} 
 \end{frame}
 
-\begin{frame}[t] 
+\begin{frame} 
 \frametitle{Rvachev functions (1963)} 
 \begin{itemize} 
 \item Commonly referred to as R-functions 
@@ -89,7 +89,7 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \end{itemize} 
 \end{frame}
 \begin{frame}[t] 
-\frametitle{R-functions --- example} 
+\frametitle{R-functions -- examples} 
 Union of two spheres:
 \[
    \begin{aligned}
@@ -110,7 +110,7 @@ f \cup g: {\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\
 \end{frame} 
 
 \begin{frame}
-\frametitle{R-functions more examples} 
+\frametitle{R-functions -- examples} 
 \centerline{\begin{tabular}{cc}
 \includegraphics[width=.32\textwidth]{./figs/shape1.pdf} &
 \includegraphics[width=.32\textwidth]{./figs/shape2.pdf}  
@@ -150,7 +150,7 @@ $$\text{BRDF}(\mathbf{I},\mathbf{V};\mathbf{N}) = \left(\frac{\langle\mathbf{H},
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Blinn--Phong as MRDF on Sphere}
+\frametitle{Blinn--Phong as MRDF}
 \begin{itemize}
 \item MRDF: \textit{Mono-static reflectance distribution function}
 \item Case where light and viewing vectors are parallel
@@ -238,11 +238,16 @@ $$\sigma=\sum_{n=1}^{\infty} \sigma_n$$
 \end{itemize}
 \end{frame}
 
+\begin{frame}[t]
+\frametitle{Image references}
+\begin{itemize}
+\item Satellite image from ``Motivation" frame: \\
+https://www.newscientist.com/article/2113311-first-ever-lightning-mapping-satellite-set-for-take-off/ 
+\item OpenSCAD image from ``OpenSCAD" frame: \\
+http://sfepy.org/doc-devel/preprocessing.html
+\item Vectors image from ``The Blinn--Phong model" frame is modified from original:
+Martin Kraus - Own work, CC0, https://commons.wikimedia.org/w/index.php?curid=15534756
+\end{itemize}
+\end{frame}
+
 \end{document}
-
-
-%% Image references: 
- 
-% Satellite.jpg: https://www.newscientist.com/article/2113311-first-ever-lightning-mapping-satellite-set-for-take-off/ 
- 
-% ModelVectors.jpg: By Martin Kraus - Own work, CC0, https://commons.wikimedia.org/w/index.php?curid=15534756

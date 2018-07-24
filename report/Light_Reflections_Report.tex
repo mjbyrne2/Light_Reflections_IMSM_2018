@@ -181,7 +181,7 @@ Theoretically, BRDF is material-specific. Therefore, getting an accurate functio
 relation requires careful measurements through lab experiments. However, there
 are models that provide substitutes for easy usage. The most famous examples
 are Cook--Torrance model~\cite{CookTorr}, the Ward's model~\cite{Ward} and the
-Blinn-Phong model~\cite{BlinnPhong}. In our report, we will focus on using the
+Blinn--Phong model~\cite{BlinnPhong}. In our report, we will focus on using the
 Blinn--Phong model, which says the following
 \[
    \BRDF(\mathbf{I},\mathbf{V};\mathbf{N})
@@ -196,20 +196,20 @@ is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the l
  %Surfaces.png} 
 \end{figure}
 
-A special case of the Blinn-Phong Model gives rise to a handy formula for MRDF. Taking $\mathbf{I}=\mathbf{V}$ and letting the angle between $\mathbf{I}$ and $\mathbf{N}$ be $\theta$, we get
+A special case of the Blinn--Phong model gives rise to a handy formula for MRDF. Taking $\mathbf{I}=\mathbf{V}$ and letting the angle between $\mathbf{I}$ and $\mathbf{N}$ be $\theta$, we get
 \[
 \MRDF(\mathbf{I};\mathbf{N})=(\cos \theta)^\alpha
 \]
 
 \begin{figure}[H]
  \includegraphics[width=1\textwidth]{./figs/MRDFs.eps}
- \caption{The MRDFs from the simplified Blinn-Phong model for varying values of $\alpha$. The aspect angle is the angle between $\mathbf{N}$ and $\mathbf{I}=\mathbf{V}$. Note as the value of $\alpha$ becomes large, the modeled specularity of the surface increases; in other words, there is less diffusion of light as it is being reflected off of the surface.}
+ \caption{The MRDFs from the simplified Blinn--Phong model for varying values of $\alpha$. The aspect angle is the angle between $\mathbf{N}$ and $\mathbf{I}=\mathbf{V}$. Note as the value of $\alpha$ becomes large, the modeled specularity of the surface increases; in other words, there is less diffusion of light as it is being reflected off of the surface.}
  \label{MRDFs}
 \end{figure}
 
 \begin{figure}[H]
  \includegraphics[width=0.8\textwidth]{./figs/BRDF_Vectors.pdf}
- \caption{Distributions of light from the Blinn-Phong model for varying values of $\alpha$, where $\mathbf{N} = (0,1)$ and $\mathbf{I} = (\cos(3\pi/4),\sin(3\pi/4))$. Again, as the value of $\alpha$ becomes large, the modeled specularity of the surface increases which results in more of the incoming light being reflected in the direction $(\cos(\pi/4),\sin(\pi/4))$.}
+ \caption{Distributions of light from the Blinn--Phong model for varying values of $\alpha$, where $\mathbf{N} = (0,1)$ and $\mathbf{I} = (\cos(3\pi/4),\sin(3\pi/4))$. Again, as the value of $\alpha$ becomes large, the modeled specularity of the surface increases which results in more of the incoming light being reflected in the direction $(\cos(\pi/4),\sin(\pi/4))$.}
  \label{BRDFVectors}
 \end{figure}
 
@@ -439,7 +439,7 @@ The following Table \ref{table: sphere OCS} shows the numerical results for diff
   
 \subsection{Numerical Solutions for Sphere \& Application to Ellipsoid}
 
-To capture the target area for numerical integration using Chebfun, the boolean relationship is incorporated to avoid defining explicit boundary angles. This is achieved by multiplying the integrand derived from the Blinn-Phong model by $\max\{0, \langle \mathbf{L},\mathbf{N}\rangle\}$ and $\max\{0,\langle \mathbf{V},\mathbf{N}\rangle\}$ which rules out area not in the intersection of the lighted area and viewer's range. Here $\langle\cdot, \cdot\rangle$ is the inner product, $\mathbf{L}$ is the light source direction, $\mathbf{V}$ is the viewer direction, and $\mathbf{N}$ is the outward unit normal of the surface.
+To capture the target area for numerical integration using Chebfun, the boolean relationship is incorporated to avoid defining explicit boundary angles. This is achieved by multiplying the integrand derived from the Blinn--Phong model by $\max\{0, \langle \mathbf{L},\mathbf{N}\rangle\}$ and $\max\{0,\langle \mathbf{V},\mathbf{N}\rangle\}$ which rules out area not in the intersection of the lighted area and viewer's range. Here $\langle\cdot, \cdot\rangle$ is the inner product, $\mathbf{L}$ is the light source direction, $\mathbf{V}$ is the viewer direction, and $\mathbf{N}$ is the outward unit normal of the surface.
 
 {\bf Case 1: Method verification.} Verification of the accuracy of Chebfun is performed by simulating the case where the light source and the viewer are at the identical direction to capture the optical cross section value. The reflexivity and the light diffusivity of the surface are fixed as $\rho = 1$ and $\alpha =0$ respectively. The optical cross section (OCS) approximated using Chebfun, with interpolating error tolerance of $10^{-8}$, yields $\sigma_{cheb} = 2.094395102389723$. The known analytic solution is $\sigma_{analytic} = \frac{2*\pi}{3}\approx 2.094395102393195$. The absolute error of the Chebfun approach is in the range of $10^{-12}$ due its semi-analytic nature. This is superior to the triangular discretization approach which performs at $\approx 10^{-4}$ accuracy. To ensure the Chebfun approach does not produce non-physical result, additional tests were run for different $\alpha$ value and different viewer's position.
 
@@ -499,8 +499,8 @@ planes, and spheres. In Figure~\ref{fig:rocket}, we show a model rocket created
 using this approach. Finding the correct sequence of shapes and Rvachev
 functions, is in general non-trivial. Another issue is finding 
 an appropriate visualization tool. For this purpose, 
-we used the Matlab code \verb+ezimplot3+ which can be 
-found in Matlab Central~\cite{Morales}.
+we used the MATLAB code \verb+ezimplot3+ which can be 
+found in MATLAB Central~\cite{Morales}.
 
 \begin{figure} 
 \centerline{\includegraphics[width=.7\textwidth]{rocket.pdf}} 
@@ -565,7 +565,7 @@ Total contributions for up to $n$ bounces is then given by
  
 \section{Conclusion}
 
-In this work we have investigated several aspects of the light reflection. Our main goals is to understand the diffusivity of the reflection associated with material of the surface. To do so first we construct and de-construct complex geometric shapes using Rvachev function which is based on boolean operations. Rvachev functions help obtaining functional representation of the surface that does not require storage of information such as vertices, unit normal vectors and triangle adjacency.
+In this work we have investigated several aspects of the light reflection. Our main goals were to understand the diffusivity of the reflection associated with material of the surface. To do so first we construct and de-construct complex geometric shapes using Rvachev function which is based on boolean operations. Rvachev functions help obtaining functional representation of the surface that does not require storage of information such as vertices, unit normal vectors and triangle adjacency.
 Second, we improve the current discrete model to continuous model favoring less data storage and we learned to use the combination of Chebfun and indicator function, a computation tool that takes the advantage of Chebyshev polynomial interpolation to perform numerical integration over the surface with less need of explicit expression.
 Finally, we extend the continuous model to incorporate the multi-path phenomenon starting from simple case of two-dimensional one reflection model and extended the result to build the theory for three-dimensional n reflections model.
 

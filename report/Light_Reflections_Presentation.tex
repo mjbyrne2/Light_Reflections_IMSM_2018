@@ -4,6 +4,9 @@
 \usepackage{amsmath,geometry,graphicx}
 \usetheme{Madrid}
 \usepackage{multicol}
+\newcommand{\BRDF}{\mathrm{BRDF}}
+\newcommand{\MRDF}{\mathrm{MRDF}}
+\newcommand{\ip}[2]{\langle {#1}, {#2} \rangle}
 
 % Title page
 \title{Light reflections}
@@ -158,8 +161,25 @@ used \verb+chebfun+ for computing integrals
 
 \begin{frame}[t]
 \frametitle{Multipath}
+When light is projected onto a concave surface, some light beams could be reflected multiple times before it exits the surface area. 
+\begin{columns}
+\column{0.5 \textwidth} \includegraphics[width=2.4in]{./figs/multipath_edit.pdf}
+\column{0.5 \textwidth} $N_i=(-\cos \theta_i,-\sin\theta_i)$\\ $I_i=(-\cos \psi_i,-\sin\psi_i)$\\ Plane geometry gives $\psi_{i}=\psi_{i-1}-\pi+\theta_i-\theta_{i-1}$
+\end{columns}
+Need to compute separately for each bouncing case. Denote contributions from lights that bounce exactly $n-$times before received by detector by $\sigma_n$.
 \end{frame}
 
+\begin{frame}[t]
+"Projected" $\BRDF$ at each bounce
+$$\BRDF^*_{D_i}=\Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{I}_{i+1}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha\frac{\ip{\mathbf{I}_i}{\mathbf{N}_i}}{\|\mathbf{I}_i\|\|\mathbf{N}_i\|}\frac{\ip{\mathbf{I}_{i+1}}{\mathbf{N}_i}}{\|\mathbf{I}_{i+1}\|\|\mathbf{N}_i\|} \frac{1}{\|r\mathbf{N}_{i+1}-r\mathbf{N}_i\|^2}$$
+Contribution to OCS from lights that bounces exactly $n-$times 
+\begin{equation*}
+\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N_n})\bigg(\prod_{i=1}^{n-1}\BRDF^*_{D_i}\bigg) |J|^n\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n , \quad |J|=r
+\end{equation*}
+Add up to get the whole OCS
+$$\sigma=\sum_{n=1}^{\infty} \sigma_n$$
+Note: we have assume convergence of both the integral and infinite sum. Rigorous justification needs to be done. Computation can be generalized to other concave surfaces. 
+\end{frame}
 
 \begin{frame}[t]
 \frametitle{Conclusion and future work}

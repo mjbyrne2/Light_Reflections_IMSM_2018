@@ -1,8 +1,6 @@
 
 all:
 	pdflatex Light_Reflections_Report
-	bibtex Light_Reflections_Report
-	pdflatex Light_Reflections_Report
 	pdflatex Light_Reflections_Report
 
 clean:

@@ -192,9 +192,9 @@ Blinn--Phong model, which says the following
 \[
    \BRDF(\mathbf{I},\mathbf{V};\mathbf{N})
    \approx
-   |\ip{\mathbf{H}}{\mathbf{V}}|^\alpha
+   |\ip{\mathbf{H}}{\mathbf{N}}|^\alpha
 \]
-where $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
+where $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{V}} {\|\mathbf{I}+\mathbf{V}\|}$$
 is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the light reflectivity the material used to cover the surface (large reflectivity corresponds to large $\alpha$). Intuitively speaking, the more mirror-like an object is,  the sharper its specular peak will be (corresponding to an RDF that decays faster). 
 
 \begin{figure}[H]
@@ -404,7 +404,7 @@ $$\cos\gamma =\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|},
 we arrive at
 \[
 \sigma = \int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}
-\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi \, \mathbf{\ind}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\ind}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0} \: d\vartheta \: d\varphi
+\Bigg(\frac{\ip{\mathbf{I}+\mathbf{V}}{\mathbf{N}}}{\|\mathbf{I}+\mathbf{V}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi \, \mathbf{\ind}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\ind}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0} \: d\vartheta \: d\varphi
 \]
   
 \subsection{Numerical Calculation of Scattering Function for Sphere - Finite Element Approach}~\\

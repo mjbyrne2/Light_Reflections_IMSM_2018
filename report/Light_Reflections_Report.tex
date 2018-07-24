@@ -150,28 +150,19 @@ Faculty Mentor: Alen Alexanderian (NCSU)}}
 We build a mathematical model of the properties of an object which faithfully captures the relevant optical phenomena for satellite tracking and prediction of reflective response. We develop analytical models to replace facetized CAD models with continuous functions by providing a more accurate, faster and less complex calculation of the Optical Cross Section(OCS) function. Also, we propose an extension of the discrete multipath solution on the continuous domain. Our method shows the potential to reproduce the accuracy observed on simple analytic object to much more complex objects using constructive solid geometry via Rvachev functions.
 
 \section{Introduction}
-By carefully observing the light reflected from a distant object, it may be possible to infer subtle properties such as
-orientation, conditions of surface materials and overall status and health of the object. The physics of light reflecting from
-the surface of an object is fairly well known and depends on material properties, angles of incidence and reflection and the
-wavelength of the incident beam. To model reflectance from a surface, the object is often discretized using triangular mesh
-and reflectance from each patch then determined from the local surface normal, incident and reflected angles as well as the
-bistatic reflectance distribution function (BRDF) which provides a measure of the reflectivity for a material (at a selected
-wavelength) for each incident and reflected angle.
-The total optical cross section (OCS) for an object is simply the sum of the reflectance for each triangular patch. For
-simple geometric objects such as spheres, cubes, cylinders or cones the OCS may be calculated analytically, but for more
-complex objects the typical procedure is to generate a mesh model and then perform the estimate. However, in order to obtain highly accurate estimation using discretized surface a large number of facets is required. To further improve the accuracy, one often must rely on unproportional increase of the data storage and computational cost. 
-
-For highly specular (mirror-like) surfaces the flat triangular
-patches reflect over a very narrow set of angles resulting in a ``disco ball" effect.
-Our contribution with this project is to develop a method that extends the accuracy of simple analytical models to much more complex
-objects. Many man-made objects are composed of relatively simple basis shapes and may be described through constructive
-solid geometry methods. The surfaces may be then represented in functional forms built up using Rvachev functions [6] and interpolated with Chebyshev polynomials [8]. With a functional description of the surface, it is possible to also have a functional
-definition of the normal vector which is required to calculate the reflectance from the BRDF, and with a smoothly varying
-normal function the "disco ball" effect is eliminated. Another advantage of using functional representations of the surfaces
-is that the data storage requirements may be significantly reduced. Calculating the OCS becomes more complicated in
-regions where the surface is concave because a portion of the surface may be hidden behind another area, and light may
-make multiple reflections in the concave region before exiting towards the sensor. Developing robust solutions to the
-problem of surface concavities will be the main focus of this project.
+Through observation of light reflected from an object, various properties of the object may be estimated such as object composition and relative orientation. 
+Light reflection is a well-studied phenomenon; much is known regarding the relationships between wavelength, angles of incidence, and surface material. 
+One popular way to model the reflectance of an arbitrary object is to form a triangular mesh and from each patch use incident, reflected, and surface normal angles to determine the amount of local reflectance. 
+A distribution function is used to model the reflectance, which are functions of the angles described previously. 
+Since the reflectance of light depends upon the direction of both incident light and the viewing direction, model of light reflection often come in the form of a bi-static reflectance distribution functions (BRDF). 
+Distribution functions for light are also specific to the wavelength of light, though in this report wavelength will be considered fixed. \par 
+Once reflectance is calculated for each patch, the reflectances can be summed to determine the overall reflectance of the object. 
+The sum of the reflectance is known as the total optical cross section of the object.  
+If the object being considered is simple, such as a sphere, ellipse, or cylinder, optical cross section can be determined analytically. 
+However, more complex objects often require the triangular patch approximation described above. 
+For highly specular surfaces, the triangular patch approximation may result in an undesirable ``disco ball" representation of the object. 
+Increasing the number of mesh points (and thus increasing the number of triangular patches) is one possible remedy, though this approach reduces computational efficiency. 
+As such, the primary objective of this project is to investigate and develop extensions of analytical modelling of light reflection for more complicated objects. 
 
 \section{Theoretical Background and Tools}~\\
 \subsection{Reflectance Distribution Functions and Optical Cross Section}~\\

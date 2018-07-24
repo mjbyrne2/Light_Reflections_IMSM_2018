@@ -150,11 +150,14 @@ $$\text{BRDF}(\mathbf{I},\mathbf{V};\mathbf{N}) = \left(\frac{\langle\mathbf{H},
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Blinn--Phong as MRDF}
+\frametitle{Blinn--Phong as MRDF on Sphere}
 \begin{itemize}
 \item MRDF: \textit{Mono-static reflectance distribution function}
 \item Case where light and viewing vectors are parallel
-\item Blinn--Phong model reduces to $(\cos\theta)^\alpha$ \\\vspace*{0.25 in}
+\item Blinn--Phong model reduces to $(\cos\theta)^\alpha$ \\
+($\theta$ denotes the angle between viewing/light vectors and the surface normal)
+
+\vspace*{0.25 in} 
 \end{itemize}
 \centerline{\includegraphics[scale=0.3]{./figs/MRDFs}}
 \end{frame}

@@ -366,9 +366,9 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 \end{exmp}
 
 \section{Results and Discussions}
-\subsection{Analytical Solutions for Sphere}
-Recall that by using Bling-Phong model for shpere, we can compute OCS through
-$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) cos\gamma cos\beta \mathbf{\chi}_{\ip{N}{I}\geq 0}\mathbf{\chi}_{\ip{V}{N}\geq 0}\mathrm{d}A$$
+\subsection{Analytical Solutions for Sphere}$~\\$
+Recall that by using Blinn--Phong model for sphere, we can compute OCS through
+$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma \cos\beta \mathbf{\chi}_{\ip{N}{I}\geq 0}\mathbf{\chi}_{\ip{V}{N}\geq 0} \: dA$$
 where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\vartheta\sin\varphi,\cos\varphi)$ and  $\mathbf{V}=(\mathbf{V}_1,\mathbf{V}_2,\mathbf{V}_3)$,  $\beta$ is the angle between $\mathbf{N}$ and $\mathbf{I}=(\mathbf{I}_1,\mathbf{I}_2,\mathbf{I}_3)$. The geometric relations are shown in the picture below.
 
 \begin{figure}[h!]
@@ -489,9 +489,8 @@ Both orbiting simulation results show agreement with the physical phenomenon. Th
 \end{figure}
 
 \section{Future work}
-\subsection{Other Shapes and Technical Challenges}
-
-\textbf{Creating complex shapes and visualization.}
+\subsection{Other Shapes and Technical Challenges}$~\\$
+\textbf{\indent Creating complex shapes and visualization.}
 Using Rvachev functions, it is possible to create 
 complex objects by combining basic shapes such as elliptic paraboloids, 
 planes, and spheres. In Figure~\ref{fig:rocket}, we show a model rocket created
@@ -507,7 +506,6 @@ found in MATLAB Central~\cite{Morales}.
 functions.}
 \label{fig:rocket} 
 \end{figure} 
-
 \textbf{Numerical approximation issues.}
 In the pursuit of accurate solutions of optical cross section for more complex
 objects, one major challenge arises when the object being considered has sharp

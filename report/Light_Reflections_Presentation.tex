@@ -147,11 +147,14 @@ $$\text{BRDF}(\mathbf{I},\mathbf{V};\mathbf{N}) = \left(\frac{\langle\mathbf{H},
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Blinn--Phong as MRDF}
+\frametitle{Blinn--Phong as MRDF on Sphere}
 \begin{itemize}
 \item MRDF: \textit{Mono-static reflectance distribution function}
 \item Case where light and viewing vectors are parallel
-\item Blinn--Phong model reduces to $(\cos\theta)^\alpha$ \\\vspace*{0.25 in}
+\item Blinn--Phong model reduces to $(\cos\theta)^\alpha$ \\
+($\theta$ denotes the angle between viewing/light vectors and the surface normal)
+
+\vspace*{0.25 in} 
 \end{itemize}
 \centerline{\includegraphics[scale=0.3]{./figs/MRDFs}}
 \end{frame}
@@ -206,7 +209,7 @@ Need to compute separately for each bouncing case. Denote contributions from lig
 \end{frame}
 
 \begin{frame}[t]
-"Projected" $\BRDF$ at each bounce
+``Projected" $\BRDF$ at each bounce
 $$\BRDF^*_{D_i}=\Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{I}_{i+1}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha\frac{\ip{\mathbf{I}_i}{\mathbf{N}_i}}{\|\mathbf{I}_i\|\|\mathbf{N}_i\|}\frac{\ip{\mathbf{I}_{i+1}}{\mathbf{N}_i}}{\|\mathbf{I}_{i+1}\|\|\mathbf{N}_i\|} \frac{1}{\|r\mathbf{N}_{i+1}-r\mathbf{N}_i\|^2}$$
 Contribution to OCS from lights that bounces exactly $n-$times 
 \begin{equation*}
@@ -214,7 +217,7 @@ Contribution to OCS from lights that bounces exactly $n-$times
 \end{equation*}
 Add up to get the whole OCS
 $$\sigma=\sum_{n=1}^{\infty} \sigma_n$$
-Note: we have assume convergence of both the integral and infinite sum. Rigorous justification needs to be done. Computation can be generalized to other concave surfaces. 
+Computation can be generalized to other concave surfaces. 
 \end{frame}
 
 \begin{frame}[t]

@@ -2,6 +2,7 @@
 % Document type, packages imported, theme and color:
 \documentclass{beamer}
 \usepackage{amsmath,geometry,graphicx}
+\usepackage{tcolorbox}
 \usetheme{Madrid}
 \usepackage{multicol}
 \newcommand{\BRDF}{\mathrm{BRDF}}
@@ -135,8 +136,10 @@ used \verb+chebfun+ for computing integrals
 \begin{frame}[t]
 \frametitle{The Blinn--Phong model}
 \centerline{\includegraphics[scale=0.2]{./figs/ModelVectors}}
-$$\text{BRDF}(\mathbf{I},\mathbf{V}) = \left(\frac{\langle\mathbf{H},\mathbf{N}\rangle}{\|\mathbf{H}\|}\right)^\alpha \text{ for } \alpha \geq 0$$
+\begin{tcolorbox}
+$$\text{BRDF}(\mathbf{I},\mathbf{V};\mathbf{N}) = \left(\frac{\langle\mathbf{H},\mathbf{N}\rangle}{\|\mathbf{H}\|}\right)^\alpha \text{ for } \alpha \geq 0$$
 \centerline{where $\mathbf{H} = \mathbf{I} + \mathbf{V}$ is the \textit{halfway vector}}
+\end{tcolorbox}
 \begin{itemize}
 \item Modification of Phong model
 \item BRDF: \textit{Bi-static reflectance distribution function}
@@ -147,8 +150,8 @@ $$\text{BRDF}(\mathbf{I},\mathbf{V}) = \left(\frac{\langle\mathbf{H},\mathbf{N}\
 \frametitle{Blinn--Phong as MRDF}
 \begin{itemize}
 \item MRDF: \textit{Mono-static reflectance distribution function}
-\item Case where light and viewing vector are parallel
-\item Blinn--Phong reduces to scaled $(\cos\theta)^\alpha$ \\\vspace*{0.25 in}
+\item Case where light and viewing vectors are parallel
+\item Blinn--Phong model reduces to $(\cos\theta)^\alpha$ \\\vspace*{0.25 in}
 \end{itemize}
 \centerline{\includegraphics[scale=0.3]{./figs/MRDFs}}
 \end{frame}
@@ -193,7 +196,7 @@ $$\text{BRDF}(\mathbf{I},\mathbf{V}) = \left(\frac{\langle\mathbf{H},\mathbf{N}\
 
 
 \begin{frame}[t]
-\frametitle{Multipath}
+\frametitle{Multi-path problem}
 When light is projected onto a concave surface, some light beams could be reflected multiple times before it exits the surface area. 
 \begin{columns}
 \column{0.5 \textwidth} \includegraphics[width=2.4in]{./figs/multipath_edit.pdf}

@@ -5,6 +5,7 @@
 \renewcommand{\baselinestretch}{1.1}
 \usepackage{url}
 \usepackage{color}
+\usepackage{breqn}
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -541,29 +542,38 @@ with the approach of simply increasing the approximation tolerance.
 \end{figure}
 
 \subsection{The Multipath Problem}~\\
-Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is r. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$. The light hits point $D$ and gets reflected to travel along $\mathbf{I}_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $\mathbf{V}=(\cos\psi_V,\sin\psi_V)$ with $\psi_V$ also given. With the picture below, it is clear that
+Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is $r$. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$ and the light detector has viewing angle $\mathbf{V}$. For lights that are reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector, denote the (inward) normal vector at $D_n$ by $\mathbf{N}_n=(-\cos\vartheta_n,-\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(-\cos\psi_n,-\sin\psi_n)$.  Define inductively 
+$$(*)\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\ \delta_n=\vartheta_{n+1}-\vartheta_n,\\ \psi_n=\psi_{n-1}-(\pi-\delta_n)\end{cases}$$ 
 
-$$\mathbf{N}_1=(\cos\vartheta_1,\sin\vartheta_1),\quad \mathbf{I}_2= (-\cos(\psi_I+\vartheta_2-\vartheta_1),-\sin(\psi_I+\vartheta_2-\vartheta_1)),\quad \mathbf{N}_2= (\cos\vartheta_2,\sin\vartheta_2)$$
+\begin{proposition}
+Consider the situation described above. The Optical Cross Section under such circumstances is computed as
+$$\sigma=\sum_{n}^{\infty}\sigma_n$$
+with
+\begin{multline*}
+\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \\\prod_{i=1}^{n-1}\bigg\{ \Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha \frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|}\bigg\}r^n\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n\end{multline*}
+assuming that the infinite sum and the integral both converge.
+\end{proposition}
 
+\begin{proof}
+The proof is very straightforward. The contribution from a single bounce to the OCS is easily computed by using Bling-Phong's model
+$$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_1+\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{I}_1+\mathbf{N}_1\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{N}_1\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_1}{\mathbf{I}_1}}{\|\mathbf{N}_1\| \|\mathbf{I}_1\|} r\mathrm{d}\vartheta_1$$
+To compute the contribution from lights that bounce multiple times before it is received, what we need is just to write the relations between the angles correctly. For the case with two bounces, we can deduce these relations with the help from the picture below. Observe that now
+$\angle{ID_1O}=\angle{OD_1D_2}=\angle{D_1D_2O}$ and $\vartheta_1=\vartheta_2+\angle{D_2D_1O}+\angle{OD_1I}$. Hence by defining $\delta_2=\vartheta_2-\vartheta_1$, $\angle{D_2D_1O}+\angle{OD_1I}=\pi-\delta_2$. So the polar angle $\psi_2$ for $\mathbf{I}_2$ can be written as $\psi_1-(\pi-\delta_2)$.  More generally,  the relations among the angles for even more bounces are given by  $(*)$.
 \begin{figure}[H]
-  \includegraphics[width=4.5in]{./figs/multipath_edit.pdf}
+  \includegraphics[width=4in]{./figs/multipath_edit.pdf}
   \label{fig:reflection}
 \end{figure}
 
-The contribution from a single bounce to the OCS is computed by
-$$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_1+\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{I}_1+\mathbf{N}_1\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{N}_1\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_1}{\mathbf{I}_1}}{\|\mathbf{N}_1\| \|\mathbf{I}_1\|} \: d\vartheta_1$$
+Now let's compute the contribution for lights that bounce exactly $n$ times (happening at $D_1,...,D_n$ respectively) before it is received. For each bounce happening at $D_i$, a differential length around $D_1$ becomes the new emitter that shines towards another differential length around $D_{i+1}$. The viewing angle from $D_{i+1}$ towards $D_i$ now is just the direction of the reflected light $\mathbf{I}_{i}$. So we can invoke Blinn-Phong model to compute the detectable light at $D_{i+1}$ from $D_i$ and get the projected $\BRDF$
+$$E_i=\Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{I}_{i+1}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha\frac{\ip{\mathbf{I}_i}{\mathbf{N}_i}}{\|\mathbf{I}_i\|\|\mathbf{N}_i\|}\frac{\ip{\mathbf{I}_{i+1}}{\mathbf{N}_i}}{\|\mathbf{I}_{i+1}\|\|\mathbf{N}_i\|} \frac{1}{\|\mathbf{N}_{i+1}-\mathbf{N}_i\|^2}$$
+where $1/\|\mathbf{N}_{i+1}-\mathbf{N}_i\|^2$ is used to account for energy lost for distributing over spherical surfaces. Therefore, for the lights that bounce exactly $n-$times before reaching the detector, their total contributions to $OCS$ would be 
+\begin{equation*}
+\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \bigg(\prod_{i=1}^{n-1}E_i\bigg) r^n\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n
+\end{equation*}
 
-Then the contribution from the second bounce to the OCS is computed by
-
-$$\sigma_2 =\int_{0}^{\pi}\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_2+\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{I}_2+\mathbf{N}_2\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{N}_2\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_2}{\mathbf{I}_2}}{\|\mathbf{N}_2\| \|\mathbf{I}_2\|} \frac{1}{\|\mathbf{N}_1-\mathbf{N}_2\|^2} \: d\vartheta_1 \: d\vartheta_2$$
-where the extra factor  $1/\|\mathbf{N}_1-{\mathbf{N}}_2\|^2$ is to due to the fact that the longer distance the light travels from $D$ to $E$, the weaker the light can be gathered at $E$.  Therefore the OCS including two bounces is given by $$\sigma=\sigma_1+\sigma_2$$
-
-We can compute the total contribution for more bounces in similar fashion. Assume the incoming light $\mathbf{I}=(\cos\psi_{I},\sin\psi_{I})$ is reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector whose viewing angle is $\mathbf{V}$. Denote the normal vector at $D_n$ by $\mathbf{N}_n=(\cos\vartheta_n,\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(\cos\psi_n,\sin\psi_n)$. Define inductively 
-$$\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\ 2\delta_n=\vartheta_{n+1}-\vartheta_n,\\ \psi_n=\psi_{n-1}-(\pi-2\delta_n)\end{cases}$$ 
-$$\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \bigg(\prod_{i=1}^{n}\frac{1}{\|\mathbf{N}_{i+1}-\mathbf{N}_{i}\|^2} \bigg)\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n$$
-
-Total contributions for up to $n$ bounces is then given by
+The appearance of factor $r^n$ is due to the Jacobians from rewriting line integrals into usual integrals. Total contributions for up to $n$ bounces is then given by
  $$ \sigma= \sigma_1+\sigma_2+...+\sigma_n$$
+ \end{proof}
  
 \section{Conclusion}
 

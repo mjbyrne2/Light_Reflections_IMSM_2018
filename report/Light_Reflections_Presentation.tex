@@ -52,13 +52,13 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \begin{itemize} 
 \item Build complex objects using various methods (OpenSCAD, R-functions) 
 \item Develop a continuous approach to optical cross section (OCS) computation 
-\item Find a solution to the mutlipath problem 
+\item Find a solution to the multipath problem 
 \end{itemize} 
 \end{column}
 \begin{column}{0.5\textwidth}
-\includegraphics[width = 0.6\linewidth]{rocket.pdf}\\ 
+\centerline{\includegraphics[width = 0.6\linewidth]{rocket.pdf}}\\ 
 \vspace{5mm}
-\includegraphics[width = 0.6\linewidth]{./figs/multipath.pdf} 
+\centerline{\includegraphics[width = 0.6\linewidth]{./figs/multipath.pdf}}
 \end{column}
 \end{columns}
 
@@ -73,12 +73,13 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \frametitle{Rvachev functions (1963)} 
 \begin{itemize} 
 \item Commonly referred to as R-functions 
+\item Inputs are implicit functions
 \item Boolean algebra to construct composite shapes from simple ones 
 \[
     \begin{aligned}
-    f \cap g &=        \\ 
-    g \cup g &=        \\
-    f \setminus g &=   \\
+    f \cap g &= f + g + \sqrt{f^2 + g^2}       \\ 
+    g \cup g &= f + g - \sqrt{f^2 + g^2}       \\
+    f \setminus g &= f - g - \sqrt{f^2 + g^2}  \\
     \end{aligned}
 \]
 \end{itemize} 
@@ -106,11 +107,13 @@ f \cup g: {\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\
 
 \begin{frame}
 \frametitle{R-functions more examples} 
-\begin{tabular}{ccc}
-\includegraphics[width=.32\textwidth]{./figs/shape1.pdf} & 
+\centerline{\begin{tabular}{cc}
+\includegraphics[width=.32\textwidth]{./figs/shape1.pdf} &
 \includegraphics[width=.32\textwidth]{./figs/shape2.pdf}  
 \\
-$f$ & $g$\\
+$f$ & $g$
+\end{tabular}}
+\begin{tabular}{ccc}
 \includegraphics[width=.32\textwidth]{./figs/union.pdf} & 
 \includegraphics[width=.32\textwidth]{./figs/intersect.pdf} & 
 \includegraphics[width=.32\textwidth]{./figs/diff.pdf}\\
@@ -130,32 +133,61 @@ used \verb+chebfun+ for computing integrals
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Analytic benchmark: the sphere}
+\frametitle{The Blinn--Phong model}
+\centerline{\includegraphics[scale=0.22]{./figs/ModelVectors}}
+$$\text{BRDF}(\mathbf{I},\mathbf{V}) = \big(<\mathbf{H},\mathbf{N}>\big)^\alpha \text{ for } \alpha \geq 0$$
+\centerline{where the \textit{halfway vector} $\mathbf{H}$ is defined as $(\mathbf{I} + \mathbf{V})/\|\mathbf{I} + \mathbf{V}\|$}
 \begin{itemize}
-\item Unit sphere (spherical coordinate)
-\item Light source: fixed at the direction $(\theta,\phi) = (\frac{\pi}{2},\frac{\pi}{2})$
-\item Detector: orbiting on $xy$-plane
-\item Varying specular highlight
+\item Modification of Phong model
+\item BRDF: \textit{Bistatic reflectance distribution function}
 \end{itemize}
-\begin{multicols}{2}
-\centering \includegraphics[scale=0.13]{./figs/OCS_parallel_plane}
-\begin{figure}
-\centering \includegraphics[scale=0.1]{./figs/orbiting_example}\caption{qimono.
- pixabay. 2016}
-\end{figure}
-\end{multicols}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Chebfun and the sphere (cont'd)}
+\frametitle{Blinn--Phong as MRDF}
 \begin{itemize}
-\item Unit sphere
+\item MRDF: \textit{Monostatic reflectance distribution function}
+\item Case where $\mathbf{I} = \mathbf{V}$
+\end{itemize}
+\centerline{\includegraphics[scale=0.3]{./figs/MRDFs}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Blinn--Phong as BRDF}
+\centerline{\includegraphics[scale=0.4]{./figs/BRDF_Vectors.pdf}}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Analytic benchmark: the sphere}
+\begin{itemize}
+\item (LEFT) Unit sphere, (RIGHT) Ellipsoid
+\item Light source: fixed at the direction $(\theta,\phi) = (\frac{\pi}{2},\frac{\pi}{2})$
+\item Detector: orbiting on $xy$-plane
+\item Analytic solution for sphere: $2\pi/3 \approx 2.094395102393195$
+\item Chebfun approximation for sphere: $\approx 2.094395102389723$
+\end{itemize}
+\begin{columns}[c]
+\column{.5\textwidth}
+\centering \includegraphics[scale=0.21]{./figs/OCS_parallel_plane}
+\column{.5\textwidth}
+\centering \includegraphics[scale=0.21]{./figs/OCS_parallel_plane_ellipsoid}
+\end{columns}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Analytic benchmark: OCS values of sphere \& ellipsoid}
+\begin{itemize}
+\item (LEFT) Unit sphere, (RIGHT) Ellipsoid
 \item Light source: fixed at the direction $(\theta,\phi) = (0,0)$
 \item Detector: orbiting on $xy$-plane
 \item Varying specular highlight
 \end{itemize}
-
-\centering \includegraphics[scale=0.13]{./figs/OCS_perpendicular_plane}
+\begin{columns}[c]
+\column{.5\textwidth}
+\centering \includegraphics[scale=0.22]{./figs/OCS_perpendicular_plane}
+\column{.5\textwidth}
+\centering \includegraphics[scale=0.13]{./figs/OCS_perpendicular_plane_ellipsoid}
+\end{columns}
 \end{frame}
 
 
@@ -198,3 +230,4 @@ Note: we have assume convergence of both the integral and infinite sum. Rigorous
  
 % Satellite.jpg: https://www.newscientist.com/article/2113311-first-ever-lightning-mapping-satellite-set-for-take-off/ 
  
+% ModelVectors.jpg: By Martin Kraus - Own work, CC0, https://commons.wikimedia.org/w/index.php?curid=15534756

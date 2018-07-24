@@ -173,7 +173,7 @@ problem of surface concavities will be the main focus of this project.
 When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A reflectance distribution function (RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable``light density" after reflection. 
 
 In general, the degree to which light is reflected depends on the viewer and
-light position relative to the surface normal and tangent. Generally speaking, RDF is
+light position relative to the surface normal and tangent. Generally speaking, RDF
 depends on the wave length of the light that is projected and is a function of incoming light direction (represented by the incident vector
 \textbf{I})and viewing direction (represented by observing vector \textbf{V})
 relative to a local orientation at the light interaction point. However, since this is not the concern of our project, we ignore for now the effect of the wave length. When the light incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$, such function is called Mono-static Reflectance Distribution Function (MRDF). More generally, when the two angles are different it is called Bi-directional Reflectance Distribution Function (BRDF). 
@@ -219,9 +219,9 @@ $$\sigma=\int_{S} \rho \: dA$$
 where $\rho$ is the optical density and is given by an $RDF$, $S$ denotes the surface. In our project, we use the representation
 $$\sigma= \int_S\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma\cos\beta \: dA$$
 with $\gamma$ denoting the relative angle between incident light angle and surface normal, $\beta$ denoting the relative angle between viewing angle and the surface normal. The cosine functions are use to account for the projected light along the surface normal. 
-
+\\
 \subsection{Rvachev Functions}~\\
-The study Rvachev functions (R-functions) arises in the attempt
+The study of Rvachev functions (R-functions) arises in the attempt
 to describe complex geometric objects with a single inequality or equation. In the
 17th century, Decartes suggested the idea of relating geometric objects (e.g.
 lines, circles and bodies) to analytical objects (e.g. sets, functions and
@@ -285,7 +285,7 @@ Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripe
 
 The checker board will then be represented by the following Boolean equation
 $$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_2)\wedge D_3$$
-Recall that $\Leftrightarrow$ is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
+Recall that`` $\Leftrightarrow$ " is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
 $$(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
 This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$.  
 
@@ -303,14 +303,14 @@ OpenSCAD is a free software application for creating solid 3D CAD (computer-aide
 
 Numerically, we can handle even more complex objects through the typical procedure. However, to accurately represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between accuracy of the surface represented and speed of calculation. Table \ref{table: sphere OCS} shows the numerical calculation of OCS for a unit sphere. The relative error is about $10^{-4}$ by using 20480 triangle facets.  
 
-We wish to develop a method that improves the accuracy for much more complex objects. We consider representing the surface in functional form using Chebyshev polynomials and built up through Rvachev functions. The reason to choose Chebyshev polynomial is because for smooth enough object surface, by using sufficiently many Chebyshev poins, the surface representation is possibly accurate to close to machine precision.
+We wish to develop a method that improves the accuracy for much more complex objects. We consider representing the surface in functional form using Chebyshev polynomials and built up through Rvachev functions. The reason to choose Chebyshev polynomial is because for smooth enough object surface, by using sufficiently many Chebyshev points, the surface representation is possibly accurate close to machine precision.
 
 \subsubsection{Chebyshev interpolation analysis}~\\
-It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.
+It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant effect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.
 
 Consider the case with single variable. We start with a function $y=f(x)$ and take data points from it to build an interpolating polynomial $P(x)$. The interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following theorem gives a formula for the interpolation error that is usually impossible to evaluate exactly, but often can be at least bounded by an error.
 \begin{theorem}
-Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ pionts $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 
+Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ points $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 
 \begin{equation} \label{eqn_poly_error}
 f(x)-P(x)=\frac{(x-x_1)(x-x_2)\cdot\cdot\cdot(x-x_n)}{n!}f^{(n)}(c)
 \end{equation}
@@ -457,37 +457,37 @@ Both orbiting simulation results show agreement with the physical phenomenon. Th
 {\bf Case 3: Ellipsoid II} We next chose the ellipsoid described by $\frac{x^2}{9}+\frac{y^2}{4}+\frac{z^2}{1} = 1$ to compare the result with ellipsoid I case. The remaining setup is identical to the previous case. Using the Chebfun approach we found that the OCS value when the light source and the viewer are at the identical position is about 1.6786. Since the viewer would be facing a larger area, the OCS value is expected to be higher. The result turns out to be as expected such that the OCS value produced is higher than the previous case. Finally we looked at the decay rate of the OCS value based on the increase of specular highlight. The result indicates that even though the geometry has definite influence on how fast the OCS decreases, but at the long run the value would likely converge to the same value.
 
 \begin{figure}[h]
-\includegraphics[scale=0.2]{./figs/OCS_parallel_plane}    
+\centering \includegraphics[scale=0.4]{./figs/OCS_parallel_plane}    
 \caption{Simulation of orbiting viewer on the plane as the light source with different $\alpha$ values.}    
 \label{OCSParallelPlane}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[scale=0.2]{./figs/OCS_perpendicular_plane}
+\centering \includegraphics[scale=0.4]{./figs/OCS_perpendicular_plane}
 \caption{Simulation of orbiting viewer on the plane perpendicular to the light source with different $\alpha$ values.}
 \label{OCSPerpendicularPlane}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[scale=0.35]{./figs/OCS_ellipsoid}
+\centering \includegraphics[scale=0.35]{./figs/OCS_ellipsoid}
 \caption{A visual representation of the ellipsoid I simulation. The red line represents the direction of the incoming light source. It can be observed that how fast the curvature change when the viewer orbits around the ellipsoid. The graphic is generated using the Chebfun package.}
 \label{OCSEllipsoid}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[scale=0.32]{./figs/OCS_parallel_plane_ellipsoid}
+\centering \includegraphics[scale=0.35]{./figs/OCS_parallel_plane_ellipsoid}
 \caption{Simulation of orbiting viewer on the same plane as the light source. $\alpha = 0$. The shape of interest here is an ellipsoid.}
 \label{OCSParallelPlaneEllipsoid}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[scale=0.2]{./figs/OCS_perpendicular_plane_ellipsoid}
+\centering \includegraphics[scale=0.22]{./figs/OCS_perpendicular_plane_ellipsoid}
 \caption{Simulation of orbiting viewer on the plane perpendicular to the light source. $\alpha = 0$. The shape of interest here is an ellipsoid.}
 \label{OCSPerpendicularPlaneEllipsoid}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[scale=0.2]{./figs/OCS_decay_by_alpha_ellipsoid}
+\centering \includegraphics[scale=0.2]{./figs/OCS_decay_by_alpha_ellipsoid}
 \caption{OCS value of the ellipsoid simulations with increasing $\alpha$ values. It can be observed that ellipsoid I experiences a faster decay due to the high curvature decay.}
 \label{OCSDecaybyAlphaEllipsoid}
 \end{figure}
@@ -499,8 +499,8 @@ Both orbiting simulation results show agreement with the physical phenomenon. Th
 Using Rvachev functions, it is possible to create 
 complex objects by combining basic shapes such as elliptic paraboloids, 
 planes, and spheres. In Figure~\ref{fig:rocket}, we show a model rocket created
-using this approach. Finding the correct sequence of shapes and Rvachev
-functions, is in general non-trivial. Another issue is finding 
+using this approach. One issue we encounter is finding the correct sequence of shapes and Rvachev
+functions,which is in general non-trivial. Another issue is finding 
 an appropriate visualization tool. For this purpose, 
 we used the MATLAB code \verb+ezimplot3+ which can be 
 found in MATLAB Central~\cite{Morales}.
@@ -527,7 +527,7 @@ $(1.5,0,0)$ is
 \]
 One solution could be to manually increase the tolerance (and thus decrease the
 desired accuracy) of the polynomial approximation, though doing so for complex
-objects might yield approximations that are far less accurate that using facets
+objects might yield approximations that are far less accurate than using facets
 to discretize the surface. Another approach might be to use smoothed versions
 of objects, such as the equation $x^n + y^n + z^n = 1$ for large even values of
 $n$ to approximate a cube centered at the origin (see Figure \ref{cubes}).
@@ -542,7 +542,7 @@ with the approach of simply increasing the approximation tolerance.
 \end{figure}
 
 \subsection{The Multipath Problem}~\\
-Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is $r$. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$ and the light detector has viewing angle $\mathbf{V}$. For lights that are reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector, denote the (inward) normal vector at $D_n$ by $\mathbf{N}_n=(-\cos\vartheta_n,-\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(-\cos\psi_n,-\sin\psi_n)$.  Define inductively 
+Let's now consider the case where light is projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is $r$. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$ and the light detector has viewing angle $\mathbf{V}$. For lights that are reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector, denote the (inward) normal vector at $D_n$ by $\mathbf{N}_n=(-\cos\vartheta_n,-\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(-\cos\psi_n,-\sin\psi_n)$.  Define inductively 
 $$(*)\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\ \delta_n=\vartheta_{n+1}-\vartheta_n,\\ \psi_n=\psi_{n-1}-(\pi-\delta_n)\end{cases}$$ 
 
 \begin{proposition}
@@ -577,9 +577,9 @@ The appearance of factor $r^n$ is due to the Jacobians from rewriting line integ
  
 \section{Conclusion}
 
-In this work we have investigated several aspects of the light reflection. Our main goals were to understand the diffusivity of the reflection associated with material of the surface. To do so first we construct and de-construct complex geometric shapes using Rvachev function which is based on boolean operations. Rvachev functions help obtaining functional representation of the surface that does not require storage of information such as vertices, unit normal vectors and triangle adjacency.
+In this work we have investigated several aspects of the light reflection. Our main goal is to understand the diffusivity of the reflection associated with material of the surface. To do so first we construct and de-construct complex geometric shapes using Rvachev function based on boolean operations. Rvachev functions help obtaining functional representation of the surface that does not require storage of information such as vertices, unit normal vectors and triangle adjacency.
 Second, we improve the current discrete model to continuous model favoring less data storage and we learned to use the combination of Chebfun and indicator function, a computation tool that takes the advantage of Chebyshev polynomial interpolation to perform numerical integration over the surface with less need of explicit expression.
-Finally, we extend the continuous model to incorporate the multi-path phenomenon starting from simple case of two-dimensional one reflection model and extended the result to build the theory for three-dimensional n reflections model.
+Finally, we extend the continuous model to incorporate the multi-path phenomenon starting from simple case of two-dimensional, one reflection model and extended the result to build the theory for three-dimensional, n reflections model.
 
 \section{Acknowledgment}
 

@@ -5,6 +5,7 @@
 \renewcommand{\baselinestretch}{1.1}
 \usepackage{url}
 \usepackage{color}
+\usepackage{breqn}
 \usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -117,29 +118,26 @@
 \newtheorem{exmp}{Example}[section]
 
 \author{Michael Byrne$^1$}
-\thanks{$^1$mjbyrne2@asu.edu}
+\thanks{$^1$Arizona State University, mjbyrne2@asu.edu}
 \author{Fatoumata Sanogo$^2$}
-\thanks{$^2$sanogof1@uab.edu}
+\thanks{$^2$University of Alabama at Birmingham, sanogof1@uab.edu}
 \author{Pai Song$^3$}
-\thanks{$^3$psong@odu.edu}
+\thanks{$^3$Old Dominion University, psong@odu.edu}
 \author{Kevin Tsai$^4$}
-\thanks{$^4$ytsai003@ucr.edu}
+\thanks{$^4$University of California Riverside, ytsai003@ucr.edu}
 \author{Hang Yang$^5$}
-\thanks{$^5$hang.yang@rice.edu}
+\thanks{$^5$Rice University, hang.yang@rice.edu}
 \author{Li Zhu$^6$}
-\thanks{$^6$zhul5@unlv.nevada.edu}
+\thanks{$^6$University of Nevada Las Vegas, zhul5@unlv.nevada.edu}
 \title{Something Cool (TBD)}
 %% Document
 
 \begin{document}
 
 \maketitle
-{
-\noindent
+{\noindent
 \textit{Problem Presenter:  John Peach (MIT Lincoln Lab)\\
-Faculty Mentor: Alen Alexanderian (NCSU)
-}
-}
+Faculty Mentor: Alen Alexanderian (NCSU)}}
 
 \tableofcontents
 
@@ -151,7 +149,7 @@ wavelength of the incident beam. To model reflectance from a surface, the object
 and reflectance from each patch then determined from the local surface normal, incident and reflected angles as well as the
 bistatic reflectance distribution function (BRDF) which provides a measure of the reflectivity for a material (at a selected
 wavelength) for each incident and reflected angle.
-The total optical cross section (OCS) for an object is simply the sum of the reflectances for each triangular patch. For
+The total optical cross section (OCS) for an object is simply the sum of the reflectance for each triangular patch. For
 simple geometric objects such as spheres, cubes, cylinders or cones the OCS may be calculated analytically, but for more
 complex objects the typical procedure is to generate a mesh model and then perform the estimate. However, to accurately
 represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between
@@ -159,7 +157,7 @@ accuracy of the surface represented and speed of calculation. For highly specula
 patches reflect over a very narrow set of angles resulting in a ``disco ball" effect. The Humanity Star
 (http://www.thehumanitystar.com/) is an excellent example of a satellite deliberately designed with just such an effect and
 is expected to produce a pulsing bright spot in the night sky as sunlight reflects off of the large facets [l].
-The goal of this project is to develop a method that extends the accuracy of simple analytic models to much more complex
+The goal of this project is to develop a method that extends the accuracy of simple analytical models to much more complex
 objects. Many man-made objects are composed of relatively simple basis shapes and may be described through constructive
 solid geometry methods [5]. The surfaces may be then represented in functional forms using Chebyshev polynomials [2]
 and built up using Rvachev functions [4]. With a functional description of the surface, it is possible to also have a functional
@@ -170,10 +168,9 @@ regions where the surface is concave because a portion of the surface may be hid
 make multiple reflections in the concave region before exiting towards the sensor. Developing robust solutions to the
 problem of surface concavities will be the main focus of this project.
 
-
 \section{Theoretical Background and Tools}~\\
 \subsection{Reflectance Distribution Functions and Optical Cross Section}~\\
-When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A Reflectance Distribution Function (RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable``light density" after reflection. 
+When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A reflectance distribution function (RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable``light density" after reflection. 
 
 In general, the degree to which light is reflected depends on the viewer and
 light position relative to the surface normal and tangent. Generally speaking, RDF
@@ -185,35 +182,35 @@ Theoretically, BRDF is material-specific. Therefore, getting an accurate functio
 relation requires careful measurements through lab experiments. However, there
 are models that provide substitutes for easy usage. The most famous examples
 are Cook--Torrance model~\cite{CookTorr}, the Ward's model~\cite{Ward} and the
-Blinn-Phong model~\cite{BlinnPhong}. In our report, we will focus on using the
+Blinn--Phong model~\cite{BlinnPhong}. In our report, we will focus on using the
 Blinn--Phong model, which says the following
-
 \[
    \BRDF(\mathbf{I},\mathbf{V};\mathbf{N})
    \approx
    |\ip{\mathbf{H}}{\mathbf{V}}|^\alpha
 \]
 where $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
-is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the light reflectivity the material used to cover the surface (large reflectivity corresponds to large $\alpha$). Intuitively speaking, the more mirror-like an object is,  the shaper its specular peak will be (corresponding to an RDF that decays faster). \begin{figure}[H]
+is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the light reflectivity the material used to cover the surface (large reflectivity corresponds to large $\alpha$). Intuitively speaking, the more mirror-like an object is,  the sharper its specular peak will be (corresponding to an RDF that decays faster). 
+
+\begin{figure}[H]
  \includegraphics[width=1.1\textwidth]{./figs/Surfaces.pdf}
  %Surfaces.png} 
 \end{figure}
 
-
-A special case of the Blinn-Phong Model gives rise to a handy formula for MRDF. Taking $\mathbf{I}=\mathbf{V}$ and letting the angle between $\mathbf{I}$ and $\mathbf{N}$ be $\theta$, we get
+A special case of the Blinn--Phong model gives rise to a handy formula for MRDF. Taking $\mathbf{I}=\mathbf{V}$ and letting the angle between $\mathbf{I}$ and $\mathbf{N}$ be $\theta$, we get
 \[
 \MRDF(\mathbf{I};\mathbf{N})=(\cos \theta)^\alpha
 \]
 
 \begin{figure}[H]
  \includegraphics[width=1\textwidth]{./figs/MRDFs.eps}
- \caption{The MRDFs from the simplified Blinn-Phong model for varying values of $\alpha$. The aspect angle is the angle between $\mathbf{N}$ and $\mathbf{I}=\mathbf{V}$. Note as the value of $\alpha$ becomes large, the modeled specularity of the surface increases; in other words, there is less diffusion of light as it is being reflected off of the surface.}
+ \caption{The MRDFs from the simplified Blinn--Phong model for varying values of $\alpha$. The aspect angle is the angle between $\mathbf{N}$ and $\mathbf{I}=\mathbf{V}$. Note as the value of $\alpha$ becomes large, the modeled specularity of the surface increases; in other words, there is less diffusion of light as it is being reflected off of the surface.}
  \label{MRDFs}
 \end{figure}
 
 \begin{figure}[H]
  \includegraphics[width=0.8\textwidth]{./figs/BRDF_Vectors.pdf}
- \caption{Distributions of light from the Blinn-Phong model for varying values of $\alpha$, where $\mathbf{N} = (0,1)$ and $\mathbf{I} = (\cos(3\pi/4),\sin(3\pi/4))$. Again, as the value of $\alpha$ becomes large, the modeled specularity of the surface increases which results in more of the incoming light being reflected in the direction $(\cos(\pi/4),\sin(\pi/4))$.}
+ \caption{Distributions of light from the Blinn--Phong model for varying values of $\alpha$, where $\mathbf{N} = (0,1)$ and $\mathbf{I} = (\cos(3\pi/4),\sin(3\pi/4))$. Again, as the value of $\alpha$ becomes large, the modeled specularity of the surface increases which results in more of the incoming light being reflected in the direction $(\cos(\pi/4),\sin(\pi/4))$.}
  \label{BRDFVectors}
 \end{figure}
 
@@ -230,10 +227,10 @@ to describe complex geometric objects with a single inequality or equation. In t
 lines, circles and bodies) to analytical objects (e.g. sets, functions and
 equations). Since then, methods to study geometric properties based on its
 functional descriptions have been developed systematically. This is also known
-as the direct problem of analytical geometry. As oppose to the direct problem,
+as the direct problem of analytic geometry. As oppose to the direct problem,
 people also considered the inverse problem: given certain geometric objects
 equipped with some desired properties, find an analytical representation to
-such objects. The following graphs illustrate one of the inverse problem: given a disk and a ball, find the analytical formulae respectively for their union, intersection and difference. 
+such objects. Figure \ref{DiskAndBall} illustrates the union, intersection and difference of a disk and ball. 
 
 \begin{figure}[H]
 \includegraphics[width=.32\textwidth]{./figs/shape1.pdf}
@@ -242,12 +239,13 @@ such objects. The following graphs illustrate one of the inverse problem: given 
 \includegraphics[width=.32\textwidth]{./figs/union.pdf}
 \includegraphics[width=.32\textwidth]{./figs/intersect.pdf}
 \includegraphics[width=.32\textwidth]{./figs/diff.pdf}
+\caption{The bottom three objects are the union, intersection, and difference of the disk and ball (top two objects).}
+\label{DiskAndBall}
 \end{figure}
 
-
 For the simple geometric objects, the inverse problem is not
-difficult at all. Yet for more complicated ones, especially when multiple forms
-and shapes are combined, the analytical description of it becomes less clean and usually involves logical operations among regions defined by inequalities. The birth of R-functions is exactly to help resolve this issue.    
+difficult. Yet for more complicated ones, especially when multiple forms
+and shapes are combined, analytical descriptions become less clean and usually involve logical operations among regions defined by inequalities. The birth of R-functions is exactly to help resolve this issue.    
 
 On the formal level, an R-function is a function whose sign do not depend on the magnitude of its arguments.  The following are some easy  examples of R-functions: 
 \begin{enumerate}
@@ -290,7 +288,6 @@ $$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_
 Recall that`` $\Leftrightarrow$ " is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
 $$(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
 This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$.  
-
 
 \subsection{OpenSCAD and Chebfun}
 \subsubsection{OpenSCAD}~\\
@@ -362,7 +359,7 @@ The interpolation formula ~\eqref{eqn_cheb_error} gives
 \end{exmp}
 
 \begin{exmp}
-In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and chebyshev method with 15 points. FIGURE \ref{fig:e2} shows Runge phenomenon from polynomial interpolation.
+In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polynomial and Chebyshev method with 15 points. Figure \ref{fig:e2} shows Runge phenomenon from polynomial interpolation.
 \begin{figure}[H] 	
         \centerline{\includegraphics[width=3.2in]{./figs/e2a.eps}
       	\hspace{-6pt}
@@ -375,10 +372,9 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 
 \section{Results and Discussions}
 \subsection{Analytical Solutions for Sphere}
-Recall that by using Bling-Phong model for shpere, we can compute OCS through
+Recall that by using Blinn--Phong model for sphere, we can compute OCS through
 $$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma \cos\beta \mathbf{\chi}_{\ip{N}{I}\geq 0}\mathbf{\chi}_{\ip{V}{N}\geq 0} \: dA$$
 where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\vartheta\sin\varphi,\cos\varphi)$ and  $\mathbf{V}=(\mathbf{V}_1,\mathbf{V}_2,\mathbf{V}_3)$,  $\beta$ is the angle between $\mathbf{N}$ and $\mathbf{I}=(\mathbf{I}_1,\mathbf{I}_2,\mathbf{I}_3)$. The geometric relations are shown in the picture below.
-
 
 \begin{figure}[h!]
   \includegraphics[width=4in]{./figs/Sphere_edit.pdf}
@@ -405,21 +401,24 @@ For each facet in the model, find angle $\theta$ between incident ray and facet 
 where $A$ is target area, $\Omega$ is solid angle of scattering.
 
 Simply for a sphere, we generate a mesh by using icosahedron. An icosahedron is a polyhedron composed of twenty identical equilateral, each triangle has the same area and each vertex is at the same distance from all its neighbors. To get a higher number of triangles we need to subdivide each triangles by creating a new vertex at the middle point of each edge which is then normalized, to make it lie in the sphere surface. This breaks the initial properties of the icosahedron, the triangles are not equilateral anymore and neither the area nor the distance between adjacent vertices is the same across the mesh. But it is still a better approximation by almost any measure excluding its number of triangles. 
+
 \begin{figure}[H]  	\centerline{\includegraphics[height=1.4in,width=1.2in]{./figs/facet.png}}
 		\caption{Incident angle $\theta$ on each triangle facet}
         \label{fig:facet}
 \end{figure}
+
 \begin{figure}[H] 	\centerline{\includegraphics[width=4.8in]{./figs/icosahedron.eps}}
 		\caption{Visualization of icosahedral mesh with number of faces N = 20, 80, 320, 1280, 5120 and 20480}
         \label{fig:icosahedron}
 \end{figure}
+
 The calculation of optical cross section is summarized as following:
 \begin{itemize}
 \item Genete mesh for a given model
 \item For each facet, calculate reflectance from incident angle, material properties, etc.
 \item Sum over all visible facets to obtain OCS
 \end{itemize} 
-The following Table \ref{table: sphere OCS} shows the numerical results for different mesh size of a sphere with constant $\rho=1$ and $\alpha=0$. The analytic OCS for a sphere is $2\pi/3\approx 2.094395102389723$.
+The following Table \ref{table: sphere OCS} shows the numerical results for different mesh size of a sphere with constant $\rho=1$ and $\alpha=0$. The analytical OCS for a sphere is $2\pi/3\approx 2.094395102389723$.
 \begin{table}[H]
 	\small
 	\caption{Numerical calculation of OCS for a sphere
@@ -443,10 +442,9 @@ The following Table \ref{table: sphere OCS} shows the numerical results for diff
   
 \subsection{Numerical Solutions for Sphere \& Application to Ellipsoid}
 
+To capture the target area for numerical integration using Chebfun, the boolean relationship is incorporated to avoid defining explicit boundary angles. This is achieved by multiplying the integrand derived from the Blinn--Phong model by $\max\{0, \langle \mathbf{L},\mathbf{N}\rangle\}$ and $\max\{0,\langle \mathbf{V},\mathbf{N}\rangle\}$ which rules out area not in the intersection of the lighted area and viewer's range. Here $\langle\cdot, \cdot\rangle$ is the inner product, $\mathbf{L}$ is the light source direction, $\mathbf{V}$ is the viewer direction, and $\mathbf{N}$ is the outward unit normal of the surface.
 
-To capture the target area for numerical integration using Chebfun, the boolean relationship is incorporated to avoid defining explicit boundary angles. This is achieved by multiplying the integrand derived from the Blinn-Phong model by $\max\{0, \langle \mathbf{L},\mathbf{N}\rangle\}$ and $\max\{0,\langle \mathbf{V},\mathbf{N}\rangle\}$ which rules out area not in the intersection of the lighted area and viewer's range. Here $\langle\cdot, \cdot\rangle$ is the inner product, $\mathbf{L}$ is the light source direction, $\mathbf{V}$ is the viewer direction, and $\mathbf{N}$ is the outward unit normal of the surface.
-
-{\bf Case 1: Method verification.} Verification of the accuracy of Chebfun is performed by simulating the case where the light source and the viewer are at the identical direction to capture the optical cross section value. The reflexivity and the light diffusivity of the surface are fixed as $\rho = 1$ and $\alpha =0$ respectively. The optical cross section (OCS) approximated using Chebfun, with interpolating error tolerance of $10^{-8}$, yields $\sigma_{cheb} = 2.094395102389723$. The known analytic solution is $\sigma_{analytic} = \frac{2*\pi}{3}\approx 2.094395102393195$. The absolute error of the Chebfun approach is in the range of $10^{-12}$ due its semi-analytic nature. This is superior to the triangular discretization approach which performs at $\approx 10^{-4}$ accuracy. To ensure the Chebfun approach does not produce non-physical result, additional tests were run for different $\alpha$ value and different viewer's position.
+{\bf Case 1: Method verification.} Verification of the accuracy of Chebfun is performed by simulating the case where the light source and the viewer are at the identical direction to capture the optical cross section value. The reflexivity and the light diffusivity of the surface are fixed as $\rho = 1$ and $\alpha =0$ respectively. The optical cross section (OCS) approximated using Chebfun, with interpolating error tolerance of $10^{-8}$, yields $\sigma_{cheb} = 2.094395102389723$. The known analytical solution is $\sigma_{analytical} = 2\pi/3 \approx 2.094395102393195$. The absolute error of the Chebfun approach is in the range of $10^{-12}$ due its semi-analytical nature. This is superior to the triangular discretization approach which performs at $\approx 10^{-4}$ accuracy. To ensure the Chebfun approach does not produce non-physical result, additional tests were run for different $\alpha$ value and different viewer's position.
 
 The $\alpha$ value is chosen to be the interval $[0,18]$ with fixed increment. The results shows that as $\alpha$ increases the OCS value decreases (Figure \ref{OCSParallelPlane}). Since higher $\alpha$ value represents the smaller specular highlight, the viewer would receive less total reflected light across the whole surface. This is in agreement with the physical observation.
 
@@ -456,7 +454,7 @@ Both orbiting simulation results show agreement with the physical phenomenon. Th
 
 {\bf Case 2: Ellipsoid I} Following the verification we applied the Chebfun approach to a non-uniform shape. The shape chosen is an triaxial ellipsoid due to its simple geometry and non-uniform symmetry. We started with the ellipsoid $\frac{x^2}{4}+\frac{y^2}{9}+\frac{z^2}{1} = 1$. $\rho$ and $\alpha$ are as in the verification section. However, due to the artificial singularities generated from the parameterization of the surface, we intentionally excluded a small neighborhood near the ``north pole" and the``south pole" to avoid instability. Light source is fixed at $(\theta,\phi) = (\pi/2, \pi/2)$ and the viewer orbits on the $xy$-plane. The Chebfun approach yields OCS value $\approx 0.9821$ when the viewer and the light source are at the identical direction. This lower observed value is likely due to the difference in curvatures of the surface facing $(\theta, \phi)=(\pi/2, \pi/2)$ comparing to a hemisphere. While in the sphere case, the angle between the unit normal and the viewer direction increases at a constant rate, in the ellipsoid case the the angle approaches 90 degree at a faster rate. Similar to the sphere case, the OCS value drops down as the viewer moves further away from the light source. The decay rates of OCS value between the sphere and ellipsoid case are expected to be different and can be observed using Figure \ref{OCSParallelPlane} and Figure \ref{OCSParallelPlaneEllipsoid}. We also performed the same test simulating viewer orbiting on a plane perpendicular to the light source, the resulting periodic oscillation obtained is determined to be physical.
 
-{\bf Case 3: Ellipsoid II} We next chose the ellipsoid described by $\frac{x^2}{9}+\frac{y^2}{4}+\frac{z^2}{1} = 1$ to compare the result with ellipsoid I case. The remaining setup is identical to the previous case. Using the Chebfun approach we found that the OCS value when the light source and the viewer are at the identical position is $\approx 1.6786$. Since the viewer would be facing a larger area, the OCS value is expected to be higher. The result turns out to be as expected such that the OCS value produced is higher than the previous case. Finally we looked at the decay rate of the OCS value based on the increase of specular highlight. The result indicates that even though the geometry has definite influence on how fast the OCS decreases, but at the long run the value would likely converge to the same value.
+{\bf Case 3: Ellipsoid II} We next chose the ellipsoid described by $\frac{x^2}{9}+\frac{y^2}{4}+\frac{z^2}{1} = 1$ to compare the result with ellipsoid I case. The remaining setup is identical to the previous case. Using the Chebfun approach we found that the OCS value when the light source and the viewer are at the identical position is about 1.6786. Since the viewer would be facing a larger area, the OCS value is expected to be higher. The result turns out to be as expected such that the OCS value produced is higher than the previous case. Finally we looked at the decay rate of the OCS value based on the increase of specular highlight. The result indicates that even though the geometry has definite influence on how fast the OCS decreases, but at the long run the value would likely converge to the same value.
 
 \begin{figure}[h]
 \includegraphics[scale=0.2]{./figs/OCS_parallel_plane}    
@@ -504,8 +502,8 @@ planes, and spheres. In Figure~\ref{fig:rocket}, we show a model rocket created
 using this approach. One issue we encounter is finding the correct sequence of shapes and Rvachev
 functions,which is in general non-trivial. Another issue is finding 
 an appropriate visualization tool. For this purpose, 
-we used the Matlab code \verb+ezimplot3+ which can be 
-found in Matlab Central~\cite{Morales}.
+we used the MATLAB code \verb+ezimplot3+ which can be 
+found in MATLAB Central~\cite{Morales}.
 
 \begin{figure} 
 \centerline{\includegraphics[width=.7\textwidth]{rocket.pdf}} 
@@ -543,40 +541,47 @@ with the approach of simply increasing the approximation tolerance.
 \label{cubes}
 \end{figure}
 
-
 \subsection{The Multipath Problem}~\\
-Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface to other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is r. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$. The light hits point $D$ and gets reflected to travel along $\mathbf{I}_2$. It was reflected by the surface again at point E before arriving at the sensor, whose viewing angle is represented by $\mathbf{V}=(\cos\psi_V,\sin\psi_V)$ with $\psi_V$ also given. With the picture below, it is clear that
+Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is $r$. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$ and the light detector has viewing angle $\mathbf{V}$. For lights that are reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector, denote the (inward) normal vector at $D_n$ by $\mathbf{N}_n=(-\cos\vartheta_n,-\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(-\cos\psi_n,-\sin\psi_n)$.  Define inductively 
+$$(*)\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\ \delta_n=\vartheta_{n+1}-\vartheta_n,\\ \psi_n=\psi_{n-1}-(\pi-\delta_n)\end{cases}$$ 
 
-$$\mathbf{N}_1=(\cos\vartheta_1,\sin\vartheta_1),\quad \mathbf{I}_2= (-\cos(\psi_I+\vartheta_2-\vartheta_1),-\sin(\psi_I+\vartheta_2-\vartheta_1)),\quad \mathbf{N}_2= (\cos\vartheta_2,\sin\vartheta_2)$$
+\begin{proposition}
+Consider the situation described above. The Optical Cross Section under such circumstances is computed as
+$$\sigma=\sum_{n}^{\infty}\sigma_n$$
+with
+\begin{multline*}
+\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \\\prod_{i=1}^{n-1}\bigg\{ \Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{V}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha \frac{\ip{\mathbf{N}_i}{\mathbf{V}}}{\|\mathbf{N}_i\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_i}{\mathbf{I}_i}}{\|\mathbf{N}_i\| \|\mathbf{I}_i\|}\frac{1}{\|rN_{i+1}-rN_i\|^2}\bigg\}r^n\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n\end{multline*}
+assuming that the infinite sum and the integral both converge.
+\end{proposition}
 
+\begin{proof}
+The proof is very straightforward. The contribution from a single bounce to the OCS is easily computed by using Bling-Phong's model with the projected $\BRDF$
+$$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_1+\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{I}_1+\mathbf{N}_1\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{N}_1\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_1}{\mathbf{I}_1}}{\|\mathbf{N}_1\| \|\mathbf{I}_1\|} r\mathrm{d}\vartheta_1$$
+To compute the contribution from lights that bounce multiple times before it is received, what we need is just to write the relations between the angles correctly. For the case with two bounces, we can deduce these relations with the help from the picture below. Observe that now
+$\angle{ID_1O}=\angle{OD_1D_2}=\angle{D_1D_2O}$ and $\vartheta_1=\vartheta_2+\angle{D_2D_1O}+\angle{OD_1I}$. Hence by defining $\delta_2=\vartheta_2-\vartheta_1$, $\angle{D_2D_1O}+\angle{OD_1I}=\pi-\delta_2$. So the polar angle $\psi_2$ for $\mathbf{I}_2$ can be written as $\psi_1-(\pi-\delta_2)$.  More generally,  the relations among the angles for even more bounces are given by  $(*)$.
 \begin{figure}[H]
-  \includegraphics[width=4.5in]{./figs/multipath_edit.pdf}
+  \includegraphics[width=4in]{./figs/multipath_edit.pdf}
   \label{fig:reflection}
 \end{figure}
 
+Now let's compute the contribution for lights that bounce exactly $n$ times (happening at $D_1,...,D_n$ respectively) before it is received. For each bounce happening at $D_i$, a differential length around $D_1$ becomes the new emitter that shines towards another differential length around $D_{i+1}$. The viewing angle from $D_{i+1}$ towards $D_i$ now is just the direction of the reflected light $\mathbf{I}_{i}$. So we can invoke Blinn-Phong model to compute the detectable light at $D_{i+1}$ from $D_i$ and get the projected $\BRDF$
+$$\BRDF^*_{D_i}=\Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{I}_{i+1}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha\frac{\ip{\mathbf{I}_i}{\mathbf{N}_i}}{\|\mathbf{I}_i\|\|\mathbf{N}_i\|}\frac{\ip{\mathbf{I}_{i+1}}{\mathbf{N}_i}}{\|\mathbf{I}_{i+1}\|\|\mathbf{N}_i\|} \frac{1}{\|r\mathbf{N}_{i+1}-r\mathbf{N}_i\|^2}$$
+Therefore, for the lights that bounce exactly $n-$times before reaching the detector, their total contributions to $OCS$ would be 
+\begin{equation*}
+\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \bigg(\prod_{i=1}^{n-1}\BRDF^*_{D_i}\bigg) r^n\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n
+\end{equation*}
 
-The contribution from a single bounce to the OCS is computed by
-$$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_1+\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{I}_1+\mathbf{N}_1\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{N}_1\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_1}{\mathbf{I}_1}}{\|\mathbf{N}_1\| \|\mathbf{I}_1\|} \: d\vartheta_1$$
-
-Then the contribution from the second bounce to the OCS is computed by
-
-$$\sigma_2 =\int_{0}^{\pi}\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_2+\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{I}_2+\mathbf{N}_2\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_2}{\mathbf{V}}}{\|\mathbf{N}_2\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_2}{\mathbf{I}_2}}{\|\mathbf{N}_2\| \|\mathbf{I}_2\|} \frac{1}{\|\mathbf{N}_1-\mathbf{N}_2\|^2} \: d\vartheta_1 \: d\vartheta_2$$
-where the extra factor  $1/\|\mathbf{N}_1-{\mathbf{N}}_2\|^2$ is to due to the fact that the longer distance the light travels from $D$ to $E$, the weaker the light can be gathered at $E$.  Therefore the OCS including two bounces is given by $$\sigma=\sigma_1+\sigma_2$$
-
-We can compute the total contribution for more bounces in similar fashion. Assume the incoming light $\mathbf{I}=(\cos\psi_{I},\sin\psi_{I})$ is reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector whose viewing angle is $\mathbf{V}$. Denote the normal vector at $D_n$ by $\mathbf{N}_n=(\cos\vartheta_n,\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(\cos\psi_n,\sin\psi_n)$. Define inductively 
-$$\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\ 2\delta_n=\vartheta_{n+1}-\vartheta_n,\\ \psi_n=\psi_{n-1}-(\pi-2\delta_n)\end{cases}$$ 
-$$\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \bigg(\prod_{i=1}^{n}\frac{1}{\|\mathbf{N}_{i+1}-\mathbf{N}_{i}\|^2} \bigg)\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n$$
-
-Total contributions for up to $n$ bounces is then given by
+The appearance of factor $r^n$ is due to the Jacobians from rewriting line integrals into usual integrals. Total contributions for up to $n$ bounces is then given by
  $$ \sigma= \sigma_1+\sigma_2+...+\sigma_n$$
+ \end{proof}
+ 
 \section{Conclusion}
 
 In this work we have investigated several aspects of the light reflection. Our main goal is to understand the diffusivity of the reflection associated with material of the surface. To do so first we construct and de-construct complex geometric shapes using Rvachev function based on boolean operations. Rvachev functions help obtaining functional representation of the surface that does not require storage of information such as vertices, unit normal vectors and triangle adjacency.
 Second, we improve the current discrete model to continuous model favoring less data storage and we learned to use the combination of Chebfun and indicator function, a computation tool that takes the advantage of Chebyshev polynomial interpolation to perform numerical integration over the surface with less need of explicit expression.
 Finally, we extend the continuous model to incorporate the multi-path phenomenon starting from simple case of two-dimensional, one reflection model and extended the result to build the theory for three-dimensional, n reflections model.
 
-
-\section{acknowledgement}
+\section{Acknowledgment}
 
 \begin{thebibliography}{9}
 \bibitem{BRDF}

@@ -147,7 +147,7 @@ Faculty Mentor: Alen Alexanderian (NCSU)}}
 
 \section{Abstract}
 
-We build a mathematical model of the properties of an object which faithfully captures the relevant optical phenomena for satellite tracking and prediction of reflective response. We develop analytic models to replace facetized CAD models with continuous functions by providing a more accurate, faster and less complex calculation of the Optical Cross Section(OCS) function. Also, we propose an extension of the discrete multipath solution to the continuous domain. Our method shows the potential to reproduce the accuracy observed on simple analytic object to much more complex objects using constructive solid geometry via Rvachev functions.
+We build a mathematical model of the properties of an object which faithfully captures the relevant optical phenomena for satellite tracking and prediction of reflective response. We develop analytical models to replace facetized CAD models with continuous functions by providing a more accurate, faster and less complex calculation of the Optical Cross Section(OCS) function. Also, we propose an extension of the discrete multipath solution on the continuous domain. Our method shows the potential to reproduce the accuracy observed on simple analytic object to much more complex objects using constructive solid geometry via Rvachev functions.
 
 \section{Introduction}
 By carefully observing the light reflected from a distant object, it may be possible to infer subtle properties such as
@@ -162,12 +162,10 @@ simple geometric objects such as spheres, cubes, cylinders or cones the OCS may 
 complex objects the typical procedure is to generate a mesh model and then perform the estimate. However, in order to obtain highly accurate estimation using discretized surface a large number of facets is required. To further improve the accuracy, one often must rely on unproportional increase of the data storage and computational cost. 
 
 For highly specular (mirror-like) surfaces the flat triangular
-patches reflect over a very narrow set of angles resulting in a ``disco ball" effect. The Humanity Star
-(http://www.thehumanitystar.com/) is an excellent example of a satellite deliberately designed with just such an effect and
-is expected to produce a pulsing bright spot in the night sky as sunlight reflects off of the large facets [l].
-The goal of this project is to develop a method that extends the accuracy of simple analytical models to much more complex
+patches reflect over a very narrow set of angles resulting in a ``disco ball" effect.
+Our contribution with this project is to develop a method that extends the accuracy of simple analytical models to much more complex
 objects. Many man-made objects are composed of relatively simple basis shapes and may be described through constructive
-solid geometry methods [5]. The surfaces may be then represented in functional forms built up using Rvachev functions [4] and interpolated with Chebyshev polynomials [2]. With a functional description of the surface, it is possible to also have a functional
+solid geometry methods. The surfaces may be then represented in functional forms built up using Rvachev functions [6] and interpolated with Chebyshev polynomials [8]. With a functional description of the surface, it is possible to also have a functional
 definition of the normal vector which is required to calculate the reflectance from the BRDF, and with a smoothly varying
 normal function the "disco ball" effect is eliminated. Another advantage of using functional representations of the surfaces
 is that the data storage requirements may be significantly reduced. Calculating the OCS becomes more complicated in

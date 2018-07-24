@@ -1,4 +1,4 @@
-\documentclass[11pt]{amsart}
+\documentclass[11pt,reqno]{amsart}
 %\textwidth7in \textheight9in \topmargin-10mm 
 \evensidemargin-5mm
 \oddsidemargin-5mm
@@ -14,6 +14,8 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
+\usepackage{bbm}
+
 
 
 \newcommand{\nn}{\nonumber}
@@ -33,6 +35,7 @@
 \newcommand{\beq}{\begin{equation}}
 
 
+\newcommand{\ind}{{\Large\mathbbm{1}}}
 \newcommand{\BRDF}{\mathrm{BRDF}}
 \newcommand{\MRDF}{\mathrm{MRDF}}
 \newcommand{\ip}[2]{\langle {#1}, {#2} \rangle}
@@ -130,7 +133,7 @@
 \thanks{$^5$Rice University, hang.yang@rice.edu}
 \author{Li Zhu$^6$}
 \thanks{$^6$University of Nevada Las Vegas, zhul5@unlv.nevada.edu}
-\title{Semi-Analytics and Quantification of Light Reflection}
+\title{Semi-Analytical BRDF-based quantification of light reflection}
 %% Document
 
 \begin{document}
@@ -205,14 +208,14 @@ A special case of the Blinn--Phong model gives rise to a handy formula for MRDF.
 \MRDF(\mathbf{I};\mathbf{N})=(\cos \theta)^\alpha
 \]
 
-\begin{figure}[H]
- \includegraphics[width=1\textwidth]{./figs/MRDFs.eps}
+\begin{figure}
+ \includegraphics[width=.6\textwidth]{./figs/MRDFs.eps}
  \caption{The MRDFs from the simplified Blinn--Phong model for varying values of $\alpha$. The aspect angle is the angle between $\mathbf{N}$ and $\mathbf{I}=\mathbf{V}$. Note as the value of $\alpha$ becomes large, the modeled specularity of the surface increases; in other words, there is less diffusion of light as it is being reflected off of the surface.}
  \label{MRDFs}
 \end{figure}
 
-\begin{figure}[H]
- \includegraphics[width=0.8\textwidth]{./figs/BRDF_Vectors.pdf}
+\begin{figure}
+ \includegraphics[width=0.6\textwidth]{./figs/BRDF_Vectors.pdf}
  \caption{Distributions of light from the Blinn--Phong model for varying values of $\alpha$, where $\mathbf{N} = (0,1)$ and $\mathbf{I} = (\cos(3\pi/4),\sin(3\pi/4))$. Again, as the value of $\alpha$ becomes large, the modeled specularity of the surface increases which results in more of the incoming light being reflected in the direction $(\cos(\pi/4),\sin(\pi/4))$.}
  \label{BRDFVectors}
 \end{figure}
@@ -383,7 +386,7 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 \section{Results and Discussions}
 \subsection{Analytical Solutions for Sphere}$~\\$
 Recall that by using Blinn--Phong model for sphere, we can compute OCS through
-$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma \cos\beta \mathbf{\chi}_{\ip{N}{I}\geq 0}\mathbf{\chi}_{\ip{V}{N}\geq 0} \: dA$$
+$$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma \cos\beta \mathbf{\ind}_{\ip{N}{I}\geq 0}\mathbf{\ind}_{\ip{V}{N}\geq 0} \: dA$$
 where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\vartheta\sin\varphi,\cos\varphi)$ and  $\mathbf{V}=(V_1, V_2, V_3)$,  $\beta$ is the angle between $\mathbf{N}$ and $\mathbf{I}=(I_1,I_2,I_3)$. The geometric relations are shown in the picture below.
 
 \begin{figure}[h!]
@@ -391,8 +394,8 @@ where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\v
   \label{fig:sphere}
 \end{figure}
 The appearances of two indicator functions 
-$$\mathbf{\chi}_{\ip{N}{I}\geq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi I_1+\sin\vartheta\sin\varphi I_2+\cos\varphi I_3\geq 0\}$$ 
-$$\mathbf{\chi}_{\ip{V}{N}\geq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi V_1+\sin\vartheta\sin\varphi V_2+\cos\varphi V_3\geq 0\}$$ 
+$$\mathbf{\ind}_{\ip{N}{I}\geq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi I_1+\sin\vartheta\sin\varphi I_2+\cos\varphi I_3\geq 0\}$$ 
+$$\mathbf{\ind}_{\ip{V}{N}\geq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi V_1+\sin\vartheta\sin\varphi V_2+\cos\varphi V_3\geq 0\}$$ 
 in the formula are just to include only the common part of the illuminated area and the detectable area.
 The spherical coordinates $(r,\vartheta,\varphi)$ are related to the Cartesian coordinates $(x,y,z)$ via
 $$x =r\cos\vartheta \sin\varphi, \quad y=r\sin\vartheta \sin\varphi, \quad z=r\cos\varphi $$
@@ -401,7 +404,10 @@ $$\bigg|\frac{\partial(x,y,z)}{\partial(r,\vartheta,\varphi)}\bigg|= r^2 \sin\va
 Thus by noticing 
 $$\cos\gamma =\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|},\quad \cos\beta=\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}$$
 we arrive at
-  $$\sigma =\int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\chi}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0} \: d\vartheta \: d\varphi$$
+\[
+\sigma = \int_{0}^{2\pi}\int_{\frac{\pi}{2}}^{-\frac{\pi}{2}}
+\Bigg(\frac{\ip{\mathbf{I}+\mathbf{N}}{\mathbf{V}}}{\|\mathbf{I}+\mathbf{N}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi \, \mathbf{\ind}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\ind}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0} \: d\vartheta \: d\varphi
+\]
   
 \subsection{Numerical Calculation of Scattering Function for Sphere - Finite Element Approach}~\\
 For each facet in the model, find angle $\theta$ between incident ray and facet normal, in FIGURE \ref{fig:facet}. Target relativity, $\rho$, is given by $MRDF$($\theta$), and scattering function, $\sigma$, is estimated by
@@ -551,23 +557,47 @@ with the approach of simply increasing the approximation tolerance.
 \end{figure}
 
 \subsection{The Multipath Problem}~\\
-Let's now consider the case where light projected on a concave surface. Unlike the previous cases, the light detected by the sensor can be reflected multiple times from points on the surface other points on the surface due to concavity. Theoretically, the bouncing of light can go on infinitely if there is no energy dissipation. The surface we consider here is the half cylindrical shell facing downwards and the radius of the cylinder is $r$. Given $\psi_I$, we denote the incident light by its vector of direction $\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$ and the light detector has viewing angle $\mathbf{V}$. For lights that are reflected by the surface at $D_1,D_2,...,D_n$ before it is collected by the light detector, denote the (inward) normal vector at $D_n$ by $\mathbf{N}_n=(-\cos\vartheta_n,-\sin\vartheta_n)$ and unit vector for $\overrightarrow{D_{n}D_{n-1}}$ by $\mathbf{I}_n=(-\cos\psi_n,-\sin\psi_n)$.  Define inductively 
-$$(*)\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\ \delta_n=\vartheta_{n+1}-\vartheta_n,\\ \psi_n=\psi_{n-1}-(\pi-\delta_n)\end{cases}$$ 
+Let's now consider the case where light projected on a concave surface. Unlike
+the previous cases, the light detected by the sensor can be reflected multiple
+times from points on the surface other points on the surface due to concavity.
+Theoretically, the bouncing of light can go on infinitely if there is no energy
+dissipation. The surface we consider here is the half cylindrical shell facing
+downwards and the radius of the cylinder is $r$. Given $\psi_I$, we denote the
+incident light by its vector of direction
+$\mathbf{I}_1=(\cos\psi_I,\sin\psi_I)$ and the light detector has viewing angle
+$\mathbf{V}$. For lights that are reflected by the surface at $D_1,D_2,...,D_n$
+before it is collected by the light detector, denote the (inward) normal vector
+at $D_n$ by $\mathbf{N}_n=(-\cos\vartheta_n,-\sin\vartheta_n)$ and unit vector
+for $\overrightarrow{D_{n}D_{n-1}}$ by
+$\mathbf{I}_n=(-\cos\psi_n,-\sin\psi_n)$.  Define inductively
+
+\begin{equation}\label{equ:induct}
+\begin{cases}\mathbf{I}_1=\mathbf{I}=(\cos\psi_{I},\sin\psi_{I}),\\
+\delta_n=\vartheta_{n+1}-\vartheta_n,\\
+\psi_n=\psi_{n-1}-(\pi-\delta_n)\end{cases}
+\tag{$\ast$}
+\end{equation} 
 
 \begin{proposition}
-Consider the situation described above. The Optical Cross Section under such circumstances is computed as
-$$\sigma=\sum_{n}^{\infty}\sigma_n$$
+The Optical Cross Section, up to $N$ bounces, is computed as
+\[
+\sigma=\sum_{n=1}^{N}\sigma_n
+\]
 with
 \begin{multline*}
-\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \\\prod_{i=1}^{n-1}\bigg\{ \Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{V}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha \frac{\ip{\mathbf{N}_i}{\mathbf{V}}}{\|\mathbf{N}_i\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_i}{\mathbf{I}_i}}{\|\mathbf{N}_i\| \|\mathbf{I}_i\|}\frac{1}{\|rN_{i+1}-rN_i\|^2}\bigg\}r^n\: \mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n\end{multline*}
-assuming that the infinite sum and the integral both converge.
+\sigma_n =
+\int_{0}^{\pi}...\int_{0}^{\pi}
+\Bigg(\frac{\ip{\mathbf{I}_n+\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{I}_n+\mathbf{N}_n\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_n}{\mathbf{V}}}{\|\mathbf{N}_n\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_n}{\mathbf{I}_n}}{\|\mathbf{N}_n\| \|\mathbf{I}_n\|} \\\prod_{i=1}^{n-1}\bigg\{ \Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{V}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha \frac{\ip{\mathbf{N}_i}{\mathbf{V}}}{\|\mathbf{N}_i\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_i}{\mathbf{I}_i}}{\|\mathbf{N}_i\| \|\mathbf{I}_i\|}\frac{1}{\|rN_{i+1}-rN_i\|^2}\bigg\}r^n\: \mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n\end{multline*}
+assuming that the integral converges.
 \end{proposition}
 
 \begin{proof}
-The proof is very straightforward. The contribution from a single bounce to the OCS is easily computed by using Bling-Phong's model with the projected $\BRDF$
+The contribution from a single bounce to the OCS is easily computed by using
+Bling-Phong's model with the projected $\BRDF$
 $$\sigma_1 =\int_{0}^{\pi}\Bigg(\frac{\ip{\mathbf{I}_1+\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{I}_1+\mathbf{N}_1\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}_1}{\mathbf{V}}}{\|\mathbf{N}_1\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}_1}{\mathbf{I}_1}}{\|\mathbf{N}_1\| \|\mathbf{I}_1\|} r\:\mathrm{d}\vartheta_1$$
 To compute the contribution from lights that bounce multiple times before it is received, what we need is just to write the relations between the angles correctly. For the case with two bounces, we can deduce these relations with the help from the picture below. Observe that now
-$\angle{ID_1O}=\angle{OD_1D_2}=\angle{D_1D_2O}$ and $\vartheta_1=\vartheta_2+\angle{D_2D_1O}+\angle{OD_1I}$. Hence by defining $\delta_2=\vartheta_2-\vartheta_1$, $\angle{D_2D_1O}+\angle{OD_1I}=\pi-\delta_2$. So the polar angle $\psi_2$ for $\mathbf{I}_2$ can be written as $\psi_1-(\pi-\delta_2)$.  More generally,  the relations among the angles for even more bounces are given by  $(*)$.
+$\angle{ID_1O}=\angle{OD_1D_2}=\angle{D_1D_2O}$ and $\vartheta_1=\vartheta_2+\angle{D_2D_1O}+\angle{OD_1I}$. Hence by defining $\delta_2=\vartheta_2-\vartheta_1$, $\angle{D_2D_1O}+\angle{OD_1I}=\pi-\delta_2$. So the polar angle $\psi_2$ for $\mathbf{I}_2$ can be written as $\psi_1-(\pi-\delta_2)$.  More generally,  the relations among the angles for even more bounces are given 
+by~\eqref{equ:induct}.
 \begin{figure}[H]
   \includegraphics[width=4in]{./figs/multipath_edit.pdf}
   \label{fig:reflection}

@@ -195,7 +195,8 @@ Blinn--Phong model, which says the following
 \]
 where $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{N}} {\|\mathbf{I}+\mathbf{N}\|}$$
 is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the light reflectivity the material used to cover the surface (large reflectivity corresponds to large $\alpha$). Intuitively speaking, the more mirror-like an object is,  the shaper its specular peak will be (corresponding to an RDF that decays faster). \begin{figure}[H]
- \includegraphics[width=1.1\textwidth]{./figs/%Surfaces.png} 
+ \includegraphics[width=1.1\textwidth]{./figs/
+ %Surfaces.png} 
 surfaces.pdf}
 \end{figure}
 
@@ -296,11 +297,11 @@ OpenSCAD is a free software application for creating solid 3D CAD (computer-aide
      	\hspace{-6pt}
 		\includegraphics[scale=0.2]{./figs/sdh_mesh}}
      	\hspace{-6pt}
-		\caption{Constructive Solid Geometry \& Generation of Finite element mesh}
-        \label{fig:penscad}
+		\caption{Constructive Solid Geometry \& Generation of Finite element mesh ~\cite{mesh}}
+        \label{fig:sdh_openscad}
 \end{figure}
 
-Numerically, we can handle even more complex objects through the typical procedure. However, to accurately represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between accuracy of the surface represented and speed of calculation. Table \ref{table: sphere OCS} shows the numerical calculation of OCS for a unit sphere. The relative error is $4.48476\times 10^{-4}$ by using 20480 triangle facets.  
+Numerically, we can handle even more complex objects through the typical procedure. However, to accurately represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between accuracy of the surface represented and speed of calculation. Table \ref{table: sphere OCS} shows the numerical calculation of OCS for a unit sphere. The relative error is about $10^{-4}$ by using 20480 triangle facets.  
 
 We wish to develop a method that improves the accuracy for much more complex objects. We consider representing the surface in functional form using Chebyshev polynomials and built up through Rvachev functions. The reason to choose Chebyshev polynomial is because for smooth enough object surface, by using sufficiently many Chebyshev poins, the surface representation is possibly accurate to close to machine precision.
 
@@ -614,7 +615,8 @@ Scientific Visualization: Advanced Concepts, 78-89 (1998)
   \emph{An Extension of Matlab to Continuous Function and Operations}.
   SIAM J. SCI. COMPUT Vol. 25, No. 5: 1743-1770 
  
-
+\bibitem{mesh}
+\url{http://sfepy.org/doc-devel/preprocessing.html}
 
 \bibitem{Morales}
 Gustavo Morales. Matlab Central.\\

@@ -35,20 +35,31 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \begin{itemize} 
 \item Satellite tracking 
 \item Prediction of reflective response 
+\item Guide model calibration 
+\vspace{2mm}
 \end{itemize} 
-\centerline{\includegraphics[width = 0.75\linewidth]{./figs/Satellite.jpg}} 
+\centerline{\includegraphics[width = 0.5\linewidth]{./figs/Satellite.jpg}} 
 \end{frame} 
  
-\begin{frame}[t] 
+\begin{frame} 
 \frametitle{Goals} 
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
 \begin{itemize} 
 \item Build complex objects using various methods (OpenSCAD, R-functions) 
 \item Develop a continuous approach to optical cross section (OCS) computation 
 \item Find a solution to the mutlipath problem 
 \end{itemize} 
-\centerline{\includegraphics[width = 0.9\linewidth]{rocket.pdf}} 
-\end{frame} 
+\end{column}
+\begin{column}{0.5\textwidth}
+\includegraphics[width = 0.6\linewidth]{rocket.pdf}\\ 
+\vspace{5mm}
+\includegraphics[width = 0.6\linewidth]{./figs/multipath.pdf} 
+\end{column}
+\end{columns}
 
+\end{frame} 
 
 \begin{frame}
 \frametitle{OpenSCAD} 
@@ -56,36 +67,67 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \end{frame}
 
 \begin{frame}[t] 
-\frametitle{R-functions} 
+\frametitle{Rvachev functions (1963)} 
 \begin{itemize} 
-\item Known also as Rvachev functions (1963) 
-\item Uses Boolean algebra to construct composite shapes from simple shapes 
-\item Implicit surface representation 
+\item Commonly referred to as R-functions 
+\item Boolean algebra to construct composite shapes from simple ones 
+\[
+    \begin{aligned}
+    f \cap g &=        \\ 
+    g \cup g &=        \\
+    f \setminus g &=   \\
+    \end{aligned}
+\]
 \end{itemize} 
-${\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\left({\left(x-\frac{3}{2}\right)}^2+y^2+z^2-1\right)}^2}+x^2+2\,y^2+2\,z^2-2 = 0$ 
+\end{frame}
+\begin{frame}[t] 
+\frametitle{R-functions --- example} 
+Union of two spheres:
+\[
+   \begin{aligned}
+   f&: x^2+y^2+z^2 - 1 &= 0 \\
+   g&: (x-1)^2+y^2+z^2 - 1 &= 0 \\
+   \end{aligned}
+\]
+
+
+\begin{center}
+{\tiny
 \centerline{\includegraphics[width = 0.75\linewidth]{./figs/TwoSpheres}} 
+\vspace{-3mm}
+$
+f \cup g: {\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\left({\left(x-\frac{3}{2}\right)}^2+y^2+z^2-1\right)}^2}+x^2+2\,y^2+2\,z^2-2 = 0$ 
+}
+\end{center}
 \end{frame} 
 
 \begin{frame}
-\frametitle{R-function examples} 
-\centerline{\includegraphics[width=.32\textwidth]{./figs/shape1.pdf} \: \includegraphics[width=.32\textwidth]{./figs/shape2.pdf}}  
-\includegraphics[width=.32\textwidth]{./figs/union.pdf} 
-\includegraphics[width=.32\textwidth]{./figs/intersect.pdf} 
-\includegraphics[width=.32\textwidth]{./figs/diff.pdf} 
+\frametitle{R-functions more examples} 
+\begin{tabular}{ccc}
+\includegraphics[width=.32\textwidth]{./figs/shape1.pdf} & 
+\includegraphics[width=.32\textwidth]{./figs/shape2.pdf}  
+\\
+$f$ & $g$\\
+\includegraphics[width=.32\textwidth]{./figs/union.pdf} & 
+\includegraphics[width=.32\textwidth]{./figs/intersect.pdf} & 
+\includegraphics[width=.32\textwidth]{./figs/diff.pdf}\\
+$f \cup g$ & $f \cap g$ & $f \setminus g$ 
+\end{tabular}
 \end{frame} 
 
-\begin{frame}[t]
-\frametitle{Optical cross section}
+\begin{frame}[fragile]
+\frametitle{Optical cross section (OCS)}
 \begin{itemize}
-\item Accumulated reflectance over a target surface
-\item Discrete: summing triangular facets (5 -- 20,000+) 
-\item Continuous: chebfun in conjunction with R-functions
+\item Accumulate reflectance over a target surface
+\item Discrete: Sum over triangular facets 
+\item Continuous: Analytic formulas (use R-functions); 
+used \verb+chebfun+ for computing integrals
 \end{itemize}
 \centerline{\includegraphics[scale = 0.5]{./figs/facet.png} \: \includegraphics[scale = 0.5]{./figs/icosahedron.png}}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Chebfun and the sphere}
+\frametitle{Analytic benchmark: the sphere}
 \begin{itemize}
 \item Unit sphere (spherical coordinate)
 \item Light source: fixed at the direction $(\theta,\phi) = (\frac{\pi}{2},\frac{\pi}{2})$

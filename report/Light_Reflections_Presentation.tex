@@ -20,27 +20,55 @@ Li Zhu\\
 Problem Presenter:  John Peach (MIT Lincoln Lab)\\
 Faculty Mentor: Alen Alexanderian (NCSU)
 }
-\titlegraphic{
-\includegraphics[width=.5\textwidth]{./figs/title-page-image.png}}
+\titlegraphic{}
 \institute[Abbreviation]{SAMSI-IMSM}
 
 %% Presentation
 \begin{document}
 
-% Title page:
+\begin{frame}[t] 
+\frametitle{Motivation} 
+\begin{itemize} 
+\item Satellite tracking 
+\item Prediction of reflective response 
+\end{itemize} 
+\centerline{\includegraphics[width = 0.75\linewidth]{./figs/Satellite.jpg}} 
+\end{frame} 
+ 
+\begin{frame}[t] 
+\frametitle{Goals} 
+\begin{itemize} 
+\item Build complex objects using various methods (OpenSCAD, R-functions) 
+\item Develop a continuous approach to optical cross section (OCS) computation 
+\item Find a solution to the mutlipath problem 
+\end{itemize} 
+\centerline{\includegraphics[width = 0.9\linewidth]{rocket.pdf}} 
+\end{frame} 
+
+
 \begin{frame}
-\titlepage
+\frametitle{OpenSCAD} 
+\centerline{\includegraphics[scale = 0.3]{./figs/sdh_mesh}} 
 \end{frame}
 
-% Presentation overview:
-\begin{frame}
-\frametitle{Overview}
-\tableofcontents
-\end{frame}
+\begin{frame}[t] 
+\frametitle{R-functions} 
+\begin{itemize} 
+\item Known also as Rvachev functions (1963) 
+\item Uses Boolean algebra to construct composite shapes from simple shapes 
+\item Implicit surface representation 
+\end{itemize} 
+${\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\left({\left(x-\frac{3}{2}\right)}^2+y^2+z^2-1\right)}^2}+x^2+2\,y^2+2\,z^2-2 = 0$ 
+\centerline{\includegraphics[width = 0.75\linewidth]{./figs/TwoSpheres}} 
+\end{frame} 
 
-
 \begin{frame}
-\frametitle{First slide}
+\frametitle{R-function examples} 
+\centerline{\includegraphics[width=.32\textwidth]{./figs/shape1.pdf} \: \includegraphics[width=.32\textwidth]{./figs/shape2.pdf}}  
+\includegraphics[width=.32\textwidth]{./figs/union.pdf} 
+\includegraphics[width=.32\textwidth]{./figs/intersect.pdf} 
+\includegraphics[width=.32\textwidth]{./figs/diff.pdf} 
+\end{frame} 
 \end{frame}
 
 \begin{frame}[t]
@@ -99,3 +127,9 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \end{frame}
 
 \end{document}
+
+
+%% Image references: 
+ 
+% Satellite.jpg: https://www.newscientist.com/article/2113311-first-ever-lightning-mapping-satellite-set-for-take-off/ 
+ 

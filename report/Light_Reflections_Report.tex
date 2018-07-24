@@ -15,6 +15,7 @@
 \usepackage{subcaption}
 \usepackage{float}
 
+
 \newcommand{\nn}{\nonumber}
 
 \newtheorem{theorem}{Theorem}%[section]
@@ -30,7 +31,7 @@
 \newcommand{\ben}{\begin{eqnarray}}
 \newcommand{\een}{\end{eqnarray}}
 \newcommand{\beq}{\begin{equation}}
-\newcommand{\eeq}{\end{equation}}
+
 
 \newcommand{\BRDF}{\mathrm{BRDF}}
 \newcommand{\MRDF}{\mathrm{MRDF}}
@@ -291,8 +292,8 @@ Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripe
 
 The checker board will then be represented by the following Boolean equation
 $$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_2)\wedge D_3$$
-Recall that $\Leftrightarrow$ is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
-$$(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$$
+Recall that`` $\Leftrightarrow$ " is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
+$(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$
 This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$.  
 
 \subsection{OpenSCAD and Chebfun}

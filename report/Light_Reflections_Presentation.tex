@@ -146,39 +146,45 @@ $$\text{BRDF}(\mathbf{I},\mathbf{V}) = \big(<\mathbf{H},\mathbf{N}>\big)^\alpha 
 \item MRDF: \textit{Monostatic reflectance distribution function}
 \item Case where $\mathbf{I} = \mathbf{V}$
 \end{itemize}
+\centerline{\includegraphics[scale=0.3]{./figs/MRDFs}}
 \end{frame}
 
-\begin{frame}[t]
+\begin{frame}
 \frametitle{Blinn--Phong as BRDF}
+\centerline{\includegraphics[scale=0.4]{./figs/BRDF_Vectors.pdf}}
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{Analytic benchmark: the sphere}
 \begin{itemize}
-\item Unit sphere (spherical coordinate)
+\item (LEFT) Unit sphere, (RIGHT) Ellipsoid
 \item Light source: fixed at the direction $(\theta,\phi) = (\frac{\pi}{2},\frac{\pi}{2})$
 \item Detector: orbiting on $xy$-plane
-\item Varying specular highlight
+\item Analytic solution for sphere: $2\pi/3 \approx 2.094395102393195$
+\item Chebfun approximation for sphere: $\approx 2.094395102389723$
 \end{itemize}
-\begin{multicols}{2}
-\centering \includegraphics[scale=0.13]{./figs/OCS_parallel_plane}
-\begin{figure}
-\centering \includegraphics[scale=0.1]{./figs/orbiting_example}\caption{qimono.
- pixabay. 2016}
-\end{figure}
-\end{multicols}
+\begin{columns}[c]
+\column{.5\textwidth}
+\centering \includegraphics[scale=0.21]{./figs/OCS_parallel_plane}
+\column{.5\textwidth}
+\centering \includegraphics[scale=0.21]{./figs/OCS_parallel_plane_ellipsoid}
+\end{columns}
 \end{frame}
 
 \begin{frame}[t]
-\frametitle{Chebfun and the sphere (cont'd)}
+\frametitle{Analytic benchmark: OCS values of sphere \& ellipsoid}
 \begin{itemize}
-\item Unit sphere
+\item (LEFT) Unit sphere, (RIGHT) Ellipsoid
 \item Light source: fixed at the direction $(\theta,\phi) = (0,0)$
 \item Detector: orbiting on $xy$-plane
 \item Varying specular highlight
 \end{itemize}
-
-\centering \includegraphics[scale=0.13]{./figs/OCS_perpendicular_plane}
+\begin{columns}[c]
+\column{.5\textwidth}
+\centering \includegraphics[scale=0.22]{./figs/OCS_perpendicular_plane}
+\column{.5\textwidth}
+\centering \includegraphics[scale=0.13]{./figs/OCS_perpendicular_plane_ellipsoid}
+\end{columns}
 \end{frame}
 
 

@@ -274,13 +274,13 @@ $$S_2(x)=\begin{cases} 1,\quad x>0;\\ 0, \quad x<0\end{cases}$$
 Such function $F$ is called the Boolean companion function of $f$.
 \end{definition}
 
-With this definition, we can easily see, for example, that (a), (c), (d), and are indeed R-functions with Boolean companions $1$, $\Leftrightarrow$ and $\wedge$
+With this definition, we can easily see, for example, that (a), (c) and (d) are indeed R-functions with Boolean companions $1$, $\Leftrightarrow$ and $\wedge$
 respectively. Other examples can also be checked and can have more complicated
 companions. 
 
-Upon combining elementary ``primitives" (sphere, cylinder, etc.) into composite objects with Boolean operations, we can actually construct certain R-functions that allows us to operate on the formulae/functions of those primitives and get a single analytical expression for the composite objects. And the set of R-functions used to define these operations has a natural correspondence to the Boolean functions. For the complete system of Boolean functions $\{0, \neg, \wedge, \vee\}$, consider the set of R-functions $\{-1,-x, x_1\wedge_\alpha x_2, x_1\vee_\alpha x_2\}$ where $\wedge_\alpha, \vee_\alpha$ is defined by
+Upon combining elementary ``primitives" (sphere, cylinder, etc.) into composite objects with Boolean operations, we can actually construct certain R-functions that allows us to operate directly on the formulae/functions of those primitives and obtain a single analytical expression for the composite objects. And the set of R-functions used to define these operations has a natural correspondence to the Boolean functions. For the complete system of Boolean functions $\{0, \neg, \wedge, \vee\}$, consider the set of R-functions $\{-1,-x, x_1\wedge_\alpha x_2, x_1\vee_\alpha x_2\}$ where $\wedge_\alpha, \vee_\alpha$ is defined by
 $$R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} (x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2})$$
-In the above definition, $a$ is a symmetric function in general with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent (in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. Let's look at an example of how we can use R-functions to get simple analytical equation for complex geometric objects. There are other system of R-functions that could also be used to complete the task. For example
+In the above definition, $a$ is a symmetric function in general with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent (in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. There are other system of R-functions that could also be used to complete the task. For example
 $$R_{\alpha}^m(x_1,x_2): \frac{1}{1+\alpha} (x_1 \wedge_\alpha ,\vee_\alpha x_2)(x_1^2+x_2^2)^{m/2}$$
 One of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that while $R_\alpha$ is not differentiable along the diagonal $x_1=x_2$, $R_{\alpha}^m$ is analytic on the whole plane except at $0$ where it is only $m$-times differentiable. For the purpose of this report, we shall not dwell on differentiability of the R-functions and will use $R_\alpha$. See~\cite{Shapiro} for more information.
 The following example shows the merits of using R-functions. Consider defining the checkerboard in a single equation with the following constituents (primitives) 
@@ -381,17 +381,17 @@ In this example, we interpolate function $f(x)=1/(1+12x^2)$ by using both polyno
 \subsection{Analytical Solutions for Sphere}$~\\$
 Recall that by using Blinn--Phong model for sphere, we can compute OCS through
 $$\sigma =\iint_{A}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma \cos\beta \mathbf{\chi}_{\ip{N}{I}\geq 0}\mathbf{\chi}_{\ip{V}{N}\geq 0} \: dA$$
-where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\vartheta\sin\varphi,\cos\varphi)$ and  $\mathbf{V}=(\mathbf{V}_1,\mathbf{V}_2,\mathbf{V}_3)$,  $\beta$ is the angle between $\mathbf{N}$ and $\mathbf{I}=(\mathbf{I}_1,\mathbf{I}_2,\mathbf{I}_3)$. The geometric relations are shown in the picture below.
+where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\vartheta\sin\varphi,\cos\varphi)$ and  $\mathbf{V}=(V_1, V_2, V_3)$,  $\beta$ is the angle between $\mathbf{N}$ and $\mathbf{I}=(I_1,I_2,I_3)$. The geometric relations are shown in the picture below.
 
 \begin{figure}[h!]
   \includegraphics[width=4in]{./figs/Sphere_edit.pdf}
   \label{fig:sphere}
 \end{figure}
 The appearances of two indicator functions 
-$$\mathbf{\chi}_{\ip{N}{I}\geq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi\mathbf{I}_1+\sin\vartheta\sin\varphi\mathbf{I}_2+\cos\varphi\mathbf{I}_3\geq 0\}$$ 
-$$\mathbf{\chi}_{\ip{V}{N}\geq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi\mathbf{V}_1+\sin\vartheta\sin\varphi\mathbf{V}_2+\cos\varphi\mathbf{V}_3\geq 0\}$$ 
+$$\mathbf{\chi}_{\ip{N}{I}\geq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi I_1+\sin\vartheta\sin\varphi I_2+\cos\varphi I_3\geq 0\}$$ 
+$$\mathbf{\chi}_{\ip{V}{N}\geq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi V_1+\sin\vartheta\sin\varphi V_2+\cos\varphi V_3\geq 0\}$$ 
 in the formula are just to include only the common part of the illuminated area and the detectable area.
-The spherical coordinates $(r,\theta,\varphi)$ are related to the Cartesian coordinates $(x,y,z)$ via
+The spherical coordinates $(r,\vartheta,\varphi)$ are related to the Cartesian coordinates $(x,y,z)$ via
 $$x =r\cos\vartheta \sin\varphi, \quad y=r\sin\vartheta \sin\varphi, \quad z=r\cos\varphi $$
 with Jacobian 
 $$\bigg|\frac{\partial(x,y,z)}{\partial(r,\vartheta,\varphi)}\bigg|= r^2 \sin\varphi $$
@@ -570,7 +570,7 @@ $\angle{ID_1O}=\angle{OD_1D_2}=\angle{D_1D_2O}$ and $\vartheta_1=\vartheta_2+\an
   \label{fig:reflection}
 \end{figure}
 
-Now let's compute the contribution for lights that bounce exactly $n$ times (happening at $D_1,...,D_n$ respectively) before it is received. For each bounce happening at $D_i$, a differential length around $D_1$ becomes the new emitter that shines towards another differential length around $D_{i+1}$. The viewing angle from $D_{i+1}$ towards $D_i$ now is just the direction of the reflected light $\mathbf{I}_{i}$. So we can invoke Blinn-Phong model to compute the detectable light at $D_{i+1}$ from $D_i$ and get the projected $\BRDF$
+Now let's compute the contribution for lights that bounce exactly $n$ times (happening at $D_1,...,D_n$ respectively) before they are received. For each bounce happening at $D_i$, a differential length around $D_1$ becomes the new emitter that shines towards another differential length around $D_{i+1}$. The viewing angle from $D_{i+1}$ towards $D_i$ now is just the direction of the reflected light $\mathbf{I}_{i}$. So we can invoke Blinn-Phong model to compute the detectable light at $D_{i+1}$ from $D_i$ and get the projected $\BRDF$
 $$\BRDF^*_{D_i}=\Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{I}_{i+1}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha\frac{\ip{\mathbf{I}_i}{\mathbf{N}_i}}{\|\mathbf{I}_i\|\|\mathbf{N}_i\|}\frac{\ip{\mathbf{I}_{i+1}}{\mathbf{N}_i}}{\|\mathbf{I}_{i+1}\|\|\mathbf{N}_i\|} \frac{1}{\|r\mathbf{N}_{i+1}-r\mathbf{N}_i\|^2}$$
 Therefore, for the lights that bounce exactly $n-$times before reaching the detector, their total contributions to $OCS$ would be 
 \begin{equation*}

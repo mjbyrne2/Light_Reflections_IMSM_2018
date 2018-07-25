@@ -147,46 +147,81 @@ Faculty Mentor: Alen Alexanderian (NCSU)}}
 
 \section{Abstract}
 
-We build a mathematical model of the properties of an object which faithfully captures the relevant optical phenomena for satellite tracking and prediction of reflective response. We develop analytical models to replace facetized CAD models with continuous functions by providing a more accurate, faster and less complex calculation of the Optical Cross Section(OCS) function. Also, we propose an extension of the discrete multipath solution on the continuous domain. Our method shows the potential to reproduce the accuracy observed on simple analytic object to much more complex objects using constructive solid geometry via Rvachev functions.
+We build a mathematical model of the properties of an object that faithfully
+captures the relevant optical phenomena for satellite tracking and prediction
+of reflective response. We develop analytical models to replace facetized CAD
+models with continuous functions by providing a more accurate, faster and less
+complex calculation of the Optical Cross Section(OCS) function. Also, we
+propose an extension of the discrete multipath problem on the continuous
+domain. Our method shows the potential to reproduce the accuracy observed on
+simple analytic objects to much more complex objects using constructive solid
+geometry via Rvachev functions.
 
 \section{Introduction}
 Through observation of light reflected from an object, various properties of the object may be estimated such as object composition and relative orientation. 
 Light reflection is a well-studied phenomenon; much is known regarding the relationships between wavelength, angles of incidence, and surface material. 
 One popular way to model the reflectance of an arbitrary object is to form a triangular mesh and from each patch use incident, reflected, and surface normal angles to determine the amount of local reflectance. 
 A distribution function is used to model the reflectance, which are functions of the angles described previously. 
-Since the reflectance of light depends upon the direction of both incident light and the viewing direction, model of light reflection often come in the form of a bi-static reflectance distribution functions (BRDF). 
-Distribution functions for light are also specific to the wavelength of light, though in this report wavelength will be considered fixed. \par 
-Once reflectance is calculated for each patch, the reflectances can be summed to determine the overall reflectance of the object. 
-The sum of the reflectance is known as the total optical cross section of the object.  
-If the object being considered is simple, such as a sphere, ellipse, or cylinder, optical cross section can be determined analytically. 
-However, more complex objects often require the triangular patch approximation described above. 
-For highly specular surfaces, the triangular patch approximation may result in an undesirable ``disco ball" representation of the object. 
-Increasing the number of mesh points (and thus increasing the number of triangular patches) is one possible remedy, though this approach reduces computational efficiency. 
-As such, the primary objective of this project is to investigate and develop extensions of analytical modelling of light reflection for more complicated objects. 
+Since the reflectance of light depends upon the direction of both incident light and the viewing direction, models of light reflection often come in the form of a bi-static reflectance distribution functions (BRDF). 
+Distribution functions for light are also specific to the wavelength of light, though in this 
+work we consider a fixed wavelength. 
+
+Once reflectance is calculated for each patch, the reflectances can be summed
+to determine the overall reflectance of the object.  The sum of the reflectance
+is known as the total optical cross section of the object.  If the object being
+considered is simple, such as a sphere, ellipse, or cylinder, optical cross
+section can be determined analytically.  However, more complex objects often
+require the triangular patch approximation described above.  For highly
+specular surfaces, the triangular patch approximation may result in an
+undesirable ``disco ball'' representation of the object.  Increasing the number
+of mesh points (and thus increasing the number of triangular patches) is one
+possible remedy, though this approach can become expensive.  As
+such, the primary objective of this project is to investigate and develop
+extensions of analytical modelling of light reflection for more complicated
+objects. 
 
 \section{Theoretical Background and Tools}~\\
-\subsection{Reflectance Distribution Functions and Optical Cross Section}~\\
-When light is projected onto opaque materials, the majority of incident light is transformed into reflected light and absorbed light. As a result, when an observer views an illuminated surface, what is seen is reflected light, i.e. the light that is reflected towards the observer from all visible surface regions. A reflectance distribution function (RDF) describes how much light is reflected when light makes contact with a certain material at certain point. On the informal level, RDF determines the detectable``light density" after reflection. 
+\subsection{Reflectance Distribution Functions and Optical Cross Section}
+When light is projected onto opaque materials, the majority of incident light
+is transformed into reflected light and absorbed light. As a result, when an
+observer views an illuminated surface, what is seen is reflected light, i.e.
+the light that is reflected towards the observer from all visible surface
+regions. A reflectance distribution function (RDF) describes how much light is
+reflected when light makes contact with a certain material at certain point. 
+Informally, RDF determines the detectable``light density'' after
+reflection. 
 
 In general, the degree to which light is reflected depends on the viewer and
-light position relative to the surface normal and tangent. Generally speaking, RDF is
-depends on the wave length of the light that is projected and is a function of incoming light direction (represented by the incident vector
+light position relative to the surface normal and tangent. Generally speaking,
+RDF is depends on the wavelength of the light that is projected and is a
+function of incoming light direction (represented by the incident vector
 \textbf{I})and viewing direction (represented by observing vector \textbf{V})
-relative to a local orientation at the light interaction point. However, since this is not the concern of our project, we ignore for now the effect of the wave length. When the light incoming angle and the viewing angle coincide, i.e. $\mathbf{I}=\mathbf{V}$, such function is called Mono-static Reflectance Distribution Function (MRDF). More generally, when the two angles are different it is called Bi-directional Reflectance Distribution Function (BRDF). 
+relative to a local orientation at the light interaction point. However, since
+this is not the concern of our project, we ignore for now the effect of the
+wave length. When the light incoming angle and the viewing angle coincide, i.e.
+$\mathbf{I}=\mathbf{V}$, such function is called Mono-static Reflectance
+Distribution Function (MRDF). More generally, when the two angles are different
+it is called Bi-directional Reflectance Distribution Function (BRDF). 
 
 Theoretically, BRDF is material-specific. Therefore, getting an accurate functional
 relation requires careful measurements through lab experiments. However, there
 are models that provide substitutes for easy usage. The most famous examples
 are Cook--Torrance model~\cite{CookTorr}, the Ward's model~\cite{Ward} and the
-Blinn--Phong model~\cite{BlinnPhong}. In our report, we will focus on using the
+Blinn--Phong model~\cite{BlinnPhong}. In our 
+work, we will focus on using the
 Blinn--Phong model, which says the following
 \[
    \BRDF(\mathbf{I},\mathbf{V};\mathbf{N})
    \approx
-   |\ip{\mathbf{H}}{\mathbf{N}}|^\alpha
+   \ip{\mathbf{H}}{\mathbf{N}}^\alpha.
 \]
-where $\mathbf{N}$ is the surface (outward) normal and $$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{V}} {\|\mathbf{I}+\mathbf{V}\|}$$
-is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the light reflectivity the material used to cover the surface (large reflectivity corresponds to large $\alpha$). Intuitively speaking, the more mirror-like an object is,  the sharper its specular peak will be (corresponding to an RDF that decays faster). 
+where $\mathbf{N}$ is the surface (outward) normal and 
+$$\mathbf{H}:=\frac{\mathbf{I}+\mathbf{V}} {\|\mathbf{I}+\mathbf{V}\|}.$$
+is the so-called half-way vector. The parameter $\alpha \geq 0$ depends on the
+light reflectivity the material used to cover the surface (large reflectivity
+corresponds to large $\alpha$). Intuitively speaking, the more mirror-like an
+object is,  the sharper its specular peak will be (corresponding to an RDF that
+decays faster). 
 
 \begin{figure}[H]
  \includegraphics[width=1.1\textwidth]{./figs/Surfaces.pdf}
@@ -209,7 +244,7 @@ A special case of the Blinn--Phong model gives rise to a handy formula for MRDF.
  \label{BRDFVectors}
 \end{figure}
 
-Optical cross section describes the maximum amount of optical flux that is reflected by an object. It can be computed accordingly by the geometry of surface of the object and reflectivity of a particular wavelength of an object. Here, we will again ignore wavelength and use the representation 
+Optical cross section, which we denote by $\sigma$, describes the maximum amount of optical flux that is reflected by an object. It can be computed accordingly by the geometry of surface of the object and reflectivity of a particular wavelength of an object. Here, we will again ignore wavelength and use the representation 
 $$\sigma=\int_{S} \rho \: \mathrm{d}A$$
 where $\rho$ is the optical density and is given by an $RDF$, $S$ denotes the surface. In our project, we use the representation
 $$\sigma= \int_S\BRDF(\mathbf{I},\mathbf{V};\mathbf{N}) \cos\gamma\cos\beta \: \mathrm{d}A$$
@@ -222,14 +257,14 @@ with $\gamma$ denoting the relative angle between incident light angle and surfa
 &\nonumber\mbox{Torus} :    ((c+a\cos u) \cos v,(c+a\cos u) \sin v, a\sin v), \quad |J|= a(c+a\cos v)           
 \end{align}
 
-\subsection{Rvachev Functions}~\\
-The study Rvachev functions (R-functions) arises in the attempt
+\subsection{Rvachev Functions}
+The study of Rvachev functions (R-functions) arises in the attempt
 to describe complex geometric objects with a single inequality or equation. In the
 17th century, Decartes suggested the idea of relating geometric objects (e.g.
 lines, circles and bodies) to analytical objects (e.g. sets, functions and
 equations). Since then, methods to study geometric properties based on its
 functional descriptions have been developed systematically. This is also known
-as the direct problem of analytic geometry. As oppose to the direct problem,
+as the direct problem of analytic geometry. As opposed to the direct problem,
 people also considered the inverse problem: given certain geometric objects
 equipped with some desired properties, find an analytical representation to
 such objects. Figure \ref{DiskAndBall} illustrates the union, intersection and difference of a disk and ball. 
@@ -247,7 +282,8 @@ such objects. Figure \ref{DiskAndBall} illustrates the union, intersection and d
 
 For the simple geometric objects, the inverse problem is not
 difficult. Yet for more complicated ones, especially when multiple forms
-and shapes are combined, analytical descriptions become less clean and usually involve logical operations among regions defined by inequalities. The birth of R-functions is exactly to help resolve this issue.    
+and shapes are combined, analytical descriptions become less clean and usually involve logical operations among regions defined by inequalities. 
+R-functions help resolve this issue.    
 
 On the formal level, an R-function is a function whose sign do not depend on the magnitude of its arguments.  The following are some easy  examples of R-functions: 
 \begin{enumerate}
@@ -273,11 +309,16 @@ With this definition, we can easily see, for example, that (a), (c) and (d) are 
 respectively. Other examples can also be checked and can have more complicated
 companions. 
 
-Upon combining elementary ``primitives" (sphere, cylinder, etc.) into composite objects with Boolean operations, we can actually construct certain R-functions that allows us to operate directly on the formulae/functions of those primitives and obtain a single analytical expression for the composite objects. And the set of R-functions used to define these operations has a natural correspondence to the Boolean functions. For the complete system of Boolean functions $\{0, \neg, \wedge, \vee\}$, consider the set of R-functions $\{-1,-x, x_1\wedge_\alpha x_2, x_1\vee_\alpha x_2\}$ where $\wedge_\alpha, \vee_\alpha$ is defined by
-$$R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} (x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2})$$
+Upon combining elementary ``primitives" (sphere, cylinder, etc.) into composite objects with Boolean operations, we can construct certain R-functions that allows us to operate directly on the formulae/functions of those primitives and obtain a single analytical expression for the composite objects. The set of R-functions used to define these operations has a natural correspondence to the Boolean functions. For the complete system of Boolean functions $\{0, \neg, \wedge, \vee\}$, consider the set of R-functions $\{-1,-x, x_1\wedge_\alpha x_2, x_1\vee_\alpha x_2\}$ where $\wedge_\alpha, \vee_\alpha$ is defined by
+\[
+R_\alpha(x_1,x_2)=\frac{1}{1+\alpha} \left(x_1+x_2\pm \sqrt{x_1^2+x_2^2-2\alpha x_1x_2}\right),
+\]
+respectively.
+
 In the above definition, $a$ is a symmetric function in general with range $(-1,1]$. In practice, we can simply choose $a$ to be constants and the resulting R-functions are equivalent (in the same branches) in the sense that their companion Boolean functions are exactly the same, i.e. $\wedge,\vee$. There are other system of R-functions that could also be used to complete the task. For example
 $$R_{\alpha}^m(x_1,x_2): \frac{1}{1+\alpha} (x_1 \wedge_\alpha ,\vee_\alpha x_2)(x_1^2+x_2^2)^{m/2}$$
-One of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that while $R_\alpha$ is not differentiable along the diagonal $x_1=x_2$, $R_{\alpha}^m$ is analytic on the whole plane except at $0$ where it is only $m$-times differentiable. For the purpose of this report, we shall not dwell on differentiability of the R-functions and will use $R_\alpha$. See~\cite{Shapiro} for more information.
+One of the significant differences of $R_\alpha$ and $R_{\alpha}^{m}$ is that while $R_\alpha$ is not differentiable along the diagonal $x_1=x_2$, $R_{\alpha}^m$ is analytic on the whole plane except at $0$ where it is only $m$-times differentiable. For the purpose of this 
+work, we shall not dwell on differentiability of the R-functions and will use $R_\alpha$. See~\cite{Shapiro} for more information.
 The following example shows the merits of using R-functions. Consider defining the checkerboard in a single equation with the following constituents (primitives) 
 $$D_1=\{\sin(\pi x_1)\geq 0\}, \quad D_2=\{\sin(\pi x_2)\geq 0\},\quad D_3=\{32-x^2-y^2-|x^2-y^2|\geq 0\}$$ 
 Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripes and $D_3$ defines region enclosed by a rectangular boundary. 
@@ -285,15 +326,25 @@ Graphically, $D_1$ generates vertical stripes, $D_2$ generates horizontal stripe
 \includegraphics[width=\textwidth]{./figs/checkerboard.pdf}
 \end{figure}
 
-The checker board will then be represented by the following Boolean equation
+The checkerboard will then be represented by the following Boolean equation
 $$(D_1\vee D_2)\wedge (\bar{D}_1\vee \bar{D}_2)\wedge D_3=(D_1\Leftrightarrow D_2)\wedge D_3$$
 Recall that`` $\Leftrightarrow$ " is the Boolean companion of $f(x,y)=xy$. Then the formula for checkerboard can be written as 
 $(\sin(\pi x_1)\sin(\pi x_2)) \wedge_\alpha (32-x^2-y^2-|x^2-y^2|) \geq 0$
 This can be further simplified into one equation with noticing that the region defined by $f(x_1,...,x_2)\geq 0$ can be written as $f-|f|= 0$.  
 
 \subsection{OpenSCAD and Chebfun}
-\subsubsection{OpenSCAD}~\\
-OpenSCAD is a free software application for creating solid 3D CAD (computer-aided design) objects. It is a script-only based modeller that uses its own description language. The program does constructive solid geometry (CSG) using specified geometric primitives (such as spheres, boxes, cylinders, etc.) and defines how they are modified and combined (for instance by intersection, difference, envelope combination and Minkowski sums) to render a more complex 3D model. Then we use other tool (Gmsh, etc.) to create finite element meshes. Figure \ref{fig:sdh_openscad} demonstrate the example of screwdriver handle constructed by OpenSCAD and the triangular mesh generated on the surface of the object.
+\subsubsection{OpenSCAD}
+OpenSCAD is a free software application for creating solid 3D CAD
+(computer-aided design) objects. It is a script-only based modeller that uses
+its own description language. The program does constructive solid geometry
+(CSG) using specified geometric primitives (such as spheres, boxes, cylinders,
+etc.) and defines how they are modified and combined (for instance by
+intersection, difference, envelope combination and Minkowski sums) to render a
+more complex 3D model. Then we use other tool (Gmsh, etc.) to create finite
+element meshes. Figure \ref{fig:sdh_openscad} demonstrates the example of
+a screwdriver handle constructed by OpenSCAD and the triangular mesh generated on
+the surface of the object.
+
 \begin{figure}[H]   	
 \centerline{\includegraphics[scale=0.3]{./figs/sdh_openscad}
      	\hspace{-6pt}
@@ -303,31 +354,56 @@ OpenSCAD is a free software application for creating solid 3D CAD (computer-aide
         \label{fig:sdh_openscad}
 \end{figure}
 
-Numerically, we can handle even more complex objects through the typical procedure. However, to accurately represent the surface many thousands to millions of facets are sometimes required and a trade-off must be made between accuracy of the surface represented and speed of calculation. Table \ref{table: sphere OCS} shows the numerical calculation of OCS for a unit sphere. The relative error is about $10^{-4}$ by using 20480 triangle facets.  
+Numerically, we can handle even more complex objects. However, to accurately
+represent the surface many thousands to millions of facets are sometimes
+required and a trade-off must be made between accuracy of the surface
+represented and speed of calculation.  For example, Table~\ref{table: sphere
+OCS} shows the numerical calculation of OCS for a unit sphere. Note that to
+attain a relative error of about $10^{-4}$ we need $20{,}480$ elements.  
 
-We wish to develop a method that improves the accuracy for much more complex objects. We consider representing the surface in functional form using Chebyshev polynomials and built up through Rvachev functions. The reason to choose Chebyshev polynomial is because for smooth enough object surface, by using sufficiently many Chebyshev poins, the surface representation is possibly accurate to close to machine precision.
 
 \subsubsection{Chebyshev interpolation analysis}~\\
-It's common to choose the base points $x_i$ for interpolation to be evenly spaced. In many cases, the data to be interpolated are available only in some certain forms, for instance, when the data consist of instrument readings separated by a constant time interval. Meanwhile, in other cases, for example, the sine function - we are free to choose the base points as we see the better fit. It turns out that the choice of base point spacing can have a significant efffect on the interpolation error. Chebyshev interpolation refers to a particular optimal way of spacing the points.
+We wish to develop a method that improves the accuracy for much more complex
+objects. We consider representing the surface in functional form using
+Chebyshev polynomials and built up through Rvachev functions. The reason to
+choose Chebyshev polynomial is because for smooth enough object surface, by
+using sufficiently many Chebyshev poins, the surface representation is possibly
+accurate to close to machine precision.
 
-Consider the case with single variable. We start with a function $y=f(x)$ and take data points from it to build an interpolating polynomial $P(x)$. The interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following theorem gives a formula for the interpolation error that is usually impossible to evaluate exactly, but often can be at least bounded by an error.
+Let us recall some basics regarding Lagrange interpolation using Chebyshev
+points for univariate functions.  It is common to choose the interpolation nodes 
+to be evenly spaced. In many cases, the data to be
+interpolated are available only in some certain forms, for instance, when the
+data consist of instrument readings separated by a constant time interval.
+Meanwhile, in other cases, for example, the sine function, we are free to
+choose the interpolation nodes. It turns out that the choice
+of interpolation points can have a significant efffect on the interpolation
+error. Chebyshev interpolation refers to a particular optimal way of spacing
+the points.
+
+Consider the case with single variable. We start with a function $y=f(x)$ and
+take data points from it to build an interpolating polynomial $P(x)$. The
+interpolation error evaluated at $x^*$ is $f(x^*)-P(x^*)$. The following
+theorem gives a formula for the interpolation error that is usually impossible
+to evaluate exactly, but often can be at least bounded by an error.
+
 \begin{theorem}
 Assume that $P(x)$ is the (degree $n-1$ or less) interpolating polynomial fitting the $n$ pionts $(x_1,y_1),...,(x_n,y_n)$. The interpolation error is 
 \begin{equation} \label{eqn_poly_error}
 f(x)-P(x)=\frac{(x-x_1)(x-x_2)\cdot\cdot\cdot(x-x_n)}{n!}f^{(n)}(c)
 \end{equation}
-where $c$ lies between the smallest and largest of the number $x,x_1,...,x_n.$
+where $c$ lies between the smallest and largest of the numbers $x,x_1,\ldots,x_n.$
 \end{theorem}
 The motivation for Chebyshev interpolation is to improve control of the maximum value of the interpolation error given by ~\eqref{eqn_poly_error}. For a given positive integer $n$, the Chebyshev nodes in the interval $(-1,1)$ are
 \begin{equation}
 \label{eqn_cheb_point}
-x_i=\cos\Big(\frac{2i-1}{2n}\pi\Big),\mbox{ }i=1,...,n.
+x_i=\cos\Big(\frac{2i-1}{2n}\pi\Big),\mbox{ }i=1,\ldots,n.
 \end{equation}
 The interpolation error due to Chebyshev positioning formula ~\eqref{eqn_cheb_point}, is summarized in the following theorem:
 \begin{theorem}
-The choice of real numbers $-1\le x_1,...,x_n\le 1$ that makes the value of 
+The choice of real numbers $-1\le x_1,\ldots,x_n\le 1$ that makes the value of 
 \begin{equation}
-\max_{-1 \leq x \leq 1}|(x-x_1)\cdot\cdot\cdot(x-x_n)|
+\max_{-1 \leq x \leq 1}|(x-x_1) \cdots (x-x_n)|
 \end{equation}
 as small as possible is given by ~\eqref{eqn_cheb_point}, and the minimum value is $\dfrac{1}{2^{n-1}}$. In fact, the minimum is achieved by 
 \begin{equation} \label{eqn_cheb_error}
@@ -337,7 +413,7 @@ where $T_n(x)$ denotes the degrees $n$ Chebyshev polynomial.
 \end{theorem}
 
 \begin{exmp}
-In this example, we compare the errors for Polynomial interpolation and Chebyshev interpolation with different interpolation points for the function $e^x$ on $[-1,1]$. FIGURE \ref{fig:e1} shows the comparisons for $N=5$ and $N=8$, and there isn't significant difference between the two interpolations for $N=5$. In the contrast, we can see better approximation for the Chebyshev interpolation near the boundary when  $N=8$.\\
+In this example, we compare the errors for Polynomial interpolation and Chebyshev interpolation with different interpolation points for the function $e^x$ on $[-1,1]$. Figure~\ref{fig:e1} shows the comparisons for $N=5$ and $N=8$, and there isn't significant difference between the two interpolations for $N=5$. In the contrast, we can see better approximation for the Chebyshev interpolation near the boundary when  $N=8$.\\
 The interpolation formula ~\eqref{eqn_poly_error} gives 
 \begin{equation}
 f(x)-P_4(x)=\frac{(x+1)(x+\frac{1}{2})x(x-\frac{1}{2})(x-1)}{5!}f^{(5)}(c)
@@ -385,7 +461,8 @@ where $\gamma$ is the angle between $\mathbf{N}=(\cos\vartheta\sin\varphi,\sin\v
 The appearances of two indicator functions 
 $$\mathbf{\ind}_{\ip{N}{I}\geq 0}=\{(\vartheta,\varphi):\cos\vartheta\sin\varphi I_1+\sin\vartheta\sin\varphi I_2+\cos\varphi I_3\geq 0\}$$ 
 $$\mathbf{\ind}_{\ip{V}{N}\geq 0}=\{(\vartheta,\varphi): \cos\vartheta\sin\varphi V_1+\sin\vartheta\sin\varphi V_2+\cos\varphi V_3\geq 0\}$$ 
-in the formula are just to include only the common part of the illuminated area and the detectable area.
+in the formula are to ensure only the common part of the illuminated area and
+the detectable area are included in the region of integration.
 The spherical coordinates $(r,\vartheta,\varphi)$ are related to the Cartesian coordinates $(x,y,z)$ via
 $$x =r\cos\vartheta \sin\varphi, \quad y=r\sin\vartheta \sin\varphi, \quad z=r\cos\varphi $$
 with Jacobian 
@@ -398,7 +475,7 @@ we arrive at
 \Bigg(\frac{\ip{\mathbf{I}+\mathbf{V}}{\mathbf{N}}}{\|\mathbf{I}+\mathbf{V}\|}\Bigg)^\alpha\frac{\ip{\mathbf{N}}{\mathbf{V}}}{\|\mathbf{N}\| \|\mathbf{V}\|}\frac{\ip{\mathbf{N}}{\mathbf{I}}}{\|\mathbf{N}\| \|\mathbf{I}\|}r^2\sin\varphi \, \mathbf{\ind}_{\ip{\mathbf{N}}{\mathbf{V}}\geq 0}\mathbf{\ind}_{\ip{\mathbf{N}}{\mathbf{I}}\geq 0} \: d\vartheta \: d\varphi
 \]
   
-\subsection{Numerical Calculation of Scattering Function for Sphere - Finite Element Approach}~\\
+\subsection{Numerical Calculation of Scattering Function for Sphere: finite element approach}
 For each facet in the model, find angle $\theta$ between incident ray and facet normal, in FIGURE \ref{fig:facet}. Target relativity, $\rho$, is given by $MRDF$($\theta$), and scattering function, $\sigma$, is estimated by
 \begin{equation}
 \sigma =\frac{\rho A}{\Omega}
@@ -445,9 +522,15 @@ The following Table \ref{table: sphere OCS} shows the numerical results for diff
 	\label{table: sphere OCS}
 \end{table}
   
-\subsection{Numerical Solutions for Sphere \& Application to Ellipsoid}
-
-To capture the target area for numerical integration using Chebfun, the boolean relationship is incorporated to avoid defining explicit boundary angles. This is achieved by multiplying the integrand derived from the Blinn--Phong model by $\max\{0, \langle \mathbf{L},\mathbf{N}\rangle\}$ and $\max\{0,\langle \mathbf{V},\mathbf{N}\rangle\}$ which rules out area not in the intersection of the lighted area and viewer's range. Here $\langle\cdot, \cdot\rangle$ is the inner product, $\mathbf{L}$ is the light source direction, $\mathbf{V}$ is the viewer direction, and $\mathbf{N}$ is the outward unit normal of the surface.
+\subsection{Numerical Solutions for Sphere \& Application to Ellipsoid: analytic approach}
+To capture the target area for numerical integration using Chebfun, the boolean
+relationship is incorporated to avoid defining explicit boundary angles. This
+is achieved by multiplying the integrand derived from the Blinn--Phong model by
+$\max\{0, \langle \mathbf{L},\mathbf{N}\rangle\}$ and $\max\{0,\langle
+\mathbf{V},\mathbf{N}\rangle\}$ which rules out area not in the intersection of
+the lighted area and viewer's range. Here $\langle\cdot, \cdot\rangle$ is the
+inner product, $\mathbf{L}$ is the light source direction, $\mathbf{V}$ is the
+viewer direction, and $\mathbf{N}$ is the outward unit normal of the surface.
 
 {\bf Case 1: Method verification.} Verification of the accuracy of Chebfun is performed by simulating the case where the light source and the viewer are at the identical direction to capture the optical cross section value. The reflexivity and the light diffusivity of the surface are fixed as $\rho = 1$ and $\alpha =0$ respectively. The optical cross section (OCS) approximated using Chebfun, with interpolating error tolerance of $10^{-8}$, yields $\sigma_{cheb} = 2.094395102389723$. The known analytical solution is $\sigma_{analytical} = 2\pi/3 \approx 2.094395102393195$. The absolute error of the Chebfun approach is in the range of $10^{-12}$ due its semi-analytical nature. This is superior to the triangular discretization approach which performs at $\approx 10^{-4}$ accuracy. To ensure the Chebfun approach does not produce non-physical result, additional tests were run for different $\alpha$ value and different viewer's position.
 
@@ -497,8 +580,8 @@ Both orbiting simulation results show agreement with the physical phenomenon. Th
 \label{OCSDecaybyAlphaEllipsoid}
 \end{figure}
 
-\section{Future work}
-\subsection{Other Shapes and Technical Challenges}$~\\$
+%\section{Future work}
+\section{Technical Challenges}$~\\$
 \textbf{\indent Creating complex shapes and visualization.}
 Using Rvachev functions, it is possible to create 
 complex objects by combining basic shapes such as elliptic paraboloids, 
@@ -545,7 +628,7 @@ with the approach of simply increasing the approximation tolerance.
 \label{cubes}
 \end{figure}
 
-\subsection{The Multipath Problem}~\\
+\section{The Multipath Problem}
 Let's now consider the case where light projected on a concave surface. Unlike
 the previous cases, the light detected by the sensor can be reflected multiple
 times from points on the surface other points on the surface due to concavity.

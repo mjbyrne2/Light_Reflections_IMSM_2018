@@ -207,12 +207,12 @@ When light is projected onto a concave surface, some light beams could be reflec
 \column{0.5 \textwidth} \includegraphics[width=2.4in]{./figs/multipath_edit.pdf}
 \column{0.5 \textwidth} $N_i=(-\cos \theta_i,-\sin\theta_i)$\\ $I_i=(-\cos \psi_i,-\sin\psi_i)$\\ Plane geometry gives $\psi_{i}=\psi_{i-1}-\pi+\theta_i-\theta_{i-1}$
 \end{columns}
-Need to compute separately for each bouncing case. Denote contributions from lights that bounce exactly $n-$times before received by detector by $\sigma_n$.
+Need to compute separately for each reflecting case. Denote contributions from lights that get reflected exactly $n-$times before captured by detector by $\sigma_n$.
 \end{frame}
 
 \begin{frame}[t]
 \frametitle{Multi-path problem}
-``Projected" $\BRDF$ at each bounce
+``Projected" $\BRDF$ at each reflection
 $$\BRDF^*_{D_i}=\Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{I}_{i+1}}{\mathbf{N}}}{\|\mathbf{I}_i+\mathbf{I}_{i+1}\|}\Bigg)^\alpha\frac{\ip{\mathbf{I}_i}{\mathbf{N}_i}}{\|\mathbf{I}_i\|\|\mathbf{N}_i\|}\frac{\ip{\mathbf{I}_{i+1}}{\mathbf{N}_i}}{\|\mathbf{I}_{i+1}\|\|\mathbf{N}_i\|} \frac{1}{\|r\mathbf{N}_{i+1}-r\mathbf{N}_i\|^2}$$
 Contribution to OCS from lights that bounces exactly $n-$times 
 \begin{equation*}

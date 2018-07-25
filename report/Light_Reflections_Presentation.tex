@@ -215,10 +215,10 @@ Need to compute separately for each bouncing case. Denote contributions from lig
 \begin{frame}[t]
 \frametitle{Multi-path problem}
 ``Projected" $\BRDF$ at each bounce
-$$\BRDF^*_{D_i}=\Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{N}_i}{\mathbf{I}_{i+1}}}{\|\mathbf{I}_i+\mathbf{N}_i\|}\Bigg)^\alpha\frac{\ip{\mathbf{I}_i}{\mathbf{N}_i}}{\|\mathbf{I}_i\|\|\mathbf{N}_i\|}\frac{\ip{\mathbf{I}_{i+1}}{\mathbf{N}_i}}{\|\mathbf{I}_{i+1}\|\|\mathbf{N}_i\|} \frac{1}{\|r\mathbf{N}_{i+1}-r\mathbf{N}_i\|^2}$$
+$$\BRDF^*_{D_i}=\Bigg(\frac{\ip{\mathbf{I}_i+\mathbf{I}_{i+1}}{\mathbf{N}}}{\|\mathbf{I}_i+\mathbf{I}_{i+1}\|}\Bigg)^\alpha\frac{\ip{\mathbf{I}_i}{\mathbf{N}_i}}{\|\mathbf{I}_i\|\|\mathbf{N}_i\|}\frac{\ip{\mathbf{I}_{i+1}}{\mathbf{N}_i}}{\|\mathbf{I}_{i+1}\|\|\mathbf{N}_i\|} \frac{1}{\|r\mathbf{N}_{i+1}-r\mathbf{N}_i\|^2}$$
 Contribution to OCS from lights that bounces exactly $n-$times 
 \begin{equation*}
-\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\BRDF(\mathbf{I},\mathbf{V};\mathbf{N_n})\bigg(\prod_{i=1}^{n-1}\BRDF^*_{D_i}\bigg) |J|^n\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n , \quad |J|=r
+\sigma_n =\int_{0}^{\pi}...\int_{0}^{\pi}\BRDF(\mathbf{I}_n,\mathbf{V};\mathbf{N_n})\bigg(\prod_{i=1}^{n-1}\BRDF^*_{D_i}\bigg) |J|^n\mathrm{d}\vartheta_1...\mathrm{d}\vartheta_n , \quad |J|=r
 \end{equation*}
 Add up to get the whole OCS
 $$\sigma=\sum_{n=1}^{\infty} \sigma_n$$

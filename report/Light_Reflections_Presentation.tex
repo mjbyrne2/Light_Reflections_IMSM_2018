@@ -77,13 +77,14 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 \frametitle{Rvachev functions (1963)} 
 \begin{itemize} 
 \item Commonly referred to as R-functions 
-\item Inputs are implicit functions
-\item Boolean algebra to construct composite shapes from simple ones 
+\item Inputs are functions
+\item ``Boolean algebra" on functional representation to construct composite shapes from simple ones. \\
+Let $f,g$ be two functions and $f=0$ generate geometric object $A$ and $g=0$ generates geometric object $B$. Define 
 \[
     \begin{aligned}
-    f \cap g &= f + g + \sqrt{f^2 + g^2}       \\ 
-    f \cup g &= f + g - \sqrt{f^2 + g^2}       \\
-    f \setminus g &= f - g - \sqrt{f^2 + g^2}  \\
+    f \land_0 g &= f + g + \sqrt{f^2 + g^2}       \\ 
+    f \lor_0 g &= f + g - \sqrt{f^2 + g^2}       \\
+    f \setminus_0 g &= f - g - \sqrt{f^2 + g^2}  \\
     \end{aligned}
 \]
 \end{itemize} 
@@ -93,8 +94,8 @@ Faculty Mentor: Alen Alexanderian (NCSU)
 Union of two spheres:
 \[
    \begin{aligned}
-   f&: x^2+y^2+z^2 - 1 &= 0 \\
-   g&: (x-1)^2+y^2+z^2 - 1 &= 0 \\
+   A&: f(x,y,z)=x^2+y^2+z^2 - 1 &= 0 \\
+   B&: g(x,y,z)=\left(x-\frac{3}{2}\right)^2+y^2+z^2 - 1 &= 0 \\
    \end{aligned}
 \]
 
@@ -104,7 +105,7 @@ Union of two spheres:
 \centerline{\includegraphics[width = 0.75\linewidth]{./figs/TwoSpheres}} 
 \vspace{-3mm}
 $
-f \cup g: {\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\left({\left(x-\frac{3}{2}\right)}^2+y^2+z^2-1\right)}^2}+x^2+2\,y^2+2\,z^2-2 = 0$ 
+A \cup B: {f\lor_0 g=0\Leftrightarrow \left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\left({\left(x-\frac{3}{2}\right)}^2+y^2+z^2-1\right)}^2}+x^2+2\,y^2+2\,z^2-2 = 0$ 
 }
 \end{center}
 \end{frame} 
@@ -115,13 +116,13 @@ f \cup g: {\left(x-\frac{3}{2}\right)}^2-\sqrt{{\left(x^2+y^2+z^2-1\right)}^2+{\
 \includegraphics[width=.32\textwidth]{./figs/shape1.pdf} &
 \includegraphics[width=.32\textwidth]{./figs/shape2.pdf}  
 \\
-$f$ & $g$
+$A$ & $B$
 \end{tabular}}
 \begin{tabular}{ccc}
 \includegraphics[width=.32\textwidth]{./figs/union.pdf} & 
 \includegraphics[width=.32\textwidth]{./figs/intersect.pdf} & 
 \includegraphics[width=.32\textwidth]{./figs/diff.pdf}\\
-$f \cup g$ & $f \cap g$ & $f \setminus g$ 
+$A \cup B$ & $A \cap B$ & $A \setminus B$ 
 \end{tabular}
 \end{frame} 
 

@@ -603,7 +603,7 @@ Both orbiting simulation results show agreement with the physical phenomenon. Th
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[width=.4\textwidth]{./figs/OCS_parallel_plane_ellipsoid}
+\includegraphics[width=.7\textwidth]{./figs/OCS_parallel_plane_ellipsoid}
 \caption{Simulation of orbiting viewer on the same plane as the light source. $\alpha = 0$. The shape of interest here is an ellipsoid.}
 \label{OCSParallelPlaneEllipsoid}
 \end{figure}
@@ -613,12 +613,12 @@ Both orbiting simulation results show agreement with the physical phenomenon. Th
 {\bf Case 3: Ellipsoid II} We next chose the ellipsoid described by $\frac{x^2}{9}+\frac{y^2}{4}+\frac{z^2}{1} = 1$ to compare the result with the ellipsoid I case. The remaining setup is identical to the previous case. Using the Chebfun approach we found that the OCS value when the light source and the viewer are at the same direction is about 1.6786. Since the viewer would be facing a larger area, the OCS value is expected to be higher. The result turns out to be as expected such that the OCS value produced is higher than the previous case. Finally we looked at the decay rate of the OCS value based on the increase of specular highlight. The initially faster decay rate of the OCS value for the ellipsoid I case is observed. This is due to change of curvature appearing earlier than the ellipsoid II case as the viewer moves away from the light source (Fig. \ref{OCSEllipsoid} and Fig. \ref{OCSDecaybyAlphaEllipsoid}).
 
 \begin{figure}[h]
-\includegraphics[width=.4\textwidth]{./figs/OCS_perpendicular_plane_ellipsoid}
+\includegraphics[width=.7\textwidth]{./figs/OCS_perpendicular_plane_ellipsoid}
 \caption{Simulation of orbiting viewer on the plane perpendicular to the light source. $\alpha = 0$. The shape of interest here is an ellipsoid.}
 \label{OCSPerpendicularPlaneEllipsoid}
 \end{figure}
 \begin{figure}
-\includegraphics[width=.4\textwidth]{./figs/OCS_decay_by_alpha_ellipsoid}
+\includegraphics[width=.7\textwidth]{./figs/OCS_decay_by_alpha_ellipsoid}
 \caption{OCS value of the ellipsoid simulations with increasing $\alpha$ values. It can be observed that ellipsoid I experiences a faster decay due to the high curvature decay.}
 \label{OCSDecaybyAlphaEllipsoid}
 \end{figure}
@@ -667,7 +667,7 @@ To compute the contribution from light that reflects multiple times before it is
 $\angle{ID_1O}=\angle{OD_1D_2}=\angle{D_1D_2O}$ and $\vartheta_1=\vartheta_2+\angle{D_2D_1O}+\angle{OD_1I}$. Hence by defining $\delta_2=\vartheta_2-\vartheta_1$, $\angle{D_2D_1O}+\angle{OD_1I}=\pi-\delta_2$. So the polar angle $\psi_2$ for $\mathbf{I}_2$ can be written as $\psi_1-(\pi-\delta_2)$.  More generally,  the relations among the angles for even more reflections are given 
 by~\eqref{equ:induct}.
 \begin{figure}[H]
-  \includegraphics[width=4in]{./figs/multipath_edit.pdf}
+  \includegraphics[width=4in]{./figs/reflection2.pdf}
   \label{fig:reflection}
 \end{figure}
 
